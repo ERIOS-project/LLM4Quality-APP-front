@@ -1,19 +1,16 @@
-import "./App.css"
+import "./App.css";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import {Routes} from "react-router-dom";
-import {Route} from "react-router-dom";
-import {useEffect} from 'react';
-import {loginRequest } from './authConfig';
-import {Provider} from 'react-redux';
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from 'react';
+import { loginRequest } from './authConfig';
+import { Provider } from 'react-redux';
 import { store } from './app/store';
 import MyAppBar from "./components/AppBar";
 import VerbatimClassification from "./pages/VerbatimClassification";
-
-
-
+import VerbatimDetails from "./pages/VerbatimDetails"; 
 
 const LoginRedirect = () => {
-  const {instance} = useMsal();
+  const { instance } = useMsal();
   useEffect(() => {
     instance.loginRedirect(loginRequest).catch((e) => {
       console.log(e);
@@ -23,25 +20,24 @@ const LoginRedirect = () => {
   return null; 
 };
 
-
-export default function App(){
+export default function App() {
   const { instance, accounts } = useMsal();
   return (
     <div className="App">
       <AuthenticatedTemplate>
-        <MyAppBar/>
+        <MyAppBar />
         <Provider store={store}>
           <div className="body">
             <Routes>
-                <Route path='/' element={< VerbatimClassification/>} />
+              <Route path='/' element={<VerbatimClassification />} />
+              <Route path='/details/:id' element={<VerbatimDetails />} />
             </Routes>
           </div>
         </Provider>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-         <LoginRedirect />
-    </UnauthenticatedTemplate>
+        <LoginRedirect />
+      </UnauthenticatedTemplate>
     </div>
-  )
+  );
 }
-

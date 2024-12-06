@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
-import VerbatimStatus  from '../../models/VerbatimStatus';
+import VerbatimStatus  from '../../../models/VerbatimStatus';
 
 export default function StatusSelection() {
   const [selectedStatus, setSelectedStatus] = useState<VerbatimStatus>(VerbatimStatus.Success);
