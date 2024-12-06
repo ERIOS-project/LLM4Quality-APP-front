@@ -10,7 +10,7 @@ export default function DeleteVerbatim() {
                 color="secondary"
                 startIcon={<DeleteIcon />}
             >
-                Supprimer le(s) verbatism(s)
+                Supprimer le(s) verbatim(s)
             </Button>
         </div>
     );

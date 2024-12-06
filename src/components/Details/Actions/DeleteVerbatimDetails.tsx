@@ -1,3 +1,6 @@
+import { Button } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 interface DeleteVerbatimDetailsProps {
     id : string;
 }
@@ -5,7 +8,13 @@ interface DeleteVerbatimDetailsProps {
 export default function DeleteVerbatimDetails({id} : DeleteVerbatimDetailsProps) {
     return (
         <div>
-            <h1>DeleteVerbatimDetails</h1>
+            <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<DeleteIcon />}
+            >
+                Supprimer le verbatim
+            </Button>
         </div>
     )
 }

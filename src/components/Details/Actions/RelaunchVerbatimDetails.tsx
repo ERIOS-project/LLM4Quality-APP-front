@@ -1,4 +1,6 @@
 import Verbatim from "../../../models/Verbatim"
+import Button from '@mui/material/Button';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 interface RelaunchVerbatimDetailsProps {
     verbatim: Verbatim;
@@ -8,7 +10,13 @@ interface RelaunchVerbatimDetailsProps {
 export default function RelaunchVerbatimDetails({verbatim} : RelaunchVerbatimDetailsProps) {
     return (
         <div>
-            <h1>RelaunchVerbatimDetails</h1>
+            <Button
+            variant="contained"
+            color="primary"
+            startIcon={<ReplayIcon />}
+            >
+                Relancer la classification
+            </Button>
         </div>
     )
 }
