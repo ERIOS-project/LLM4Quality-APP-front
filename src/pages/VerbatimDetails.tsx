@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid2';
 import DetailsHeader from '../components/Details/DetailsHeader';
 import DetailsActions from '../components/Details/DetailsActions';
 import DetailsContent from '../components/Details/DetailsContent';
+import DetailsTables from '../components/Details/DetailsTables';
 
 export default function VerbatimDetails() {
   const { id } = useParams<{ id: string }>();
@@ -38,6 +39,7 @@ export default function VerbatimDetails() {
         <DetailsHeader date={verbatim.created_at} status={verbatim.status} />
         <DetailsActions verbatim={verbatim} />
         <DetailsContent content={verbatim.content}/>
+        <DetailsTables result={verbatim.result}/>
     </div>
   );
 }
