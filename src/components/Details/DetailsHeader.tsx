@@ -20,11 +20,11 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
   const renderStatusIcon = (status: VerbatimStatus) => {
     switch (status) {
       case VerbatimStatus.Success:
-        return <CheckCircleIcon style={{ color: green[500] }} />;
+        return <CheckCircleIcon style={{ color: green[500], fontSize: '6rem',verticalAlign: 'middle' }} />;
       case VerbatimStatus.Error:
-        return <CancelIcon style={{ color: red[500] }} />;
+        return <CancelIcon style={{ color: red[500], fontSize: '5rem' }} />;
       case VerbatimStatus.Run:
-        return <HourglassTopIcon style={{ color: orange[500] }} />;
+        return <HourglassTopIcon style={{ color: orange[500], fontSize: '5rem' }} />;
       default:
         return null;
     }
@@ -32,14 +32,17 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
 
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid  size={{xs:2}}>
+      <Grid size={{xs:2}}>
         <IconButton onClick={() => navigate('/')}>
-          <ArrowBackIcon />
+          <ArrowBackIcon style={{ fontSize: '3rem' }} />
         </IconButton>
       </Grid>
       <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
-        <Typography>{date.toLocaleDateString('fr-FR')}</Typography>
-        <Typography>{renderStatusIcon(status)}</Typography>
+        <Typography variant="h6" style={{ fontSize: '5rem'}}>
+          {date.toLocaleDateString('fr-FR')}
+        </Typography>
+          {renderStatusIcon(status)}
+
       </Grid>
     </Grid>
   );

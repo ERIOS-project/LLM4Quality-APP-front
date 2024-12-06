@@ -35,9 +35,9 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
   return (
     <Grid container spacing={4} justifyContent="center" alignItems="center">
       {tables.map((table, index) => (
-        <Grid key={index} size={{xs:10}} display="flex" justifyContent="center">
-          <div style={{ textAlign: 'center', width: '100%' }}>
-            <Typography variant="h6" gutterBottom>
+        <Grid key={index} size={{lg:10}} display="flex" justifyContent="center">
+          <div style={{ textAlign: 'left', width: '100%' }}>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
               {table.title}
             </Typography>
             <TableContainer component={Paper}>
