@@ -8,8 +8,10 @@ interface DetailsContentProps {
 
 export default function DetailsContent({ content }: DetailsContentProps) {
   return (
-    <Grid size={{xs:12}}>
-      <Typography>{content}</Typography>
+    <Grid container spacing={4} justifyContent="center" alignItems="center">
+        <Grid size={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
+            <Typography>{content}</Typography>
+        </Grid>
     </Grid>
   );
 }

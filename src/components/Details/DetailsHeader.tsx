@@ -31,16 +31,14 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid size={{xs:4}}>
+    <Grid container spacing={2} alignItems="center">
+      <Grid  size={{xs:2}}>
         <IconButton onClick={() => navigate('/')}>
           <ArrowBackIcon />
         </IconButton>
       </Grid>
-      <Grid size={{xs:4}}>
+      <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
         <Typography>{date.toLocaleDateString('fr-FR')}</Typography>
-      </Grid>
-      <Grid size={{xs:4}}>
         <Typography>{renderStatusIcon(status)}</Typography>
       </Grid>
     </Grid>
