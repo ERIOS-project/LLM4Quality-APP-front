@@ -75,6 +75,7 @@ export default function UploadCsv() {
           color="primary"
           component="span"
           startIcon={<UploadFileIcon />}
+          sx={{ fontSize: '1.05rem', padding: '12px 24px' }}
         >
           Télécharger
         </Button>
