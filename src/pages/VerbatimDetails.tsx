@@ -22,10 +22,10 @@ export default function VerbatimDetails() {
   if (!verbatim) {
     return (
       <Grid container spacing={2}>
-        <Grid size={{xs: 12}}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h1">Verbatim Not Found</Typography>
         </Grid>
-        <Grid size={{xs: 12}}>
+        <Grid size={{ xs: 12 }}>
           <Button variant="contained" color="primary" onClick={() => navigate('/')}>
             Back to Classification
           </Button>
@@ -36,10 +36,18 @@ export default function VerbatimDetails() {
 
   return (
     <div>
+      <div style={{ marginBottom: '16px' }}>
         <DetailsHeader date={verbatim.created_at} status={verbatim.status} />
+      </div>
+      <div style={{ marginBottom: '16px' }}>
         <DetailsActions verbatim={verbatim} />
-        <DetailsContent content={verbatim.content}/>
-        <DetailsTables result={verbatim.result}/>
+      </div>
+      <div style={{ marginBottom: '16px' }}>
+        <DetailsContent content={verbatim.content} />
+      </div>
+      <div style={{ marginBottom: '16px' }}>
+        <DetailsTables result={verbatim.result} />
+      </div>
     </div>
   );
 }

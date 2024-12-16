@@ -6,11 +6,10 @@ export default function DeleteVerbatim() {
     return (
         <div>
             <Button
-                variant="contained"
-                color="secondary"
+                variant="outlined"
                 startIcon={<DeleteIcon />}
             >
-                Supprimer le(s) verbatim(s)
+                Supprimer
             </Button>
         </div>
     );

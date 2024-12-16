@@ -9,11 +9,10 @@ export default function DeleteVerbatimDetails({id} : DeleteVerbatimDetailsProps)
     return (
         <div>
             <Button
-            variant="contained"
-            color="secondary"
+            variant="outlined"
             startIcon={<DeleteIcon />}
             >
-                Supprimer le verbatim
+                Supprimer
             </Button>
         </div>
     )

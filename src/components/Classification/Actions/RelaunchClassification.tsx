@@ -6,11 +6,10 @@ export default function RelaunchClassification() {
     return (
         <div>
             <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 startIcon={<ReplayIcon />}
             >
-                Relancer le(s) classification(s)
+                Relancer
             </Button>
         </div>
     );

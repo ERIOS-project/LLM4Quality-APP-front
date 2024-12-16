@@ -11,11 +11,10 @@ export default function RelaunchVerbatimDetails({verbatim} : RelaunchVerbatimDet
     return (
         <div>
             <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             startIcon={<ReplayIcon />}
             >
-                Relancer la classification
+                Relancer
             </Button>
         </div>
     )

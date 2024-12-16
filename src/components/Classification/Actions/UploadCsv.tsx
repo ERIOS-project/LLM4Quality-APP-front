@@ -76,7 +76,7 @@ export default function UploadCsv() {
           component="span"
           startIcon={<UploadFileIcon />}
         >
-          Télécharger CSV
+          Télécharger
         </Button>
       </label>
 

@@ -5,7 +5,7 @@ import { SignOutButton } from "./SignOutButton";
 
 export default function MyAppBar() {
     return (
-        <AppBar position="static">
+        <AppBar position="static" elevation={0} sx={{ bgcolor: 'transparent', color: 'inherit' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <SignOutButton />
             </Toolbar>
