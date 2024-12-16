@@ -10,7 +10,9 @@ import {
   Select, 
   Typography, 
   Box, 
-  SelectChangeEvent 
+  SelectChangeEvent,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'; // Icône de fichier
@@ -21,6 +23,7 @@ export default function UploadCsv() {
   const [open, setOpen] = useState(false);
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
+  const [toastOpen, setToastOpen] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,6 +42,19 @@ export default function UploadCsv() {
 
   const handleYearChange = (event: SelectChangeEvent<number>) => {
     setSelectedYear(Number(event.target.value));
+  };
+
+  const handleValidate = () => {
+    if (!selectedYear) {
+      setToastOpen(true);
+    } else {
+      // Ajoutez ici la logique pour traiter le fichier et l'année sélectionnée
+      handleClose();
+    }
+  };
+
+  const handleToastClose = () => {
+    setToastOpen(false);
   };
 
   const currentYear = new Date().getFullYear();
@@ -103,11 +119,17 @@ export default function UploadCsv() {
           </Select>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="contained">
+          <Button onClick={handleValidate} color="primary" variant="contained">
             Valider
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleToastClose}>
+        <Alert onClose={handleToastClose} severity="warning" sx={{ width: '100%' }}>
+          Veuillez sélectionner une année avant de valider.
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
