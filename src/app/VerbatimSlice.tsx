@@ -20,7 +20,7 @@ En résumé, j'ai eu des soins de qualité, et je suis reconnaissant envers les 
         "Le circuit administratif": true,
         "La rapidité de prise en charge et le temps d’attente": true,
         "L’accès au bloc": true,
-        "La sortie de l’établissement": false,
+        "La sortie de l’établissement": null,
         "Le suivi du patient après le séjour hospitalier": true,
         "Les frais supplémentaires et dépassements d’honoraires": false,
       },

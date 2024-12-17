@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import { MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
-import VerbatimStatus  from '../../../models/VerbatimStatus';
+import VerbatimStatus from '../../../models/VerbatimStatus';
 
 export default function StatusSelection() {
   const [selectedStatus, setSelectedStatus] = useState<VerbatimStatus>(VerbatimStatus.Success);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedStatus(event.target.value as VerbatimStatus); // Convertir en VerbatimStatus
+  };
+
+  const getStatusLabel = (status: VerbatimStatus) => {
+    switch (status) {
+      case VerbatimStatus.Success:
+        return 'Succès';
+      case VerbatimStatus.Error:
+        return 'Erreur';
+      case VerbatimStatus.Run:
+        return 'En cours';
+      default:
+        return status;
+    }
   };
 
   return (
@@ -21,7 +34,7 @@ export default function StatusSelection() {
       >
         {Object.values(VerbatimStatus).map((status) => (
           <MenuItem key={status} value={status}>
-            {status}
+            {getStatusLabel(status)}
           </MenuItem>
         ))}
       </Select>

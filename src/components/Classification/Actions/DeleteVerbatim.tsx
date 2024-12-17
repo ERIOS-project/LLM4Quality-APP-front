@@ -8,7 +8,7 @@ export default function DeleteVerbatim() {
             <Button
                 variant="outlined"
                 startIcon={<DeleteIcon />}
-                sx={{ fontSize: '1.05rem', padding: '12px 24px' }}
+                sx={{ fontSize: '1.05rem', padding: '12px 24px',  textTransform: 'none'  }}
             >
                 Supprimer
             </Button>

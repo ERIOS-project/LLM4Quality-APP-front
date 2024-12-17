@@ -72,6 +72,7 @@ export default function VerbatimDatagrid() {
           variant="contained"
           color="primary"
           onClick={() => navigate(`/details/${params.row.id}`)}
+          sx={ {textTransform: 'none' }}
         >
           Détails
         </Button>

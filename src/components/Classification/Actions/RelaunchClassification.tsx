@@ -8,7 +8,7 @@ export default function RelaunchClassification() {
             <Button
                 variant="outlined"
                 startIcon={<ReplayIcon />}
-                sx={{ fontSize: '1.05rem', padding: '12px 24px' }}
+                sx={{ fontSize: '1.05rem', padding: '12px 24px', textTransform: 'none' }}
             >
                 Relancer
             </Button>
