@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Button, 
   Dialog, 
@@ -24,6 +24,7 @@ export default function UploadCsv() {
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
   const [toastOpen, setToastOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -38,17 +39,46 @@ export default function UploadCsv() {
     setOpen(false);
     setFileInfo(null);
     setSelectedYear('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Réinitialiser la valeur de l'élément <input>
+    }
   };
 
   const handleYearChange = (event: SelectChangeEvent<number>) => {
     setSelectedYear(Number(event.target.value));
   };
 
+  const openWebSocket = () => {
+    const socket = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/ws`);
+
+    socket.onopen = () => {
+      console.log('WebSocket connection opened');
+      const message = {
+        action: "CSV",
+        file: "ctquooi?\nAlexis pitié\nGuette la dingz"
+      };
+      socket.send(JSON.stringify(message));
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log('Message reçu:', data); // Imprimer les messages reçus
+    };
+
+    socket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+  };
+
   const handleValidate = () => {
     if (!selectedYear) {
       setToastOpen(true);
     } else {
-      // Ajoutez ici la logique pour traiter le fichier et l'année sélectionnée
+      openWebSocket(); // Ouvrir la connexion WebSocket
       handleClose();
     }
   };
@@ -68,6 +98,7 @@ export default function UploadCsv() {
         id="upload-csv"
         type="file"
         onChange={handleFileUpload}
+        ref={fileInputRef} // Ajouter une référence à l'élément <input>
       />
       <label htmlFor="upload-csv">
         <Button
