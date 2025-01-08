@@ -2,8 +2,8 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -13,14 +13,15 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedRows } from '../../app/selectedRowsSlice';
 import Verbatim from '../../models/Verbatim';
+import { fetchVerbatims } from '../../api/verbatims';
 
 export default function VerbatimDatagrid() {
-  const verbatims = useSelector((state: RootState) => state.verbatims);
+  const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>('verbatims', fetchVerbatims);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSelectionChange = (selection: GridRowId[]) => {
-    const selectedVerbatims = verbatims.filter((verbatim) => selection.includes(verbatim.id));
+    const selectedVerbatims = verbatims.filter((verbatim) => selection.includes(verbatim._id));
     dispatch(setSelectedRows(selectedVerbatims));
   };
 
@@ -30,7 +31,10 @@ export default function VerbatimDatagrid() {
       headerName: 'Date de Création',
       width: 200,
       flex: 1,
-      valueGetter: (value,row) => row.created_at.toLocaleDateString(),
+      valueGetter: (value,row) => {
+        const date = row.created_at;
+        return date ? new Date(date).toLocaleDateString() : 'Date non disponible';
+      },
     },
     {
       field: 'year',
@@ -72,13 +76,21 @@ export default function VerbatimDatagrid() {
           variant="contained"
           color="primary"
           onClick={() => navigate(`/details/${params.row.id}`)}
-          sx={ {textTransform: 'none' }}
+          sx={{ textTransform: 'none' }}
         >
           Détails
         </Button>
       ),
     },
   ];
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
@@ -90,7 +102,7 @@ export default function VerbatimDatagrid() {
             pagination
             checkboxSelection
             pageSizeOptions={[5]}
-            getRowId={(row) => row.id}
+            getRowId={(row) => row._id}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
           />
         </Paper>
