@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import VerbatimStatus from '../../../models/VerbatimStatus';
+import { setSelectedStatus } from '../../../redux/statusSlice';
 
 export default function StatusSelection() {
-  const [selectedStatus, setSelectedStatus] = useState<VerbatimStatus>(VerbatimStatus.Success);
+  const dispatch = useDispatch();
+  const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setSelectedStatus(event.target.value as VerbatimStatus); // Convertir en VerbatimStatus
+    const status = event.target.value as VerbatimStatus | '';
+    dispatch(setSelectedStatus(status));
   };
 
-  const getStatusLabel = (status: VerbatimStatus) => {
+  const getStatusLabel = (status: VerbatimStatus | '') => {
     switch (status) {
       case VerbatimStatus.Success:
         return 'Succès';
@@ -18,7 +23,7 @@ export default function StatusSelection() {
       case VerbatimStatus.Run:
         return 'En cours';
       default:
-        return status;
+        return 'Tous les statuts'; // Libellé pour l'option par défaut
     }
   };
 
@@ -32,6 +37,9 @@ export default function StatusSelection() {
         onChange={handleChange}
         label="Statut"
       >
+        <MenuItem value="">
+          {getStatusLabel('')}
+        </MenuItem>
         {Object.values(VerbatimStatus).map((status) => (
           <MenuItem key={status} value={status}>
             {getStatusLabel(status)}

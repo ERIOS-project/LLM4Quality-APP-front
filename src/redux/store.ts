@@ -2,10 +2,14 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import selectedRowsReducer from "./selectedRowsSlice"; // Import du slice des lignes sélectionnées
+import statusReducer from "./statusSlice"; 
+import yearReducer from "./yearSlice";
 
 // Combine les slices, y compris verbatimSlice
 const rootReducer = combineReducers({
   selectedRows: selectedRowsReducer,
+  status: statusReducer,
+  year: yearReducer,
 });
 
 // Déduit le type de l'état global à partir du root reducer

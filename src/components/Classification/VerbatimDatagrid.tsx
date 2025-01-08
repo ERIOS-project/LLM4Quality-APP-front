@@ -17,11 +17,17 @@ import { fetchVerbatims } from '../../api/verbatims';
 import { RootState } from '../../redux/store';
 
 export default function VerbatimDatagrid() {
-  const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>('verbatims', fetchVerbatims);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
+  const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
+  const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
   const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
+
+  const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
+    ['verbatims', selectedYear, selectedStatus],
+    () => fetchVerbatims({ year: selectedYear !== "" ? Number(selectedYear) : undefined, status: selectedStatus })
+  );
 
   useEffect(() => {
     if (selectedRows.length === 0) {
@@ -31,7 +37,7 @@ export default function VerbatimDatagrid() {
 
   const handleSelectionChange = (selection: GridRowId[]) => {
     setSelectedRowIds(selection);
-    const selectedVerbatims = verbatims.filter((verbatim) => selection.includes(verbatim._id));
+    const selectedVerbatims = verbatims.filter((verbatim: Verbatim) => selection.includes(verbatim._id));
     dispatch(setSelectedRows(selectedVerbatims));
   };
 
