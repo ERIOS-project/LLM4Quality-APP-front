@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,16 +11,26 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import { green, red, orange } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { setSelectedRows } from '../../app/selectedRowsSlice';
+import { setSelectedRows } from '../../redux/selectedRowsSlice';
 import Verbatim from '../../models/Verbatim';
 import { fetchVerbatims } from '../../api/verbatims';
+import { RootState } from '../../redux/store';
 
 export default function VerbatimDatagrid() {
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>('verbatims', fetchVerbatims);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
+  const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
+
+  useEffect(() => {
+    if (selectedRows.length === 0) {
+      setSelectedRowIds([]);
+    }
+  }, [selectedRows]);
 
   const handleSelectionChange = (selection: GridRowId[]) => {
+    setSelectedRowIds(selection);
     const selectedVerbatims = verbatims.filter((verbatim) => selection.includes(verbatim._id));
     dispatch(setSelectedRows(selectedVerbatims));
   };
@@ -75,7 +85,7 @@ export default function VerbatimDatagrid() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(`/details/${params.row.id}`)}
+          onClick={() => navigate(`/details/${params.row._id}`)}
           sx={{ textTransform: 'none' }}
         >
           Détails
@@ -103,6 +113,7 @@ export default function VerbatimDatagrid() {
             checkboxSelection
             pageSizeOptions={[5]}
             getRowId={(row) => row._id}
+            rowSelectionModel={selectedRowIds}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
           />
         </Paper>

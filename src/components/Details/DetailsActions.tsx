@@ -15,7 +15,7 @@ export default function DetailsActions({ verbatim }: DetailsActionsProps) {
         <RelaunchVerbatimDetails verbatim={verbatim} />
       </Grid>
       <Grid size={{ xs: 10, sm: 10, md: 5, lg: 5, xl: 5 }}>
-        <DeleteVerbatimDetails id={verbatim.id} />
+        <DeleteVerbatimDetails id={verbatim._id} />
       </Grid>
     </Grid>
   );

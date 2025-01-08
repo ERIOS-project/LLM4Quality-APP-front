@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect } from 'react';
 import { loginRequest } from './authConfig';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './redux/store';
 import MyAppBar from "./components/AppBar";
 import VerbatimClassification from "./pages/VerbatimClassification";
 import VerbatimDetails from "./pages/VerbatimDetails"; 

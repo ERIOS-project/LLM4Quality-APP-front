@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import VerbatimStatus from '../../models/VerbatimStatus';
 
 interface DetailsHeaderProps {
-  date: Date;
+  date: string;
   status: VerbatimStatus;
 }
 
@@ -39,7 +39,7 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
       </Grid>
       <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
         <Typography variant="h6" style={{ fontSize: '5rem'}}>
-          {date.toLocaleDateString('fr-FR')}
+          {date.substring(0, 10)}
         </Typography>
           {renderStatusIcon(status)}
 

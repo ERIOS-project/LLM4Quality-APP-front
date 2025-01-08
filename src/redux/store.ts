@@ -1,12 +1,10 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import  verbatimSlice  from "./VerbatimSlice"; // Import du slice des verbatims
 import selectedRowsReducer from "./selectedRowsSlice"; // Import du slice des lignes sélectionnées
 
 // Combine les slices, y compris verbatimSlice
 const rootReducer = combineReducers({
-  verbatims: verbatimSlice,
   selectedRows: selectedRowsReducer,
 });
 

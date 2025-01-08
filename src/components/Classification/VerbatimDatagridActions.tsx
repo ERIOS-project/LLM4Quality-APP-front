@@ -6,7 +6,7 @@ import StatusSelection from './Actions/StatusSelection';
 import RelaunchClassification from './Actions/RelaunchClassification';
 import DeleteVerbatim from './Actions/DeleteVerbatim';
 import UploadCsv from './Actions/UploadCsv';
-import { RootState } from '../../app/store';
+import { RootState } from '../../redux/store';
 
 export default function VerbatimDatagridActions() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);

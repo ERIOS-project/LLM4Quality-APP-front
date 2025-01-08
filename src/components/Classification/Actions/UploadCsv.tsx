@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'; // Icône de fichier
+import { uploadCsv } from '../../../api/websockets/csv';
 
 const START_YEAR = 2000; // Année limite inférieure
 
@@ -48,37 +49,12 @@ export default function UploadCsv() {
     setSelectedYear(Number(event.target.value));
   };
 
-  const openWebSocket = () => {
-    const socket = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/ws`);
-
-    socket.onopen = () => {
-      console.log('WebSocket connection opened');
-      const message = {
-        action: "CSV",
-        file: "ctquooi?\nAlexis pitié\nGuette la dingz"
-      };
-      socket.send(JSON.stringify(message));
-    };
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('Message reçu:', data); // Imprimer les messages reçus
-    };
-
-    socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-  };
-
   const handleValidate = () => {
     if (!selectedYear) {
       setToastOpen(true);
     } else {
-      openWebSocket(); // Ouvrir la connexion WebSocket
+      const fileContent = "ctquooi?\nAlexis pitié\nGuette la dingz"; // Remplacez ceci par le contenu réel du fichier
+      uploadCsv(fileContent); // Ouvrir la connexion WebSocket
       handleClose();
     }
   };

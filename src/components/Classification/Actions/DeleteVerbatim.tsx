@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../app/store';
+import { RootState } from '../../../redux/store';
 import { deleteVerbatims } from '../../../api/verbatims';
 
 export default function DeleteVerbatim() {
