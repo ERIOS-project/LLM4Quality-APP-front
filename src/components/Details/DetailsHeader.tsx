@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { green, red, orange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import VerbatimStatus from '../../models/VerbatimStatus';
+import { useEffect } from 'react';
 
 interface DetailsHeaderProps {
   date: string;
@@ -29,6 +30,10 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
         return null;
     }
   };
+
+  useEffect(() => {
+
+  }, [status]);
 
   return (
     <Grid container spacing={2} alignItems="center" style={{ backgroundColor: '#F4F4F4', padding: '20px', borderRadius: '8px' }}>
