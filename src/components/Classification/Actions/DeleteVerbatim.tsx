@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { deleteVerbatims } from '../../../api/verbatims';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { setDeleteVerbatimSuccessToast, setDeleteVerbatimErrorToast } from '../../../redux/toastSlice';
-import 
 
 export default function DeleteVerbatim() {
   const queryClient = useQueryClient();
-  const dispatch = useDispatch();
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
-  const successToastOpen = useSelector((state: RootState) => state.toast.deleteVerbatimSuccessToast);
-  const errorToastOpen = useSelector((state: RootState) => state.toast.deleteVerbatimErrorToast);
+  const [successToastOpen, setSuccessToastOpen] = useState(false);
+  const [errorToastOpen, setErrorToastOpen] = useState(false);
   const [deletedCount, setDeletedCount] = useState(0);
 
   const mutation = useMutation(deleteVerbatims, {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries('verbatims');
       setDeletedCount(variables.length);
-      dispatch(setDeleteVerbatimSuccessToast(true));
+      setSuccessToastOpen(true);
     },
     onError: () => {
-      dispatch(setDeleteVerbatimErrorToast(true));
+      setErrorToastOpen(true);
     },
   });
 
@@ -38,14 +35,14 @@ export default function DeleteVerbatim() {
     if (reason === 'clickaway') {
       return;
     }
-    dispatch(setDeleteVerbatimSuccessToast(false));
+    setSuccessToastOpen(false);
   };
 
   const handleErrorToastClose = (event?: any, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    dispatch(setDeleteVerbatimErrorToast(false));
+    setErrorToastOpen(false);
   };
 
   return (
