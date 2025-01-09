@@ -28,11 +28,26 @@ export default function DeleteVerbatim() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
       <Button
-        variant="outlined"
+        variant="contained"
         startIcon={<DeleteIcon />}
-        sx={{ fontSize: '1.05rem', padding: '12px 24px', textTransform: 'none' }}
+        sx={{
+          fontSize: '1.1rem',
+          padding: '12px 24px', // Espacement ajusté pour un bouton plus net
+          textTransform: 'none', // Garde la police naturelle
+          borderRadius: '8px', // Coins arrondis pour un aspect moderne
+          backgroundColor: '#d32f2f', // Rouge sérieux pour signaler une suppression
+          color: '#ffffff', // Texte blanc pour le contraste
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre douce pour profondeur
+          '&:hover': {
+            backgroundColor: '#9A0007', // Rouge plus foncé au survol
+            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)', // Ombre un peu plus marquée au survol
+          },
+          '&:active': {
+            backgroundColor: '#7A0004', // Rouge encore plus foncé au clic
+          },
+        }}
         onClick={handleDelete}
       >
         Supprimer

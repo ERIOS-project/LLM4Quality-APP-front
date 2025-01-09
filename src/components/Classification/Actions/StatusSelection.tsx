@@ -28,14 +28,30 @@ const StatusSelection = memo(() => {
   };
 
   return (
-    <FormControl fullWidth variant="outlined">
-      <InputLabel id="status-select-label">Statut</InputLabel>
+    <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
+      <InputLabel id="status-select-label" sx={{ color: '#2A3E53' }}>Statut</InputLabel>
       <Select
         labelId="status-select-label"
         id="status-select"
         value={selectedStatus}
         onChange={handleChange}
         label="Statut"
+        sx={{
+          backgroundColor: '#fff',
+          borderRadius: '6px',
+          borderColor: '#2A3E53', // Couleur pour la bordure (identique à l'AppBar)
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: '#2A3E53', // Bordure par défaut
+            },
+            '&:hover fieldset': {
+              borderColor: '#1f2c3a', // Bordure plus foncée au survol
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#2A3E53', // Bordure quand le champ est en focus
+            },
+          },
+        }}
       >
         <MenuItem value="">
           {getStatusLabel('')}

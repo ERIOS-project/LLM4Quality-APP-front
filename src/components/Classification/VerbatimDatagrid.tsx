@@ -15,6 +15,7 @@ import { setSelectedRows } from '../../redux/selectedRowsSlice';
 import Verbatim from '../../models/Verbatim';
 import { fetchVerbatims } from '../../api/verbatims';
 import { RootState } from '../../redux/store';
+import Skeleton from '@mui/material/Skeleton';
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export default function VerbatimDatagrid() {
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
   const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
+  const [pageSize, setPageSize] = useState<number>(5);
+  const [page, setPage] = useState<number>(0);
 
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
     ['verbatims', selectedYear, selectedStatus],
@@ -93,7 +96,14 @@ export default function VerbatimDatagrid() {
           variant="contained"
           color="primary"
           onClick={() => navigate(`/details/${params.row._id}`)}
-          sx={{ textTransform: 'none' }}
+          sx={{
+            textTransform: 'none',
+            backgroundColor: '#2A3E53',
+            '&:hover': {
+              backgroundColor: '#1c2a37', // Darken on hover
+            },
+            padding: '6px 12px',
+          }}
         >
           Détails
         </Button>
@@ -102,7 +112,15 @@ export default function VerbatimDatagrid() {
   ];
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid size={{ xs: 12 }}>
+          <Paper style={{ height: 600, width: '100%', borderRadius: 8, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }}>
+            <Skeleton variant="rectangular" width="100%" height="100%" />
+          </Paper>
+        </Grid>
+      </Grid>
+    );
   }
 
   if (error) {
@@ -110,15 +128,30 @@ export default function VerbatimDatagrid() {
   }
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
-        <Paper style={{ height: 400, width: '100%' }}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ backgroundColor: '#F4F4F4', padding: '20px' }}>
+      <Grid size={{ xs: 12 ,sm:10, md:10 ,lg:10}}>
+        <Paper
+          style={{
+            height: 550,
+            width: '100%',
+            borderRadius: 8,
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+            backgroundColor: '#FFFFFF',
+            padding: '10px',
+            margin: '0 auto', // This ensures the Paper container is centered
+          }}
+        >
           <DataGrid
             rows={verbatims}
             columns={columns}
             pagination
+            paginationModel={{ pageSize, page }}
+            pageSizeOptions={[10, 20, 30]}
+            onPaginationModelChange={(model) => {
+              setPageSize(model.pageSize);
+              setPage(model.page);
+            }}
             checkboxSelection
-            pageSizeOptions={[5]}
             getRowId={(row) => row._id}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
           />

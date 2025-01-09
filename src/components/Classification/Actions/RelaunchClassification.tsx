@@ -27,11 +27,23 @@ export default function RelaunchClassification() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
       <Button
-        variant="outlined"
+        variant="contained"
         startIcon={<ReplayIcon />}
-        sx={{ fontSize: '1.05rem', padding: '12px 24px', textTransform: 'none' }}
+        sx={{
+          fontSize: '1.1rem',
+          padding: '12px 24px',
+          textTransform: 'none',
+          borderRadius: '8px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+          backgroundColor: '#2A3E53', // Couleur sérieuse correspondant à l'appbar
+          color: '#ffffff', // Texte en blanc pour contraster
+          '&:hover': {
+            backgroundColor: '#1f2c3a', // Teinte plus sombre au survol
+            boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)', // Ombre plus marquée pour l'interaction
+          },
+        }}
         onClick={handleRelaunch}
       >
         Relancer

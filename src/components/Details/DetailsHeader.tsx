@@ -20,7 +20,7 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
   const renderStatusIcon = (status: VerbatimStatus) => {
     switch (status) {
       case VerbatimStatus.Success:
-        return <CheckCircleIcon style={{ color: green[500], fontSize: '6rem',verticalAlign: 'middle' }} />;
+        return <CheckCircleIcon style={{ color: green[500], fontSize: '5rem' }} />;
       case VerbatimStatus.Error:
         return <CancelIcon style={{ color: red[500], fontSize: '5rem' }} />;
       case VerbatimStatus.Run:
@@ -31,18 +31,31 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
   };
 
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid size={{xs:2}}>
-        <IconButton onClick={() => navigate('/')}>
-          <ArrowBackIcon style={{ fontSize: '3rem' }} />
+    <Grid container spacing={2} alignItems="center" style={{ backgroundColor: '#F4F4F4', padding: '20px', borderRadius: '8px' }}>
+      {/* Flèche de retour à gauche */}
+      <Grid size={{xs:2}} container justifyContent="flex-start">
+        <IconButton onClick={() => navigate('/')} style={{ color: '#2A3E53' }}>
+          <ArrowBackIcon style={{ fontSize: '2.5rem' }} />
         </IconButton>
       </Grid>
+
+      {/* Contenu central (date et statut) */}
       <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
-        <Typography variant="h6" style={{ fontSize: '5rem'}}>
+        <Typography
+          variant="h2"
+          style={{
+            fontSize: '4rem',  // Très grande taille de police pour le titre
+            color: '#2A3E53',
+            fontWeight: '600',
+            textTransform: 'capitalize',
+            textAlign: 'center',
+          }}
+        >
           {date.substring(0, 10)}
         </Typography>
+        <div style={{ marginLeft: '15px' }}>
           {renderStatusIcon(status)}
-
+        </div>
       </Grid>
     </Grid>
   );

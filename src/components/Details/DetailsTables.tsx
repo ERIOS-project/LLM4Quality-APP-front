@@ -43,23 +43,31 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
   return (
     <Grid container spacing={4} justifyContent="center" alignItems="center">
       {tables.map((table, index) => (
-        <Grid key={index} size={{lg:10}} display="flex" justifyContent="center">
+        <Grid key={index} size={{ lg: 10 }} display="flex" justifyContent="center">
           <div style={{ textAlign: 'left', width: '100%' }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
+            <Typography
+              variant="h6"
+              gutterBottom
+              fontWeight="bold"
+              style={{
+                color: '#2A3E53', // Couleur de l'appbar pour rester cohérent avec le thème
+                textTransform: 'uppercase', // Mettre en majuscules pour un ton plus formel
+              }}
+            >
               {table.title}
             </Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} style={{ borderRadius: '8px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', backgroundColor: '#FFFFFF' }}>
               <Table>
                 <TableHead>
-                  <TableRow>
-                    <TableCell align="center" style={{ width: '60%' }}></TableCell> {/* Cellule vide pour le titre de la première colonne */}
-                    <TableCell align="center" style={{ width: '20%' }}>Positif</TableCell>
-                    <TableCell align="center" style={{ width: '20%' }}>Négatif</TableCell>
+                  <TableRow style={{ backgroundColor: '#2A3E53', color: '#FFFFFF' }}>
+                    <TableCell align="center" style={{ width: '60%', color: '#FFFFFF' }}><strong>Critères</strong></TableCell>
+                    <TableCell align="center" style={{ width: '20%', color: '#FFFFFF' }}><strong>Positif</strong></TableCell>
+                    <TableCell align="center" style={{ width: '20%', color: '#FFFFFF' }}><strong>Négatif</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {table.data.map((row, idx) => (
-                    <TableRow key={idx}>
+                    <TableRow key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#F9F9F9' : '#FFFFFF' }}>
                       <TableCell style={{ width: '60%' }}>{row.name}</TableCell>
                       <TableCell align="center" style={{ width: '20%' }}>{row.positive}</TableCell>
                       <TableCell align="center" style={{ width: '20%' }}>{row.negative}</TableCell>

@@ -32,11 +32,23 @@ export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps
     };
 
     return (
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
             <Button
-                variant="outlined"
+                variant="contained"
                 startIcon={<DeleteIcon />}
-                sx={{ fontSize: '1.25rem', padding: '12px 24px', textTransform: 'none' }}
+                sx={{
+                    fontSize: '1.25rem',
+                    padding: '12px 24px',
+                    textTransform: 'none',
+                    backgroundColor: '#2A3E53', // Couleur de l'AppBar
+                    '&:hover': {
+                        backgroundColor: '#1c2a37', // Teinte plus foncée au survol
+                    },
+                    color: '#fff', // Texte blanc pour un bon contraste
+                    borderRadius: '8px', // Coins arrondis pour un aspect moderne
+                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', // Ombre douce pour l'esthétique
+                    minWidth: '150px', // Largeur minimale pour un bouton plus large et facile à cliquer
+                }}
                 onClick={handleDelete}
             >
                 Supprimer

@@ -22,11 +22,22 @@ export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDe
     };
 
     return (
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
             <Button
-                variant="outlined"
+                variant="contained"
                 startIcon={<ReplayIcon />}
-                sx={{ fontSize: '1.25rem', padding: '12px 24px', textTransform: 'none' }}
+                sx={{
+                    fontSize: '1.25rem',
+                    padding: '12px 24px',
+                    textTransform: 'none',
+                    backgroundColor: '#2A3E53', // Utilisation de la couleur de l'Appbar pour le bouton
+                    '&:hover': {
+                        backgroundColor: '#1c2a37', // Couleur plus foncée au survol
+                    },
+                    color: '#fff', // Texte blanc pour une meilleure visibilité
+                    borderRadius: '8px', // Coins arrondis pour un effet plus moderne
+                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', // Ombre douce pour l'esthétique
+                }}
                 onClick={handleRelaunch}
             >
                 Relancer

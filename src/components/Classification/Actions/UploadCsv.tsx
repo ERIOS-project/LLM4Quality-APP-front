@@ -13,7 +13,7 @@ import {
   SelectChangeEvent
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'; // Icône de fichier
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
@@ -30,8 +30,7 @@ export default function UploadCsv() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log('Fichier uploadé :', file);
-      setFileInfo({ name: file.name, size: file.size }); 
+      setFileInfo({ name: file.name, size: file.size });
       setOpen(true); 
     }
   };
@@ -67,14 +66,14 @@ export default function UploadCsv() {
   const yearOptions = Array.from({ length: currentYear - START_YEAR + 1 }, (_, i) => currentYear - i);
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
       <input
         accept=".csv,.xlsx,.xls"
         style={{ display: 'none' }}
         id="upload-csv"
         type="file"
         onChange={handleFileUpload}
-        ref={fileInputRef} // Ajouter une référence à l'élément <input>
+        ref={fileInputRef}
       />
       <label htmlFor="upload-csv">
         <Button
@@ -82,7 +81,19 @@ export default function UploadCsv() {
           color="primary"
           component="span"
           startIcon={<UploadFileIcon />}
-          sx={{ fontSize: '1.05rem', padding: '12px 24px',  textTransform: 'none'  }}
+          sx={{
+            fontSize: '1.1rem',
+            padding: '12px 24px',
+            textTransform: 'none',
+            borderRadius: '8px',
+            backgroundColor: '#2A3E53', // Correspond à l'AppBar
+            color: '#ffffff',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            '&:hover': {
+              backgroundColor: '#1f2c3a', // Gris foncé au survol
+              boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
+            },
+          }}
         >
           Télécharger
         </Button>
@@ -115,6 +126,18 @@ export default function UploadCsv() {
             displayEmpty
             fullWidth
             variant="outlined"
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: '6px',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#2A3E53', // Couleur qui correspond à l'AppBar
+                },
+                '&:hover fieldset': {
+                  borderColor: '#1f2c3a', // Couleur au survol
+                },
+              },
+            }}
           >
             <MenuItem value="" disabled>
               Sélectionnez une année

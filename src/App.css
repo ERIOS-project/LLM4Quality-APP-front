@@ -1,7 +1,22 @@
-.App {
-  text-align: center;
+/* S'assurer que html et body ont une hauteur de 100% */
+html, body {
+  height: 100%;
+  margin: 0; /* Supprimer les marges par défaut */
 }
 
+/* Appliquer la couleur de fond et s'assurer que l'élément .App occupe toute la hauteur de la page */
+.App {
+  text-align: center;
+  height: 100%; /* Assurer que l'élément couvre toute la hauteur disponible */
+  min-height: 100vh; /* Garantir que la page couvre tout l'écran, même si le contenu est peu élevé */
+  background-color: #F4F4F4; /* Couleur de fond choisie */
+  display: flex; /* Utilisation de Flexbox pour la mise en page */
+  flex-direction: column;
+  justify-content: flex-start; /* Garantir que le contenu est aligné en haut */
+  overflow: hidden; /* Pour éviter que le contenu ne déborde */
+}
+
+/* Autres styles pour le logo et header */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,7 +29,7 @@
 }
 
 .App-header {
-  min-height: 100vh;
+  min-height: 100vh; /* Assure que le header prend tout l'écran si nécessaire */
   display: flex;
   flex-direction: column;
   align-items: center;
