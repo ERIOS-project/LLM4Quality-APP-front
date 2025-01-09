@@ -3,7 +3,9 @@ import { Button } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { deleteVerbatims } from '../../../api/verbatims';
+import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
 
 interface DeleteVerbatimDetailsProps {
     id: string;
@@ -12,11 +14,16 @@ interface DeleteVerbatimDetailsProps {
 export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps) {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const mutation = useMutation(() => deleteVerbatims([id]), {
         onSuccess: () => {
             queryClient.invalidateQueries('verbatims');
+            dispatch(setSuccessToast({ open: true, message: 'Verbatim supprimé avec succès.' }));
             navigate('/');
+        },
+        onError: () => {
+            dispatch(setErrorToast({ open: true, message: 'Une erreur est survenue lors de la suppression du verbatim.' }));
         },
     });
 

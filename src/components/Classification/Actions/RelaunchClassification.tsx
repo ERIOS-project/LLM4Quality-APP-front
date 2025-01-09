@@ -6,6 +6,7 @@ import { RootState } from '../../../redux/store';
 import Verbatim from '../../../models/Verbatim';
 import { setSelectedRows } from '../../../redux/selectedRowsSlice';
 import { rerunClassification } from '../../../api/websockets/rerun';
+import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
 
 export default function RelaunchClassification() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
@@ -17,7 +18,11 @@ export default function RelaunchClassification() {
     dispatch(setSelectedRows([]));
 
     if (verbatims.length > 0) {
-      rerunClassification(verbatims);
+      rerunClassification(
+        verbatims,
+        () => dispatch(setSuccessToast({ open: true, message: 'Reclassification en cours...' })),
+        () => dispatch(setErrorToast({ open: true, message: 'Une erreur est survenue lors de la reclassification.' }))
+      );
     }
   };
 

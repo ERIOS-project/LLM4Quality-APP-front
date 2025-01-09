@@ -18,9 +18,6 @@ export const uploadCsv = (
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log('Message reçu:', data); // Imprimer les messages reçus
-    if (!data.success) {
-      onError();
-    }
   };
 
   socket.onerror = (error) => {

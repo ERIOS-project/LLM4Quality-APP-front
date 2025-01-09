@@ -1,6 +1,10 @@
 import Verbatim from '../../models/Verbatim';
 
-export const rerunClassification = (verbatims: Verbatim[]) => {
+export const rerunClassification = (
+  verbatims: Verbatim[],
+  onSuccess: () => void,
+  onError: () => void
+) => {
   const socket = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/ws`);
 
   socket.onopen = () => {
@@ -16,6 +20,7 @@ export const rerunClassification = (verbatims: Verbatim[]) => {
       })),
     };
     socket.send(JSON.stringify(message));
+    onSuccess(); // Appeler onSuccess lorsque la connexion WebSocket est ouverte avec succès
   };
 
   socket.onmessage = (event) => {
@@ -25,6 +30,7 @@ export const rerunClassification = (verbatims: Verbatim[]) => {
 
   socket.onerror = (error) => {
     console.error('WebSocket error:', error);
+    onError();
   };
 
   socket.onclose = () => {
