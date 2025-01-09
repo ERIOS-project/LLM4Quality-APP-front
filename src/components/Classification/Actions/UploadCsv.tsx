@@ -10,22 +10,21 @@ import {
   Select, 
   Typography, 
   Box, 
-  SelectChangeEvent,
-  Snackbar,
-  Alert
+  SelectChangeEvent
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'; // Icône de fichier
+import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
+import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
 
 const START_YEAR = 2000; // Année limite inférieure
 
 export default function UploadCsv() {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
-  const [toastOpen, setToastOpen] = useState(false);
-  const [successToastOpen, setSuccessToastOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,21 +51,16 @@ export default function UploadCsv() {
 
   const handleValidate = () => {
     if (!selectedYear) {
-      setToastOpen(true);
+      dispatch(setErrorToast({ open: true, message: 'Veuillez sélectionner une année avant de valider.' }));
     } else {
       const fileContent = "ctquooi?\nAlexis pitié\nGuette la dingz"; // Remplacez ceci par le contenu réel du fichier
-      uploadCsv(fileContent); // Ouvrir la connexion WebSocket
-      setSuccessToastOpen(true);
+      uploadCsv(
+        fileContent,
+        () => dispatch(setSuccessToast({ open: true, message: 'Fichier uploadé avec succès.' })),
+        () => dispatch(setErrorToast({ open: true, message: 'Une erreur est survenue lors de l\'upload du fichier.' }))
+      );
       handleClose();
     }
-  };
-
-  const handleToastClose = () => {
-    setToastOpen(false);
-  };
-
-  const handleSuccessToastClose = () => {
-    setSuccessToastOpen(false);
   };
 
   const currentYear = new Date().getFullYear();
@@ -138,18 +132,6 @@ export default function UploadCsv() {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleToastClose}>
-        <Alert onClose={handleToastClose} severity="warning" sx={{ width: '100%' }}>
-          Veuillez sélectionner une année avant de valider.
-        </Alert>
-      </Snackbar>
-
-      <Snackbar open={successToastOpen} autoHideDuration={6000} onClose={handleSuccessToastClose}>
-        <Alert onClose={handleSuccessToastClose} severity="success" sx={{ width: '100%' }}>
-          Fichier uploadé avec succès.
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

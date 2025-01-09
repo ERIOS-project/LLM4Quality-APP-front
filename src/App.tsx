@@ -8,6 +8,7 @@ import { store } from './redux/store';
 import MyAppBar from "./components/AppBar";
 import VerbatimClassification from "./pages/VerbatimClassification";
 import VerbatimDetails from "./pages/VerbatimDetails"; 
+import ToastManager from "./components/ToastManager";
 
 const LoginRedirect = () => {
   const { instance } = useMsal();
@@ -32,6 +33,7 @@ export default function App() {
               <Route path='/' element={<VerbatimClassification />} />
               <Route path='/details/:id' element={<VerbatimDetails />} />
             </Routes>
+            <ToastManager />
           </div>
         </Provider>
       </AuthenticatedTemplate>
