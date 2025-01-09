@@ -149,7 +149,10 @@ export default function VerbatimDatagrid() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(`/details/${params.row._id}`)}
+          onClick={() => {
+            eventEmitter.emit('stop');
+            navigate(`/details/${params.row._id}`);
+          }}
           sx={{
             textTransform: 'none',
             backgroundColor: '#2A3E53',
@@ -168,8 +171,8 @@ export default function VerbatimDatagrid() {
   if (isLoading) {
     return (
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid size={{ xs: 12 }}>
-          <Paper style={{ height: 600, width: '100%', borderRadius: 8, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }}>
+        <Grid size={{ xs: 12 ,sm:10, md:10 ,lg:10}}>
+          <Paper style={{ height: 550, width: '100%', borderRadius: 8, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }}>
             <Skeleton variant="rectangular" width="100%" height="100%" />
           </Paper>
         </Grid>

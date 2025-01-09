@@ -1,4 +1,5 @@
 import Verbatim from '../../models/Verbatim';
+import { eventEmitter } from './simpleEventEmitter';
 
 export const rerunClassification = (
   verbatims: Verbatim[],
@@ -26,6 +27,12 @@ export const rerunClassification = (
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log('Message reçu:', data); // Imprimer les messages reçus
+
+    if (data.status !== 'RERUN initiated') {
+    eventEmitter.emit('newVerbatim', data);
+    } else {
+    console.log('Message non valide reçu, ignoré :', data);
+    }
   };
 
   socket.onerror = (error) => {
