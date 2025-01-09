@@ -25,6 +25,7 @@ export default function UploadCsv() {
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
   const [toastOpen, setToastOpen] = useState(false);
+  const [successToastOpen, setSuccessToastOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,12 +56,17 @@ export default function UploadCsv() {
     } else {
       const fileContent = "ctquooi?\nAlexis pitié\nGuette la dingz"; // Remplacez ceci par le contenu réel du fichier
       uploadCsv(fileContent); // Ouvrir la connexion WebSocket
+      setSuccessToastOpen(true);
       handleClose();
     }
   };
 
   const handleToastClose = () => {
     setToastOpen(false);
+  };
+
+  const handleSuccessToastClose = () => {
+    setSuccessToastOpen(false);
   };
 
   const currentYear = new Date().getFullYear();
@@ -136,6 +142,12 @@ export default function UploadCsv() {
       <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleToastClose}>
         <Alert onClose={handleToastClose} severity="warning" sx={{ width: '100%' }}>
           Veuillez sélectionner une année avant de valider.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={successToastOpen} autoHideDuration={6000} onClose={handleSuccessToastClose}>
+        <Alert onClose={handleSuccessToastClose} severity="success" sx={{ width: '100%' }}>
+          Fichier uploadé avec succès.
         </Alert>
       </Snackbar>
     </div>

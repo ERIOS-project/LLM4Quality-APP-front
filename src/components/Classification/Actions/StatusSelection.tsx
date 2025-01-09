@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import VerbatimStatus from '../../../models/VerbatimStatus';
 import { setSelectedStatus } from '../../../redux/statusSlice';
 
-export default function StatusSelection() {
+const StatusSelection = memo(() => {
   const dispatch = useDispatch();
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
 
@@ -48,4 +48,6 @@ export default function StatusSelection() {
       </Select>
     </FormControl>
   );
-}
+});
+
+export default StatusSelection;

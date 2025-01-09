@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
@@ -7,7 +7,7 @@ import { setSelectedYear } from '../../../redux/yearSlice';
 const YEAR_LIMIT = 2000; // Année limite inférieure
 const CURRENT_YEAR = new Date().getFullYear(); // Année actuelle (2024)
 
-export default function YearSelection() {
+const YearSelection = memo(() => {
   const dispatch = useDispatch();
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
 
@@ -40,4 +40,6 @@ export default function YearSelection() {
       </Select>
     </FormControl>
   );
-}
+});
+
+export default YearSelection;

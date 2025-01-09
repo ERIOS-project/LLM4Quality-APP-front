@@ -31,9 +31,10 @@ export default function VerbatimDatagrid() {
 
   useEffect(() => {
     if (selectedRows.length === 0) {
-      setSelectedRowIds([]);
+      setSelectedRowIds([]); 
     }
-  }, [selectedRows]);
+  }, [selectedRows.length]); 
+  
 
   const handleSelectionChange = (selection: GridRowId[]) => {
     setSelectedRowIds(selection);
@@ -119,7 +120,6 @@ export default function VerbatimDatagrid() {
             checkboxSelection
             pageSizeOptions={[5]}
             getRowId={(row) => row._id}
-            rowSelectionModel={selectedRowIds}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
           />
         </Paper>
