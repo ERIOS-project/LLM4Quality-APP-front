@@ -3,7 +3,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -16,6 +15,8 @@ import Verbatim from '../../models/Verbatim';
 import { fetchVerbatims } from '../../api/verbatims';
 import { RootState } from '../../redux/store';
 import Skeleton from '@mui/material/Skeleton';
+import { useQuery, useQueryClient } from 'react-query';
+import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function VerbatimDatagrid() {
   const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
   const [page, setPage] = useState<number>(0);
+  const queryClient = useQueryClient();
 
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
     ['verbatims', selectedYear, selectedStatus],
@@ -37,6 +39,58 @@ export default function VerbatimDatagrid() {
       setSelectedRowIds([]); 
     }
   }, [selectedRows.length]); 
+  
+  useEffect(() => {
+    const handleNewVerbatim = (data: any | string) => {
+      // Vérifiez si `data` est une chaîne, et parsez-la si nécessaire
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch (error) {
+          console.error('Erreur lors du parsing des données WebSocket :', data, error);
+          return; // Ignorez les données invalides
+        }
+      }
+  
+  
+      // Assurez-vous que les données ont la bonne structure
+      const formattedData = {
+        _id: data.id || data._id, // Priorité à "id", mais utilisez "_id" comme fallback
+        content: data.content,
+        status: data.status,
+        result: data.result,
+        year: data.year,
+        created_at: data.created_at,
+      };
+  
+      console.log('Donnée formatée reçue :', formattedData);
+  
+      // Mise à jour de la liste des verbatims
+      queryClient.setQueryData<Verbatim[]>(['verbatims', selectedYear, selectedStatus], (oldVerbatims = []) => {
+        const existingIndex = oldVerbatims.findIndex((verbatim) => verbatim._id === formattedData._id);
+  
+        if (existingIndex !== -1) {
+          // Si le verbatim existe déjà, on le met à jour
+          const updatedVerbatims = [...oldVerbatims];
+          updatedVerbatims[existingIndex] = { ...updatedVerbatims[existingIndex], ...formattedData };
+          console.log('Verbatim mis à jour :', updatedVerbatims[existingIndex]);
+          return updatedVerbatims;
+        } else {
+          // Sinon, on ajoute un nouveau verbatim
+          console.log('Nouveau verbatim ajouté :', formattedData);
+          return [formattedData, ...oldVerbatims];
+        }
+      });
+    };
+  
+    // Abonnez-vous à l'événement "newVerbatim"
+    eventEmitter.on('newVerbatim', handleNewVerbatim);
+  
+    // Nettoyer l'abonnement
+    return () => {
+      eventEmitter.off('newVerbatim', handleNewVerbatim);
+    };
+  }, [queryClient, selectedYear, selectedStatus]);
   
 
   const handleSelectionChange = (selection: GridRowId[]) => {
@@ -152,7 +206,7 @@ export default function VerbatimDatagrid() {
               setPage(model.page);
             }}
             checkboxSelection
-            getRowId={(row) => row._id}
+            getRowId={(row) => row.id || row._id}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
           />
         </Paper>

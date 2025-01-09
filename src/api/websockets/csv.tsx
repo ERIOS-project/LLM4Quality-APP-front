@@ -1,3 +1,5 @@
+import { eventEmitter } from './simpleEventEmitter';
+
 export const uploadCsv = (
   fileContent: string,
   onSuccess: () => void,
@@ -17,8 +19,16 @@ export const uploadCsv = (
 
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log('Message reçu:', data); // Imprimer les messages reçus
+  
+    // Vérifiez si le message contient un Verbatim valide
+    if (data.status !== 'CSV processed') {
+      // Émettre un événement "newVerbatim" uniquement pour les messages valides
+      eventEmitter.emit('newVerbatim', data);
+    } else {
+      console.log('Message non valide reçu, ignoré :', data);
+    }
   };
+  
 
   socket.onerror = (error) => {
     console.error('WebSocket error:', error);
