@@ -17,6 +17,9 @@ import { RootState } from '../../redux/store';
 import Skeleton from '@mui/material/Skeleton';
 import { useQuery, useQueryClient } from 'react-query';
 import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
+import { frFR } from '@mui/x-data-grid/locales';
+
+
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -33,6 +36,9 @@ export default function VerbatimDatagrid() {
     ['verbatims', selectedYear, selectedStatus],
     () => fetchVerbatims({ year: selectedYear !== "" ? Number(selectedYear) : undefined, status: selectedStatus })
   );
+
+
+  
 
   useEffect(() => {
     if (selectedRows.length === 0) {
@@ -185,7 +191,7 @@ export default function VerbatimDatagrid() {
   }
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ backgroundColor: '#F4F4F4', padding: '20px' }}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ backgroundColor: '#F4F4F4'}}>
       <Grid size={{ xs: 12 ,sm:10, md:10 ,lg:10}}>
         <Paper
           style={{
@@ -194,10 +200,13 @@ export default function VerbatimDatagrid() {
             borderRadius: 8,
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
             backgroundColor: '#FFFFFF',
-            padding: '10px',
             margin: '0 auto', // This ensures the Paper container is centered
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
+          <div style={{ width: '98%', height: '95%' }}>
           <DataGrid
             rows={verbatims}
             columns={columns}
@@ -211,7 +220,9 @@ export default function VerbatimDatagrid() {
             checkboxSelection
             getRowId={(row) => row.id || row._id}
             onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
+            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
           />
+          </div>
         </Paper>
       </Grid>
     </Grid>
