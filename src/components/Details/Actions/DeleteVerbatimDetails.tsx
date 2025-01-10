@@ -33,7 +33,7 @@ export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Button
                 variant="contained"
                 startIcon={<DeleteIcon />}

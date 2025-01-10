@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { deleteVerbatims } from '../../../api/verbatims';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import { Box } from '@mui/material';
 
 export default function DeleteVerbatim() {
   const queryClient = useQueryClient();
@@ -28,7 +29,7 @@ export default function DeleteVerbatim() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+    <Box sx={{  justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <Button
         variant="contained"
         startIcon={<DeleteIcon />}
@@ -37,7 +38,7 @@ export default function DeleteVerbatim() {
           padding: '12px 24px', // Espacement ajusté pour un bouton plus net
           textTransform: 'none', // Garde la police naturelle
           borderRadius: '8px', // Coins arrondis pour un aspect moderne
-          backgroundColor: '#d32f2f', // Rouge sérieux pour signaler une suppression
+          backgroundColor: '#d32f2f', // Rouge pour signaler la suppression
           color: '#ffffff', // Texte blanc pour le contraste
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre douce pour profondeur
           '&:hover': {
@@ -47,11 +48,13 @@ export default function DeleteVerbatim() {
           '&:active': {
             backgroundColor: '#7A0004', // Rouge encore plus foncé au clic
           },
+          verticalAlign: 'middle', 
         }}
         onClick={handleDelete}
       >
         Supprimer
       </Button>
-    </div>
+
+    </Box>
   );
 }

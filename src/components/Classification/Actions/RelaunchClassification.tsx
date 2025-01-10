@@ -28,7 +28,7 @@ export default function RelaunchClassification() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+    <div style={{ justifyContent: 'center', marginTop: '20px' }}>
       <Button
         variant="contained"
         startIcon={<ReplayIcon />}
@@ -44,6 +44,7 @@ export default function RelaunchClassification() {
             backgroundColor: colors.hover_primary, // Teinte plus sombre au survol
             boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)', // Ombre plus marquée pour l'interaction
           },
+          verticalAlign: 'middle', 
         }}
         onClick={handleRelaunch}
       >

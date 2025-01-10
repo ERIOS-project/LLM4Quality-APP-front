@@ -4,7 +4,7 @@ import VerbatimDatagridActions from "../components/Classification/VerbatimDatagr
 export default function VerbatimClassification() {
     return (
         <div>
-            <div style={{ margin: '16px' }}>
+            <div style={{ margin: '16px', marginBottom:'32px' }}>
                 <VerbatimDatagridActions />
             </div>
             <VerbatimDatagrid />

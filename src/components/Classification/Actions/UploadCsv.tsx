@@ -98,7 +98,7 @@ export default function UploadCsv() {
   const yearOptions = Array.from({ length: currentYear - START_YEAR + 1 }, (_, i) => currentYear - i);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <input
         accept=".csv,.xlsx,.xls"
         style={{ display: 'none' }}
@@ -201,6 +201,6 @@ export default function UploadCsv() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }
