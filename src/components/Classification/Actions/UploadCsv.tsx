@@ -52,13 +52,41 @@ export default function UploadCsv() {
     if (!selectedYear) {
       dispatch(setErrorToast({ open: true, message: 'Veuillez sélectionner une année avant de valider.' }));
     } else {
-      const fileContent = "ctquooi?\nAlexis pitié\nGuette la dingz"; // Remplacez ceci par le contenu réel du fichier
-      uploadCsv(
-        fileContent,
-        () => dispatch(setSuccessToast({ open: true, message: 'Fichier uploadé avec succès.' })),
-        () => dispatch(setErrorToast({ open: true, message: 'Une erreur est survenue lors de l\'upload du fichier.' }))
-      );
-      handleClose();
+      const reader = new FileReader();
+      // Get the file content and upload it
+      const file = fileInputRef.current?.files?.[0];
+      if (!file) {
+        dispatch(
+          setErrorToast({
+            open: true,
+            message: "Une erreur est survenue lors de l'upload du fichier.",
+          })
+        );
+      } else {
+        reader.readAsText(file);
+        reader.onload = () => {
+          const fileContent = reader.result as string;
+          uploadCsv(
+            fileContent,
+            () =>
+              dispatch(
+                setSuccessToast({
+                  open: true,
+                  message: "Fichier uploadé avec succès.",
+                })
+              ),
+            () =>
+              dispatch(
+                setErrorToast({
+                  open: true,
+                  message:
+                    "Une erreur est survenue lors de l'upload du fichier.",
+                })
+              )
+          );
+          handleClose();
+        };
+      }
     }
   };
 

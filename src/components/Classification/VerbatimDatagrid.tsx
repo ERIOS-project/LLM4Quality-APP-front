@@ -25,8 +25,8 @@ export default function VerbatimDatagrid() {
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
   const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
-  const [pageSize, setPageSize] = useState<number>(5);
-  const [page, setPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
   const queryClient = useQueryClient();
 
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
@@ -149,8 +149,8 @@ export default function VerbatimDatagrid() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {
-            eventEmitter.emit('stop');
+          onClick={(event) => {
+            event.stopPropagation();
             navigate(`/details/${params.row._id}`);
           }}
           sx={{
