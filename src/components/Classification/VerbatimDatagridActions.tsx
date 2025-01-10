@@ -6,6 +6,7 @@ import StatusSelection from './Actions/StatusSelection';
 import RelaunchClassification from './Actions/RelaunchClassification';
 import DeleteVerbatim from './Actions/DeleteVerbatim';
 import UploadCsv from './Actions/UploadCsv';
+import CountVerbatim from './Actions/CountVerbatim';
 import { RootState } from '../../redux/store';
 
 export default function VerbatimDatagridActions() {
@@ -22,6 +23,12 @@ export default function VerbatimDatagridActions() {
       <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2 }} sx={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%' }}>
           <StatusSelection />
+        </div>
+      </Grid>
+
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%' }}>
+          <CountVerbatim />
         </div>
       </Grid>
 

@@ -15,6 +15,7 @@ function encodeToBase64(input : string) : string{
 
 export const uploadCsv = (
   fileContent: string,
+  year : number,
   onSuccess: () => void,
   onError: () => void
 ) => {
@@ -28,6 +29,7 @@ export const uploadCsv = (
     const message = {
       action: "CSV",
       file: fileBase64, // Send the base64 encoded string
+      year: year,
     };
     socket.send(JSON.stringify(message));
     onSuccess(); // Appeler onSuccess lorsque la connexion WebSocket est ouverte avec succès

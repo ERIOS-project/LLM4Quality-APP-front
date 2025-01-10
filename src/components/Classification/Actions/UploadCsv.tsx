@@ -70,6 +70,7 @@ export default function UploadCsv() {
           const fileContent = reader.result as string;
           uploadCsv(
             fileContent,
+            selectedYear,
             () =>
               dispatch(
                 setSuccessToast({
