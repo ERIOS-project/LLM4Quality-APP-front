@@ -9,6 +9,7 @@ import { green, red, orange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import { useEffect } from 'react';
+import colors from '../../utils/color';
 
 interface DetailsHeaderProps {
   date: string;
@@ -50,7 +51,7 @@ export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
           variant="h2"
           style={{
             fontSize: '4rem',  // Très grande taille de police pour le titre
-            color: '#2A3E53',
+            color: colors.primary,
             fontWeight: '600',
             textTransform: 'capitalize',
             textAlign: 'center',

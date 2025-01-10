@@ -5,6 +5,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { useDispatch } from 'react-redux';
 import { rerunClassification } from '../../../api/websockets/rerun';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import colors from '../../../utils/color';
 
 interface RelaunchVerbatimDetailsProps {
     verbatim: Verbatim;
@@ -30,9 +31,9 @@ export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDe
                     fontSize: '1.25rem',
                     padding: '12px 24px',
                     textTransform: 'none',
-                    backgroundColor: '#2A3E53', // Utilisation de la couleur de l'Appbar pour le bouton
+                    backgroundColor: colors.primary,
                     '&:hover': {
-                        backgroundColor: '#1c2a37', // Couleur plus foncée au survol
+                        backgroundColor: colors.hover_primary
                     },
                     color: '#fff', // Texte blanc pour une meilleure visibilité
                     borderRadius: '8px', // Coins arrondis pour un effet plus moderne

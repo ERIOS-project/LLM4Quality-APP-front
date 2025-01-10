@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteVerbatims } from '../../../api/verbatims';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import colors from '../../../utils/color';
 
 interface DeleteVerbatimDetailsProps {
     id: string;
@@ -40,9 +41,9 @@ export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps
                     fontSize: '1.25rem',
                     padding: '12px 24px',
                     textTransform: 'none',
-                    backgroundColor: '#2A3E53', // Couleur de l'AppBar
+                    backgroundColor: colors.primary,
                     '&:hover': {
-                        backgroundColor: '#1c2a37', // Teinte plus foncée au survol
+                        backgroundColor: colors.hover_primary
                     },
                     color: '#fff', // Texte blanc pour un bon contraste
                     borderRadius: '8px', // Coins arrondis pour un aspect moderne

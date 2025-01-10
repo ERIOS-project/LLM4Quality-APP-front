@@ -18,6 +18,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useQuery, useQueryClient } from 'react-query';
 import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
+import colors from '../../utils/color';
 
 
 
@@ -161,9 +162,9 @@ export default function VerbatimDatagrid() {
           }}
           sx={{
             textTransform: 'none',
-            backgroundColor: '#2A3E53',
+            backgroundColor: colors.primary,
             '&:hover': {
-              backgroundColor: '#1c2a37', // Darken on hover
+              backgroundColor: colors.hover_primary,
             },
             padding: '6px 12px',
           }}

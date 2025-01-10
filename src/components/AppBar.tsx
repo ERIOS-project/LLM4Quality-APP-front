@@ -4,11 +4,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { SignOutButton } from './SignOutButton';
+import colors from '../utils/color';
 
 export default function MyAppBar() {
     return (
         <AppBar position="static" elevation={4} sx={{
-            bgcolor: '#2A3E53', // Bleu-gris professionnel, qui évoque la confiance
+            bgcolor: colors.primary, // Bleu-gris professionnel, qui évoque la confiance
             color: 'white',
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Ombre légère pour de la profondeur
         }}>

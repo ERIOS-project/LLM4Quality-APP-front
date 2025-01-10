@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ClassificationResult from '../../models/ClassificationResult';
+import colors from '../../utils/color';
 
 interface DetailsTablesProps {
   result?: ClassificationResult;
@@ -57,7 +58,7 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
               gutterBottom
               fontWeight="bold"
               style={{
-                color: '#2A3E53', // Couleur de l'appbar pour rester cohérent avec le thème
+                color: colors.primary, // Couleur principale de l'application
                 textTransform: 'uppercase', // Mettre en majuscules pour un ton plus formel
               }}
             >
@@ -66,7 +67,7 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
             <TableContainer component={Paper} style={{ borderRadius: '8px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', backgroundColor: '#FFFFFF' }}>
               <Table>
                 <TableHead>
-                  <TableRow style={{ backgroundColor: '#2A3E53', color: '#FFFFFF' }}>
+                  <TableRow style={{ backgroundColor: colors.primary, color: '#FFFFFF' }}>
                     <TableCell align="center" style={{ width: tableColumnWidths.name, color: '#FFFFFF' }}><strong>Critères</strong></TableCell>
                     <TableCell align="center" style={{ width: tableColumnWidths.positive, color: '#FFFFFF' }}><strong>Positif</strong></TableCell>
                     <TableCell align="center" style={{ width: tableColumnWidths.negative, color: '#FFFFFF' }}><strong>Négatif</strong></TableCell>

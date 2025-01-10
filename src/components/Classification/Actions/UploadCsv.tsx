@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import colors from '../../../utils/color';
 
 const START_YEAR = 2000; // Année limite inférieure
 
@@ -117,11 +118,11 @@ export default function UploadCsv() {
             padding: '12px 24px',
             textTransform: 'none',
             borderRadius: '8px',
-            backgroundColor: '#2A3E53', // Correspond à l'AppBar
+            backgroundColor: colors.primary,
             color: '#ffffff',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             '&:hover': {
-              backgroundColor: '#1f2c3a', // Gris foncé au survol
+              backgroundColor: colors.hover_primary,
               boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
             },
           }}

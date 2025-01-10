@@ -7,7 +7,8 @@ import Verbatim from '../../../models/Verbatim';
 import { setSelectedRows } from '../../../redux/selectedRowsSlice';
 import { rerunClassification } from '../../../api/websockets/rerun';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
-
+import colors
+ from '../../../utils/color';
 export default function RelaunchClassification() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
   const dispatch = useDispatch();
@@ -37,10 +38,10 @@ export default function RelaunchClassification() {
           textTransform: 'none',
           borderRadius: '8px',
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-          backgroundColor: '#2A3E53', // Couleur sérieuse correspondant à l'appbar
+          backgroundColor: colors.primary,
           color: '#ffffff', // Texte en blanc pour contraster
           '&:hover': {
-            backgroundColor: '#1f2c3a', // Teinte plus sombre au survol
+            backgroundColor: colors.hover_primary, // Teinte plus sombre au survol
             boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)', // Ombre plus marquée pour l'interaction
           },
         }}
