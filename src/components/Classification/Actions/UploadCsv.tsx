@@ -10,10 +10,12 @@ import {
   Select, 
   Typography, 
   Box, 
-  SelectChangeEvent
+  SelectChangeEvent,
+  IconButton
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
@@ -128,7 +130,21 @@ export default function UploadCsv() {
       </label>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Fichier Uploadé</DialogTitle>
+        <DialogTitle>
+          Fichier sélectionné
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
             <InsertDriveFileIcon color="primary" sx={{ fontSize: 60 }} />
