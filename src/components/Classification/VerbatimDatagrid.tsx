@@ -109,7 +109,7 @@ export default function VerbatimDatagrid() {
   const columns: GridColDef[] = [
     {
       field: 'created_at',
-      headerName: 'Date de Création',
+      headerName: 'Date de création',
       width: 200,
       flex: 1,
       valueGetter: (value,row) => {

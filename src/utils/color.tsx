@@ -1,6 +1,6 @@
 const colors = {
-    primary: 'rgb(241, 157, 78)', // Couleur principale de votre application en RGB
-    hover_primary: 'rgb(221, 137, 58)', 
+    primary: 'rgb(48, 111, 180)', // Couleur principale de votre application en RGB
+    hover_primary: 'rgb(38, 91, 148)', 
   };
   
   export default colors;

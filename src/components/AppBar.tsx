@@ -15,6 +15,8 @@ export default function MyAppBar() {
         }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {/* Logo de l'application */}
+                    <img src="/src/chu_logo.png" alt="CHU Logo" style={{ height: '40px', marginRight: '16px' }} />
                     {/* Nom de l'application avec une police élégante et épurée */}
                     <Typography 
                         variant="h5" 
