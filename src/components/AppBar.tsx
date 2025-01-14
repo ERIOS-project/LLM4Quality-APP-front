@@ -8,31 +8,52 @@ import colors from '../utils/color';
 
 export default function MyAppBar() {
     return (
-        <AppBar position="static" elevation={4} sx={{
-            bgcolor: colors.primary, // Bleu-gris professionnel, qui évoque la confiance
-            color: 'white',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Ombre légère pour de la profondeur
-        }}>
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px' }}>
+        <AppBar
+            position="static"
+            elevation={4}
+            sx={{
+                bgcolor: colors.primary, // Couleur principale de l'application
+                color: 'white',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Ombre légère
+            }}
+        >
+            <Toolbar
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '0 24px',
+                }}
+            >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {/* Logo de l'application */}
-                    <img src="/src/chu_logo.png" alt="CHU Logo" style={{ height: '40px', marginRight: '16px' }} />
-                    {/* Nom de l'application avec une police élégante et épurée */}
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
-                            fontWeight: 'bold', 
-                            fontFamily: '"Montserrat", sans-serif', // Police moderne et professionnelle
-                            fontSize: '1.6rem', 
-                            letterSpacing: '0.8px', // Espacement légèrement plus large pour l'aération
-                            textTransform: 'uppercase', // Texte en majuscules pour plus de professionnalisme
+                    {/* Section à gauche avec fond blanc */}
+    
+                        {/* Logo de l'application */}
+                        <img
+                            src="/src/chu_logo.png"
+                            alt="CHU Logo"
+                            style={{
+                                height: '80px',
+                                marginRight: '16px',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' 
+                            }}
+                        />
+                   
+                    {/* Nom de l'application */}
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            fontWeight: 'bold',
+                            fontFamily: '"Montserrat", sans-serif',
+                            fontSize: '1.6rem',
+                            letterSpacing: '0.8px',
+                            textTransform: 'uppercase',
                         }}
                     >
                         LLM4Quality
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {/* Bouton de déconnexion avec un léger espacement */}
+                    {/* Bouton de déconnexion */}
                     <SignOutButton />
                 </Box>
             </Toolbar>
