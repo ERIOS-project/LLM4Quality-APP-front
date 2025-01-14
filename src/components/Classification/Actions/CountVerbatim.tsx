@@ -21,7 +21,7 @@ const getStatusColor = (key: string, isHover: boolean) => {
     case "run":
       return isHover ? "#ff9800" : "orange";
     case "error":
-      return isHover ? "#d32f2f" : "red";
+      return isHover ? red[600] : red[500]; ;
     default:
       return isHover ? "#9e9e9e" : "grey";
   }

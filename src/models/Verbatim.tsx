@@ -6,6 +6,6 @@ export default interface Verbatim {
     content : string;
     status : VerbatimStatus;
     year : number;
-    created_at : Date;
+    created_at : string;
     result? : ClassificationResult;
 }

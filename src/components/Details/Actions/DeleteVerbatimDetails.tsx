@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteVerbatims } from '../../../api/verbatims';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
-import colors from '../../../utils/color';
+import colors from '../../../utils/color'; // Import colors for consistent theme
 
 interface DeleteVerbatimDetailsProps {
     id: string;
@@ -33,27 +33,21 @@ export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Button
-                variant="contained"
-                startIcon={<DeleteIcon />}
-                sx={{
-                    fontSize: '1.25rem',
-                    padding: '12px 24px',
-                    textTransform: 'none',
-                    backgroundColor: colors.primary,
-                    '&:hover': {
-                        backgroundColor: colors.hover_primary
-                    },
-                    color: '#fff', // Texte blanc pour un bon contraste
-                    borderRadius: '8px', // Coins arrondis pour un aspect moderne
-                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', // Ombre douce pour l'esthétique
-                    minWidth: '150px', // Largeur minimale pour un bouton plus large et facile à cliquer
-                }}
-                onClick={handleDelete}
-            >
-                Supprimer
-            </Button>
-        </div>
+        <Button
+            variant="contained"
+            startIcon={<DeleteIcon />}
+            sx={{
+                backgroundColor: 'white',
+                color: 'rgb(46,61,81)', // Texte noir
+                fontSize: '0.875rem',
+                textTransform: 'none',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+            }}
+            onClick={handleDelete}
+        >
+            Supprimer
+        </Button>
     );
 }

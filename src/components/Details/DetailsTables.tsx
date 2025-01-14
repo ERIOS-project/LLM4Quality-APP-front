@@ -60,6 +60,7 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
               style={{
                 color: colors.primary, // Couleur principale de l'application
                 textTransform: 'uppercase', // Mettre en majuscules pour un ton plus formel
+                fontSize: '1.2rem', // Taille de police
               }}
             >
               {table.title}
@@ -68,17 +69,17 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
               <Table>
                 <TableHead>
                   <TableRow style={{ backgroundColor: colors.primary, color: '#FFFFFF' }}>
-                    <TableCell align="center" style={{ width: tableColumnWidths.name, color: '#FFFFFF' }}><strong>Critères</strong></TableCell>
-                    <TableCell align="center" style={{ width: tableColumnWidths.positive, color: '#FFFFFF' }}><strong>Positif</strong></TableCell>
-                    <TableCell align="center" style={{ width: tableColumnWidths.negative, color: '#FFFFFF' }}><strong>Négatif</strong></TableCell>
+                    <TableCell align="center" style={{ width: tableColumnWidths.name, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Critères</strong></TableCell>
+                    <TableCell align="center" style={{ width: tableColumnWidths.positive, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Positif</strong></TableCell>
+                    <TableCell align="center" style={{ width: tableColumnWidths.negative, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Négatif</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {table.data.map((row, idx) => (
                     <TableRow key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#F9F9F9' : '#FFFFFF' }}>
-                      <TableCell style={{ width: tableColumnWidths.name }}>{row.name}</TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.positive }}>{row.positive}</TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.negative }}>{row.negative}</TableCell>
+                      <TableCell style={{ width: tableColumnWidths.name, fontSize: '1.2rem' }}>{row.name}</TableCell>
+                      <TableCell align="center" style={{ width: tableColumnWidths.positive, fontSize: '1.2rem' }}>{row.positive}</TableCell>
+                      <TableCell align="center" style={{ width: tableColumnWidths.negative, fontSize: '1.2rem' }}>{row.negative}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

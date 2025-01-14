@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, IconButton } from '@mui/material';
+import { Typography, IconButton, Tooltip, Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -8,61 +8,116 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { green, red, orange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import VerbatimStatus from '../../models/VerbatimStatus';
-import { useEffect } from 'react';
+import RelaunchVerbatimDetails from './Actions/RelaunchVerbatimDetails';
+import DeleteVerbatimDetails from './Actions/DeleteVerbatimDetails';
+import Verbatim from '../../models/Verbatim';
 import colors from '../../utils/color';
 
 interface DetailsHeaderProps {
   date: string;
   status: VerbatimStatus;
+  verbatim: Verbatim;
 }
 
-export default function DetailsHeader({ date, status }: DetailsHeaderProps) {
+export default function DetailsHeader({ date, status, verbatim }: DetailsHeaderProps) {
   const navigate = useNavigate();
 
   const renderStatusIcon = (status: VerbatimStatus) => {
     switch (status) {
       case VerbatimStatus.Success:
-        return <CheckCircleIcon style={{ color: green[500], fontSize: '5rem' }} />;
+        return (
+          <CheckCircleIcon
+            sx={{
+              fontSize: '2rem',
+              color: green[500],
+              backgroundColor: 'white',
+              borderRadius: '50%',
+              padding: '4px',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            }}
+          />
+        );
       case VerbatimStatus.Error:
-        return <CancelIcon style={{ color: red[500], fontSize: '5rem' }} />;
+        return (
+          <CancelIcon
+            sx={{
+              fontSize: '2rem',
+              color: red[500],
+              backgroundColor: 'white',
+              borderRadius: '50%',
+              padding: '4px',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            }}
+          />
+        );
       case VerbatimStatus.Run:
-        return <HourglassTopIcon style={{ color: orange[500], fontSize: '5rem' }} />;
+        return (
+          <HourglassTopIcon
+            sx={{
+              fontSize: '2rem',
+              color: orange[500],
+              backgroundColor: 'white',
+              borderRadius: '50%',
+              padding: '4px',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            }}
+          />
+        );
       default:
         return null;
     }
   };
 
-  useEffect(() => {
-
-  }, [status]);
-
   return (
-    <Grid container spacing={2} alignItems="center" style={{ backgroundColor: '#F4F4F4', padding: '20px', borderRadius: '8px' }}>
-      {/* Flèche de retour à gauche */}
-      <Grid size={{xs:2}} container justifyContent="flex-start">
-        <IconButton onClick={() => navigate('/')} style={{ color: '#2A3E53' }}>
-          <ArrowBackIcon style={{ fontSize: '2.5rem' }} />
-        </IconButton>
-      </Grid>
+    <Box
+      sx={{
+        marginBottom: '20px',
+        padding: '15px',
+        background: colors.secondary,
+       // background: `linear-gradient(0deg, rgb(43, 85, 143), ${colors.primary})`,
+        color: 'white',
+      }}
+    >
+      <Grid container spacing={2} alignItems="center">
+        {/* Bouton de retour */}
+        <Grid size={{xs:2}} container justifyContent="flex-start">
+          <Tooltip title="Retour" arrow>
+            <IconButton
+              onClick={() => navigate('/')}
+              sx={{
+                color: 'white',
+              }}
+              aria-label="Retour"
+            >
+              <ArrowBackIcon sx={{ fontSize: '1.8rem' }} />
+            </IconButton>
+          </Tooltip>
+        </Grid>
 
-      {/* Contenu central (date et statut) */}
-      <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
-        <Typography
-          variant="h2"
-          style={{
-            fontSize: '4rem',  // Très grande taille de police pour le titre
-            color: colors.primary,
-            fontWeight: '600',
-            textTransform: 'capitalize',
-            textAlign: 'center',
-          }}
-        >
-          {date.substring(0, 10)}
-        </Typography>
-        <div style={{ marginLeft: '15px' }}>
-          {renderStatusIcon(status)}
-        </div>
+        {/* Contenu central */}
+        <Grid size={{xs:8}} container justifyContent="center" alignItems="center">
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: '1.5rem',
+              fontWeight: '600',
+              textAlign: 'center',
+              marginRight: '10px',
+            }}
+          >
+            {date.slice(0, 10)}
+          </Typography>
+          <Box>{renderStatusIcon(status)}</Box>
+        </Grid>
+
+        {/* Boutons d'action */}
+        <Grid size={{xs:2}} container justifyContent="flex-end" alignItems="center">
+          <Box sx={{ display: 'flex', gap: '10px' }}>
+            <RelaunchVerbatimDetails verbatim={verbatim} />
+            <DeleteVerbatimDetails id={verbatim._id} />
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }
