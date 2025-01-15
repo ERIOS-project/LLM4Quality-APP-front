@@ -216,6 +216,19 @@ export default function VerbatimDatagrid() {
                 setPage(model.page);
               }}
               checkboxSelection
+              slotProps={{
+                pagination: {
+                  SelectProps: {
+                    MenuProps: {
+                      PaperProps: {
+                        sx: {
+                          color: theme.palette.text.secondary, // Texte noir en mode clair
+                        },
+                      },
+                    },
+                  },
+                },
+              }}
               getRowId={(row) => row.id || row._id}
               onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
               localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
@@ -235,6 +248,9 @@ export default function VerbatimDatagrid() {
                 '& .MuiTablePagination-selectIcon': {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
+                '& .MuiDataGrid-selectedRowCountt':{
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                }
               }}
             />
           </div>
