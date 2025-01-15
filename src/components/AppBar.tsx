@@ -4,6 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Box, useTheme } from '@mui/material';
 import { SignOutButton } from './SignOutButton';
+import DarkModeToggle from './DarkModeToggle'; // Importation du composant DarkModeToggle
 
 export default function MyAppBar() {
     const theme = useTheme(); // Accéder au thème dynamique
@@ -52,6 +53,8 @@ export default function MyAppBar() {
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {/* Composant DarkModeToggle */}
+                    <DarkModeToggle />
                     {/* Bouton de déconnexion */}
                     <SignOutButton />
                 </Box>

@@ -149,6 +149,7 @@ export default function VerbatimDatagrid() {
           sx={{
             textTransform: 'none',
             padding: '6px 12px',
+            color: theme.palette.text.primary, // Texte noir en mode clair
           }}
         >
           Détails
@@ -218,6 +219,14 @@ export default function VerbatimDatagrid() {
               getRowId={(row) => row.id || row._id}
               onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
               localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+              sx={{
+                '& .MuiDataGrid-cell': {
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                },
+                '& .MuiDataGrid-columnHeaderTitle': {
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                },
+              }}
             />
           </div>
         </Paper>

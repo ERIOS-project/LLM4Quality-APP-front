@@ -1,6 +1,6 @@
-// themeContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Cookies from 'js-cookie'; // Importation de js-cookie
 
 // Créer le contexte du thème
 const ThemeContext = createContext({
@@ -19,10 +19,17 @@ declare module "@mui/material/styles" {
   }
 }
 
-import { ReactNode } from 'react';
-
 export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  // Lire la préférence du mode sombre depuis les cookies
+  const [darkMode, setDarkMode] = useState(() => {
+    const cookieValue = Cookies.get('darkMode');
+    return cookieValue ? cookieValue === 'true' : false;
+  });
+
+  // Mettre à jour les cookies lorsque le mode sombre change
+  useEffect(() => {
+    Cookies.set('darkMode', darkMode.toString(), { expires: 365 });
+  }, [darkMode]);
 
   // Créer un thème dynamique
   const theme = createTheme({
@@ -61,10 +68,28 @@ export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
         paper: darkMode ? '#1d1d1d' : '#ffffff', // Fond des cartes ou surfaces
       },
       text: {
-        primary: darkMode ? '#ffffff' : '#000000', // Couleur du texte principale
-        secondary: darkMode ? '#bbbbbb' : '#555555',
+        primary: darkMode ? '#ffffff' : '#ffffff', // Couleur du texte principale
+        secondary: darkMode ? 'rgb(255,255,255)' : 'rgb(0,0,0)',
       },
     },
+    components: {
+      MuiSwitch: {
+        styleOverrides: {
+          switchBase: {
+            color: "#ffffff", // Couleur du switch en mode non coché
+            "&.Mui-checked": {
+              color: "#ffffff" // Couleur du switch en mode coché
+            }
+          },
+          track: {
+            backgroundColor: "#ffffff", // Couleur de la piste en mode non coché
+            "&.Mui-checked": {
+              backgroundColor: "#ffffff" // Couleur de la piste en mode coché
+            }
+          }
+        }
+      }
+    }
   });
 
   return (

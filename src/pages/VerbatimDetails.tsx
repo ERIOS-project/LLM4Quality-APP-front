@@ -16,7 +16,7 @@ export default function VerbatimDetails() {
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>('verbatims', () => fetchVerbatims());
 
   // Recherche du verbatim correspondant dans les données récupérées
-  const verbatim = verbatims.find((v:any) => v._id === id);
+  const verbatim = verbatims.find((v: any) => v._id === id);
 
   // Gestion du cas où le verbatim n'est pas trouvé
   if (isLoading) {
@@ -33,7 +33,7 @@ export default function VerbatimDetails() {
 
   if (!verbatim) {
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
         <Grid size={{xs:12}}>
           <Typography variant="h1">Verbatim Not Found</Typography>
         </Grid>
@@ -47,16 +47,16 @@ export default function VerbatimDetails() {
   }
 
   return (
-    <div>
-      <div style={{ marginBottom: '16px' }}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ height: '100%' }}>
+      <Grid size={{xs:12}} style={{ marginBottom: '16px' }}>
         <DetailsHeader date={verbatim.created_at} status={verbatim.status} verbatim={verbatim} />
-      </div>
-      <div style={{ marginBottom: '16px' }}>
+      </Grid>
+      <Grid size={{xs:12}} style={{ marginBottom: '16px' }}>
         <DetailsContent content={verbatim.content} />
-      </div>
-      <div style={{ marginBottom: '16px' }}>
+      </Grid>
+      <Grid size={{xs:12}} style={{ marginBottom: '16px' }}>
         <DetailsTables result={verbatim.result} />
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 }

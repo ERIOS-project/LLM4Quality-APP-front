@@ -33,7 +33,7 @@ const StatusSelection = memo(() => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
-        <InputLabel id="status-select-label" sx={{ color: darkMode ? '#fff' : '#2A3E53' }}>Statut</InputLabel>
+        <InputLabel id="status-select-label" sx={{ color: darkMode ? '#fff' : '#000' }}>Statut</InputLabel>
         <Select
           labelId="status-select-label"
           id="status-select"
@@ -44,6 +44,7 @@ const StatusSelection = memo(() => {
             backgroundColor: darkMode ? '#333' : '#fff', // Couleur de fond dynamique en fonction du mode
             borderRadius: '6px',
             borderColor: darkMode ? '#444' : '#2A3E53', // Bordure ajustée selon le mode
+            color: darkMode ? '#fff' : '#000', // Couleur du texte dynamique
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: darkMode ? '#444' : '#2A3E53', // Bordure par défaut
@@ -55,13 +56,16 @@ const StatusSelection = memo(() => {
                 borderColor: darkMode ? '#666' : '#2A3E53', // Bordure quand le champ est en focus
               },
             },
+            '& .MuiMenuItem-root': {
+              color: darkMode ? '#fff' : '#000', // Couleur du texte des éléments du menu
+            },
           }}
         >
-          <MenuItem value="">
+          <MenuItem value="" sx={{ color: darkMode ? '#fff' : '#000' }}>
             {getStatusLabel('')}
           </MenuItem>
           {Object.values(VerbatimStatus).map((status) => (
-            <MenuItem key={status} value={status}>
+            <MenuItem key={status} value={status} sx={{ color: darkMode ? '#fff' : '#000' }}>
               {getStatusLabel(status)}
             </MenuItem>
           ))}

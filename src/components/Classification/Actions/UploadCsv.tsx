@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
 import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation du useThemeContext
+import { useTheme } from '@mui/material/styles'; // Import du hook useTheme pour accéder au thème
 
 const START_YEAR = 2000; // Année limite inférieure
 
@@ -32,6 +33,7 @@ export default function UploadCsv() {
 
   // Utilisation du ThemeContext
   const { darkMode } = useThemeContext();
+  const theme = useTheme(); // Utilisation du hook useTheme
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -135,7 +137,7 @@ export default function UploadCsv() {
       </label>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
+        <DialogTitle sx={{ color: theme.palette.text.secondary }}>
           Fichier sélectionné
           <IconButton
             aria-label="close"
@@ -144,7 +146,7 @@ export default function UploadCsv() {
               position: 'absolute',
               right: 8,
               top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: theme.palette.text.secondary,
             }}
           >
             <CloseIcon />
@@ -154,18 +156,18 @@ export default function UploadCsv() {
           <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
             <InsertDriveFileIcon color="primary" sx={{ fontSize: 60 }} />
             {fileInfo && (
-              <Typography variant="body1" sx={{ mt: 1 }}>
+              <Typography variant="body1" sx={{ mt: 1, color: theme.palette.text.secondary }}>
                 <strong>Nom :</strong> {fileInfo.name}
               </Typography>
             )}
             {fileInfo && (
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
                 <strong>Taille :</strong> {(fileInfo.size / 1024).toFixed(2)} Ko
               </Typography>
             )}
           </Box>
 
-          <DialogContentText sx={{ mb: 2 }}>
+          <DialogContentText sx={{ mb: 2, color: theme.palette.text.secondary }}>
             Veuillez choisir une année associée à ce fichier :
           </DialogContentText>
 
@@ -188,11 +190,11 @@ export default function UploadCsv() {
               },
             }}
           >
-            <MenuItem value="" disabled>
-              Sélectionnez une année
+            <MenuItem value="" disabled sx={{ color: theme.palette.text.secondary }}>
+              <em>Sélectionnez une année</em>
             </MenuItem>
             {yearOptions.map((year) => (
-              <MenuItem key={year} value={year}>
+              <MenuItem key={year} value={year} sx={{ color: theme.palette.text.secondary }}>
                 {year}
               </MenuItem>
             ))}

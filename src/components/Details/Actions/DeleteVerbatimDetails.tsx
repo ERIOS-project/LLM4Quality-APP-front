@@ -38,7 +38,7 @@ export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps
             startIcon={<DeleteIcon />}
             sx={{
                 backgroundColor: theme.palette.background.paper, // Fond basé sur le thème
-                color: theme.palette.text.primary, // Texte principal basé sur le thème
+                color: theme.palette.text.secondary, // Texte principal basé sur le thème
                 fontSize: '0.875rem',
                 textTransform: 'none',
                 padding: '6px 12px',

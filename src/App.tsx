@@ -32,13 +32,11 @@ export default function App() {
       sx={{
         minHeight: '100vh', // Prendre toute la hauteur de la page
         bgcolor: theme.palette.background.default, // Utiliser la couleur de fond du thème
-        display: 'flex',
-        flexDirection: 'column',
+  
       }}
     >
       <AuthenticatedTemplate>
         <MyAppBar />
-        <DarkModeToggle />
         <Provider store={store}>
           <Box className="body" sx={{ flex: 1 }}> {/* Flex: 1 pour remplir l'espace restant */}
             <Routes>

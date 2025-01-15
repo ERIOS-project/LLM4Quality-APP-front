@@ -69,7 +69,7 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
               gutterBottom
               fontWeight="bold"
               style={{
-                color: theme.palette.text.primary, // Texte principal adapté au thème
+                color: theme.palette.primary.main, // Texte principal adapté au thème
                 textTransform: 'uppercase',
                 fontSize: '1.2rem',
               }}
@@ -127,11 +127,11 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
                         backgroundColor: idx % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper, // Alternance adaptée au thème
                       }}
                     >
-                      <TableCell style={{ width: tableColumnWidths.name, fontSize: '1.2rem' }}>{row.name}</TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.positive, fontSize: '1.2rem' }}>
+                      <TableCell style={{ width: tableColumnWidths.name, fontSize: '1.2rem', color: theme.palette.text.secondary }}>{row.name}</TableCell>
+                      <TableCell align="center" style={{ width: tableColumnWidths.positive, fontSize: '1.2rem', color: theme.palette.text.secondary }}>
                         {row.positive}
                       </TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.negative, fontSize: '1.2rem' }}>
+                      <TableCell align="center" style={{ width: tableColumnWidths.negative, fontSize: '1.2rem', color: theme.palette.text.secondary }}>
                         {row.negative}
                       </TableCell>
                     </TableRow>

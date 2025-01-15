@@ -27,7 +27,7 @@ const YearSelection = memo(() => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
-        <InputLabel id="year-select-label" sx={{ color: darkMode ? '#fff' : '#2A3E53' }}>Année</InputLabel>
+        <InputLabel id="year-select-label" sx={{ color: darkMode ? '#fff' : '#000' }}>Année</InputLabel>
         <Select
           labelId="year-select-label"
           id="year-select"
@@ -38,6 +38,7 @@ const YearSelection = memo(() => {
             backgroundColor: darkMode ? '#333' : '#fff', // Fond dynamique
             borderRadius: '6px',
             borderColor: darkMode ? '#444' : '#2A3E53', // Bordure dynamique
+            color: darkMode ? '#fff' : '#000', // Couleur du texte dynamique
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: darkMode ? '#444' : '#2A3E53', // Bordure par défaut
@@ -49,13 +50,16 @@ const YearSelection = memo(() => {
                 borderColor: darkMode ? '#888' : '#2A3E53', // Bordure au focus
               },
             },
+            '& .MuiMenuItem-root': {
+              color: darkMode ? '#fff' : '#000', // Couleur du texte des éléments du menu
+            },
           }}
         >
-          <MenuItem value="">
+          <MenuItem value="" sx={{ color: darkMode ? '#fff' : '#000' }}>
             Toutes les années
           </MenuItem>
           {years.map((year) => (
-            <MenuItem key={year} value={year}>
+            <MenuItem key={year} value={year} sx={{ color: darkMode ? '#fff' : '#000' }}>
               {year}
             </MenuItem>
           ))}

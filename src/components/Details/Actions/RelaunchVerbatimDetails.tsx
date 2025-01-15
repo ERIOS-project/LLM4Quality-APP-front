@@ -29,7 +29,7 @@ export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDe
             startIcon={<ReplayIcon />}
             sx={{
                 backgroundColor: theme.palette.background.paper, // Fond dynamique en fonction du thème
-                color: theme.palette.text.primary, // Couleur du texte adaptée au thème
+                color: theme.palette.text.secondary, // Couleur du texte adaptée au thème
                 fontSize: '0.875rem',
                 textTransform: 'none',
                 padding: '6px 12px',

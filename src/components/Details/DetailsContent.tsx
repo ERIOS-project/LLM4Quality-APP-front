@@ -16,7 +16,7 @@ export default function DetailsContent({ content }: DetailsContentProps) {
           variant="h6"
           style={{
             textAlign: 'left', // Aligné à gauche
-            color: theme.palette.text.primary, // Couleur principale du texte selon le thème
+            color: theme.palette.primary.main, // Couleur principale du texte selon le thème
             fontWeight: 'bold', // Plus gras pour souligner l'importance
             textTransform: 'uppercase', // Majuscules pour un ton formel et professionnel
             marginBottom: '10px', // Espacement en bas pour séparer du contenu
