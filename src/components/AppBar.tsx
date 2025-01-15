@@ -24,17 +24,17 @@ export default function MyAppBar() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     padding: '0 24px',
+                    height: '80px', // Hauteur de la barre d'application
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     {/* Logo de l'application */}
                     <img
                         src="/src/chu_logo.png"
                         alt="CHU Logo"
                         style={{
-                            height: '80px',
+                            height: '150%', // Prendre toute la hauteur de la barre d'application
                             marginRight: '16px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                         }}
                     />
 

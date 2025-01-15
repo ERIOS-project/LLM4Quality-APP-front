@@ -34,6 +34,22 @@ const YearSelection = memo(() => {
           value={selectedYear}
           onChange={handleChange}
           label="Année"
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 200, // Limite la hauteur du menu
+                overflowY: 'auto', // Ajoute un défilement vertical si nécessaire
+              },
+            },
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left',
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'left',
+            },
+          }}
           sx={{
             backgroundColor: darkMode ? '#333' : '#fff', // Fond dynamique
             borderRadius: '6px',
