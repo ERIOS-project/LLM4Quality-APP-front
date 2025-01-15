@@ -226,6 +226,15 @@ export default function VerbatimDatagrid() {
                 '& .MuiDataGrid-columnHeaderTitle': {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
+                '& .MuiTablePagination-root': {
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                },
+                '& .MuiTablePagination-caption': {
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                },
+                '& .MuiTablePagination-selectIcon': {
+                  color: theme.palette.text.secondary, // Texte noir en mode clair
+                },
               }}
             />
           </div>
