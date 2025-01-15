@@ -1,33 +1,54 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppDispatch } from './store';
+import { v4 as uuidv4 } from 'uuid';
+
+interface Toast {
+  id: string;
+  message: string;
+  severity: 'success' | 'error';
+}
 
 interface ToastState {
-  successToastOpen: boolean;
-  errorToastOpen: boolean;
-  successMessage: string;
-  errorMessage: string;
+  toasts: Toast[];
 }
 
 const initialState: ToastState = {
-  successToastOpen: false,
-  errorToastOpen: false,
-  successMessage: '',
-  errorMessage: '',
+  toasts: [],
 };
 
 const toastSlice = createSlice({
   name: 'toast',
   initialState,
   reducers: {
-    setSuccessToast(state, action: PayloadAction<{ open: boolean; message: string }>) {
-      state.successToastOpen = action.payload.open;
-      state.successMessage = action.payload.message;
+    addToast: {
+      reducer: (state, action: PayloadAction<Toast>) => {
+        state.toasts.push(action.payload);
+      },
+      prepare: (message: string, severity: 'success' | 'error') => ({
+        payload: { id: uuidv4(), message, severity },
+      }),
     },
-    setErrorToast(state, action: PayloadAction<{ open: boolean; message: string }>) {
-      state.errorToastOpen = action.payload.open;
-      state.errorMessage = action.payload.message;
+    removeToast: (state, action: PayloadAction<string>) => {
+      state.toasts = state.toasts.filter(toast => toast.id !== action.payload);
     },
   },
 });
 
-export const { setSuccessToast, setErrorToast } = toastSlice.actions;
+export const { addToast, removeToast } = toastSlice.actions;
+
+// Thunk for adding toast with auto-dismiss
+export const setToast = (
+  message: string,
+  severity: 'success' | 'error',
+  timeout: number = 5000 // Default timeout of 5 seconds
+) => (dispatch: AppDispatch) => {
+  const toast = addToast(message, severity);
+  dispatch(toast);
+
+  // Automatically remove the toast after the timeout
+  setTimeout(() => {
+    dispatch(removeToast(toast.payload.id));
+  }, timeout);
+};
+
 export default toastSlice.reducer;

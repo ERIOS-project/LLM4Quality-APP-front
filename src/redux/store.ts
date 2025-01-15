@@ -2,7 +2,7 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import selectedRowsReducer from "./selectedRowsSlice"; // Import du slice des lignes sélectionnées
-import statusReducer from "./statusSlice"; 
+import statusReducer from "./statusSlice";
 import yearReducer from "./yearSlice";
 import toastReducer from "./toastSlice";
 
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   selectedRows: selectedRowsReducer,
   status: statusReducer,
   year: yearReducer,
-  toast : toastReducer
+  toast: toastReducer,
 });
 
 // Déduit le type de l'état global à partir du root reducer
@@ -22,6 +22,10 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
     reducer: rootReducer,
     preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: true, // Activation explicite du middleware thunk
+      }),
   });
 
   // Configure les listeners pour RTK Query

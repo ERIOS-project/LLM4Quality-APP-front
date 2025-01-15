@@ -18,14 +18,15 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
-import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import { setToast } from '../../../redux/toastSlice';
 import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation du useThemeContext
 import { useTheme } from '@mui/material/styles'; // Import du hook useTheme pour accéder au thème
+import { AppDispatch } from '../../../redux/store';
 
 const START_YEAR = 2000; // Année limite inférieure
 
 export default function UploadCsv() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
@@ -58,17 +59,14 @@ export default function UploadCsv() {
 
   const handleValidate = () => {
     if (!selectedYear) {
-      dispatch(setErrorToast({ open: true, message: 'Veuillez sélectionner une année avant de valider.' }));
+      dispatch(setToast('Veuillez sélectionner une année avant de valider.', 'error'));
     } else {
       const reader = new FileReader();
       // Get the file content and upload it
       const file = fileInputRef.current?.files?.[0];
       if (!file) {
         dispatch(
-          setErrorToast({
-            open: true,
-            message: "Une erreur est survenue lors de l'upload du fichier.",
-          })
+          setToast('Une erreur est survenue lors de l\'upload du fichier.', 'error')
         );
       } else {
         reader.readAsText(file);
@@ -79,18 +77,11 @@ export default function UploadCsv() {
             selectedYear,
             () =>
               dispatch(
-                setSuccessToast({
-                  open: true,
-                  message: "Fichier uploadé avec succès.",
-                })
+                setToast('Fichier uploadé avec succès.', 'success')
               ),
             () =>
               dispatch(
-                setErrorToast({
-                  open: true,
-                  message:
-                    "Une erreur est survenue lors de l'upload du fichier.",
-                })
+                setToast('Une erreur est survenue lors de l\'upload du fichier.', 'error')
               )
           );
           handleClose();

@@ -1,56 +1,66 @@
 import React from 'react';
-import { Button, useTheme } from "@mui/material";
+import { Button, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteVerbatims } from '../../../api/verbatims';
-import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
+import { setToast } from '../../../redux/toastSlice'; // Centralisation des notifications
+import { AppDispatch } from '../../../redux/store';
 
 interface DeleteVerbatimDetailsProps {
-    id: string;
+  id: string;
 }
 
 export default function DeleteVerbatimDetails({ id }: DeleteVerbatimDetailsProps) {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const theme = useTheme(); // Utilisation du thème Material-UI
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const theme = useTheme();
 
-    const mutation = useMutation(() => deleteVerbatims([id]), {
-        onSuccess: () => {
-            queryClient.invalidateQueries('verbatims');
-            dispatch(setSuccessToast({ open: true, message: 'Verbatim supprimé avec succès.' }));
-            navigate('/');
+  const showToast = (message: string, severity: 'success' | 'error') => {
+    dispatch(setToast(message, severity, 5000)); // Gestion centralisée des notifications
+  };
+
+  const mutation = useMutation(() => deleteVerbatims([id]), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('verbatims');
+      showToast('Verbatim supprimé avec succès.', 'success');
+      navigate('/');
+    },
+    onError: () => {
+      showToast('Une erreur est survenue lors de la suppression du verbatim.', 'error');
+    },
+  });
+
+  const handleDelete = () => {
+    mutation.mutate();
+  };
+
+  return (
+    <Button
+      variant="contained"
+      startIcon={<DeleteIcon />}
+      sx={{
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.secondary,
+        fontSize: '0.875rem',
+        textTransform: 'none',
+        padding: '6px 12px',
+        borderRadius: '20px',
+        boxShadow: theme.shadows[2],
+        '&:hover': {
+          backgroundColor: theme.palette.action.hover,
         },
-        onError: () => {
-            dispatch(setErrorToast({ open: true, message: 'Une erreur est survenue lors de la suppression du verbatim.' }));
+        '&:disabled': {
+          backgroundColor: theme.palette.action.disabledBackground,
+          color: theme.palette.action.disabled,
         },
-    });
-
-    const handleDelete = () => {
-        mutation.mutate();
-    };
-
-    return (
-        <Button
-            variant="contained"
-            startIcon={<DeleteIcon />}
-            sx={{
-                backgroundColor: theme.palette.background.paper, // Fond basé sur le thème
-                color: theme.palette.text.secondary, // Texte principal basé sur le thème
-                fontSize: '0.875rem',
-                textTransform: 'none',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                boxShadow: theme.shadows[2], // Ombre dynamique du thème
-                '&:hover': {
-                    backgroundColor: theme.palette.action.hover, // Couleur au survol
-                },
-            }}
-            onClick={handleDelete}
-        >
-            Supprimer
-        </Button>
-    );
+      }}
+      onClick={handleDelete}
+      disabled={mutation.isLoading} // Désactivation du bouton pendant le chargement
+    >
+      Supprimer
+    </Button>
+  );
 }

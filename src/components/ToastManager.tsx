@@ -3,42 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { RootState } from '../redux/store';
-import { setSuccessToast, setErrorToast } from '../redux/toastSlice';
+import { removeToast } from '../redux/toastSlice';
 
 export default function ToastManager() {
   const dispatch = useDispatch();
-  const successToastOpen = useSelector((state: RootState) => state.toast.successToastOpen);
-  const errorToastOpen = useSelector((state: RootState) => state.toast.errorToastOpen);
-  const successMessage = useSelector((state: RootState) => state.toast.successMessage);
-  const errorMessage = useSelector((state: RootState) => state.toast.errorMessage);
+  const toasts = useSelector((state: RootState) => state.toast.toasts);
 
-  const handleSuccessToastClose = (event?: any, reason?: string) => {
+  const handleClose = (id: string) => (event?: any, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    dispatch(setSuccessToast({ open: false, message: '' }));
-  };
-
-  const handleErrorToastClose = (event?: any, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    dispatch(setErrorToast({ open: false, message: '' }));
+    dispatch(removeToast(id));
   };
 
   return (
     <>
-      <Snackbar open={successToastOpen} autoHideDuration={6000} onClose={handleSuccessToastClose}>
-        <Alert onClose={handleSuccessToastClose} severity="success" sx={{ width: '100%' }}>
-          {successMessage}
-        </Alert>
-      </Snackbar>
-
-      <Snackbar open={errorToastOpen} autoHideDuration={6000} onClose={handleErrorToastClose}>
-        <Alert onClose={handleErrorToastClose} severity="error" sx={{ width: '100%' }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+      {toasts.slice().reverse().map((toast, index) => (
+        <Snackbar
+          key={toast.id}
+          open={true}
+          autoHideDuration={6000}
+          onClose={handleClose(toast.id)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          sx={{ marginBottom: `${index * 60}px` }} // Espacement entre les toasts
+        >
+          <Alert onClose={handleClose(toast.id)} severity={toast.severity} sx={{ width: '100%' }}>
+            {toast.message}
+          </Alert>
+        </Snackbar>
+      ))}
     </>
   );
 }
