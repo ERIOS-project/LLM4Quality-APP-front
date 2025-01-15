@@ -6,9 +6,12 @@ import VerbatimStatus from '../../../models/VerbatimStatus';
 import { setSelectedStatus } from '../../../redux/statusSlice';
 import { Box } from '@mui/system';
 import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation de useThemeContext
+import { useTheme
 
+ } from '@mui/material';
 const StatusSelection = memo(() => {
   const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode
+  const theme = useTheme(); // Utilisation du hook useTheme
   const dispatch = useDispatch();
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
 
@@ -45,6 +48,9 @@ const StatusSelection = memo(() => {
             borderRadius: '6px',
             borderColor: darkMode ? '#444' : '#2A3E53', // Bordure ajustée selon le mode
             color: darkMode ? '#fff' : '#000', // Couleur du texte dynamique
+            '&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.text.secondary // <------------------ utline-color on hover
+            },
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: darkMode ? '#444' : '#2A3E53', // Bordure par défaut

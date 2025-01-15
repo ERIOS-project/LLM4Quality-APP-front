@@ -5,13 +5,16 @@ import { RootState } from '../../../redux/store';
 import { setSelectedYear } from '../../../redux/yearSlice';
 import { Box } from '@mui/system';
 import { useThemeContext } from "../../../components/ThemeContextProvider";  // Importation du useThemeContext
+import { useTheme
 
+ } from '@mui/material';
 const YEAR_LIMIT = 2000; // Année limite inférieure
 const CURRENT_YEAR = new Date().getFullYear(); // Année actuelle (2024)
 
 const YearSelection = memo(() => {
   const dispatch = useDispatch();
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
+  const theme = useTheme(); // Utilisation du hook useTheme
 
   // Utilisation du ThemeContext
   const { darkMode } = useThemeContext();
@@ -55,6 +58,9 @@ const YearSelection = memo(() => {
             borderRadius: '6px',
             borderColor: darkMode ? '#444' : '#2A3E53', // Bordure dynamique
             color: darkMode ? '#fff' : '#000', // Couleur du texte dynamique
+            '&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.text.secondary // <------------------ utline-color on hover
+            },
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: darkMode ? '#444' : '#2A3E53', // Bordure par défaut

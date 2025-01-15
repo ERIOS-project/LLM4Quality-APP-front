@@ -168,16 +168,29 @@ export default function UploadCsv() {
             displayEmpty
             fullWidth
             variant="outlined"
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 200, // Limite la hauteur du menu
+                  overflowY: 'auto', // Ajoute un défilement vertical si nécessaire
+                },
+              },
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left',
+              },
+              transformOrigin: {
+                vertical: 'top',
+                horizontal: 'left',
+              },
+            }}
+            
             sx={{
               backgroundColor: darkMode ? '#333' : '#fff', // Fond dynamique
+              color: theme.palette.text.secondary,
               borderRadius: '6px',
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: darkMode ? '#444' : '#2A3E53', // Bordure dynamique
-                },
-                '&:hover fieldset': {
-                  borderColor: darkMode ? '#666' : '#1f2c3a', // Bordure au survol
-                },
+              '&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.text.secondary // <------------------ utline-color on hover
               },
             }}
           >
