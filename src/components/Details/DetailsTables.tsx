@@ -1,8 +1,17 @@
 import React from 'react';
-import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  useTheme,
+} from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ClassificationResult from '../../models/ClassificationResult';
-import colors from '../../utils/color';
 
 interface DetailsTablesProps {
   result?: ClassificationResult;
@@ -25,6 +34,8 @@ const createTableData = (data: any) =>
   });
 
 export default function DetailsTables({ result }: DetailsTablesProps) {
+  const theme = useTheme(); // Utilisation du thème Material-UI
+
   if (!result) {
     return (
       <Typography variant="h6" color="textSecondary" align="center">
@@ -51,35 +62,78 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
   return (
     <Grid container spacing={4} justifyContent="center" alignItems="center">
       {tables.map((table, index) => (
-        <Grid key={index} size={{ xs: 11 ,sm:10, md:10 ,lg:10 }} display="flex" justifyContent="center">
+        <Grid key={index} size={{ xs: 11, sm: 10, md: 10, lg: 10 }} display="flex" justifyContent="center">
           <div style={{ textAlign: 'left', width: '100%' }}>
             <Typography
               variant="h6"
               gutterBottom
               fontWeight="bold"
               style={{
-                color: colors.primary, // Couleur principale de l'application
-                textTransform: 'uppercase', // Mettre en majuscules pour un ton plus formel
-                fontSize: '1.2rem', // Taille de police
+                color: theme.palette.text.primary, // Texte principal adapté au thème
+                textTransform: 'uppercase',
+                fontSize: '1.2rem',
               }}
             >
               {table.title}
             </Typography>
-            <TableContainer component={Paper} style={{ borderRadius: '8px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', backgroundColor: '#FFFFFF' }}>
+            <TableContainer
+              component={Paper}
+              style={{
+                borderRadius: '8px',
+                boxShadow: theme.shadows[2], // Ombre dynamique selon le thème
+                backgroundColor: theme.palette.background.paper, // Fond adapté au thème
+              }}
+            >
               <Table>
                 <TableHead>
-                  <TableRow style={{ backgroundColor: colors.primary, color: '#FFFFFF' }}>
-                    <TableCell align="center" style={{ width: tableColumnWidths.name, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Critères</strong></TableCell>
-                    <TableCell align="center" style={{ width: tableColumnWidths.positive, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Positif</strong></TableCell>
-                    <TableCell align="center" style={{ width: tableColumnWidths.negative, color: '#FFFFFF', fontSize: '1.2rem' }}><strong>Négatif</strong></TableCell>
+                  <TableRow style={{ backgroundColor: theme.palette.primary.main }}> {/* Couleur principale du thème */}
+                    <TableCell
+                      align="center"
+                      style={{
+                        width: tableColumnWidths.name,
+                        color: theme.palette.primary.contrastText, // Contraste pour le texte
+                        fontSize: '1.2rem',
+                      }}
+                    >
+                      <strong>Critères</strong>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{
+                        width: tableColumnWidths.positive,
+                        color: theme.palette.primary.contrastText,
+                        fontSize: '1.2rem',
+                      }}
+                    >
+                      <strong>Positif</strong>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{
+                        width: tableColumnWidths.negative,
+                        color: theme.palette.primary.contrastText,
+                        fontSize: '1.2rem',
+                      }}
+                    >
+                      <strong>Négatif</strong>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {table.data.map((row, idx) => (
-                    <TableRow key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#F9F9F9' : '#FFFFFF' }}>
+                    <TableRow
+                      key={idx}
+                      style={{
+                        backgroundColor: idx % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper, // Alternance adaptée au thème
+                      }}
+                    >
                       <TableCell style={{ width: tableColumnWidths.name, fontSize: '1.2rem' }}>{row.name}</TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.positive, fontSize: '1.2rem' }}>{row.positive}</TableCell>
-                      <TableCell align="center" style={{ width: tableColumnWidths.negative, fontSize: '1.2rem' }}>{row.negative}</TableCell>
+                      <TableCell align="center" style={{ width: tableColumnWidths.positive, fontSize: '1.2rem' }}>
+                        {row.positive}
+                      </TableCell>
+                      <TableCell align="center" style={{ width: tableColumnWidths.negative, fontSize: '1.2rem' }}>
+                        {row.negative}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

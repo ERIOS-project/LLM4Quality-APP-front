@@ -11,6 +11,7 @@ import { MsalProvider } from '@azure/msal-react';
 import { msalConfig } from './authConfig';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ThemeContextProvider } from './components/ThemeContextProvider'; // Import du ThemeContextProvider
 
 const msalInstance = new PublicClientApplication(msalConfig);
 const queryClient = new QueryClient();
@@ -26,7 +27,9 @@ if (container) {
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             <BrowserRouter>
-              <App />
+              <ThemeContextProvider> {/* Ajout du ThemeContextProvider ici */}
+                <App />
+              </ThemeContextProvider>
             </BrowserRouter>
           </QueryClientProvider>
         </Provider>

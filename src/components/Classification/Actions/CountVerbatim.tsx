@@ -5,29 +5,38 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { fetchCounts } from "../../../api/verbatims";
+import { useTheme } from "@mui/material/styles"; // Importation de `useTheme`
 import { green, red, orange } from "@mui/material/colors";
 
+// Hook pour récupérer les données de comptage
 export const useCounts = () => {
   return useQuery(["counts"], fetchCounts, {
-    staleTime: 1000 * 60 * 5, // Cache the data for 5 minutes
-    retry: 2, // Retry failed requests up to 2 times
+    staleTime: 1000 * 60 * 5, // Cache des données pendant 5 minutes
+    retry: 2, // Réessayer les requêtes échouées jusqu'à 2 fois
   });
 };
 
-const getStatusColor = (key: string, isHover: boolean) => {
+// Fonction pour obtenir la couleur du statut
+const getStatusColor = (key: string, isHover: boolean, theme: any) => {
+  if (!theme || !theme.palette) {
+    return theme?.palette?.grey[400]; // Retourne une couleur par défaut si le theme ou palette est indéfini
+  }
+
   switch (key) {
     case "success":
-      return isHover ? "#2e7d32" : "green";
+      return isHover ? theme.palette.success.dark : theme.palette.success.main;
     case "run":
-      return isHover ? "#ff9800" : "orange";
+      return isHover ? theme.palette.warning.dark : theme.palette.warning.main;
     case "error":
-      return isHover ? red[600] : red[500]; ;
+      return isHover ? red[600] : red[500]; // Utilise une couleur spécifique pour "error"
     default:
-      return isHover ? "#9e9e9e" : "grey";
+      return isHover ? theme.palette.grey[500] : theme.palette.grey[400];
   }
 };
 
+// Composant pour afficher les statistiques
 const CountsVerbatim = () => {
+  const theme = useTheme(); // Utilisation de `useTheme` pour récupérer le thème
   const { data, isLoading, error } = useCounts();
 
   if (error)
@@ -62,27 +71,27 @@ const CountsVerbatim = () => {
             }}
           >
             {isLoading ? (
-              <Skeleton variant="circular" width={50} height={50} animation={false} sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
+              <Skeleton variant="circular" width={50} height={50} animation="wave" sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
             ) : (
               <Box
                 sx={{
                   width: 50,
                   height: 50,
                   borderRadius: "50%",
-                  backgroundColor: "grey",
+                  backgroundColor: theme.palette.mode === 'dark' ? "#333" : "#e0e0e0", // Couleur basée sur le mode sombre/clair
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
                   transition: "background-color 0.3s",
                   "&:hover": {
-                    backgroundColor: "#9e9e9e",
+                    backgroundColor: theme.palette.mode === 'dark' ? "#555" : "#bdbdbd", // Hover effect selon le mode
                   },
                 }}
               >
                 <Typography
                   variant="caption"
-                  sx={{ color: "white", fontWeight: "bold" }}
+                  sx={{ color: theme.palette.mode === 'dark' ? '#fff' : '#000', fontWeight: "bold" }}
                 >
                   {total}
                 </Typography>
@@ -105,14 +114,14 @@ const CountsVerbatim = () => {
               }}
             >
               {isLoading ? (
-                <Skeleton  variant="circular" width={50} height={50} animation={false} sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
+                <Skeleton variant="circular" width={50} height={50} animation="wave" sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
               ) : (
                 <Box
                   sx={{
                     width: 50,
                     height: 50,
                     borderRadius: "50%",
-                    backgroundColor: getStatusColor(status.key, false),
+                    backgroundColor: getStatusColor(status.key, false, theme), // Utilisation du `theme` dans `getStatusColor`
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -120,7 +129,7 @@ const CountsVerbatim = () => {
                     color: "white",
                     transition: "background-color 0.3s",
                     "&:hover": {
-                      backgroundColor: getStatusColor(status.key, true),
+                      backgroundColor: getStatusColor(status.key, true, theme), // Utilisation du `theme` dans `getStatusColor`
                     },
                   }}
                 >
@@ -135,7 +144,7 @@ const CountsVerbatim = () => {
               {/* Icône en dessous */}
               <Box sx={{ marginTop: "5px" }}>
                 {isLoading ? (
-                  <Skeleton variant="circular" width={24} height={24} animation={false} sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
+                  <Skeleton variant="circular" width={24} height={24} animation="wave" sx={{display: "flex",alignItems: "center",justifyContent: "center"}}  />
                 ) : (
                   status.icon
                 )}

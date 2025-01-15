@@ -2,19 +2,20 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { SignOutButton } from './SignOutButton';
-import colors from '../utils/color';
 
 export default function MyAppBar() {
+    const theme = useTheme(); // Accéder au thème dynamique
+
     return (
         <AppBar
             position="static"
             elevation={4}
             sx={{
-                bgcolor: colors.primary, // Couleur principale de l'application
-                color: 'white',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Ombre légère
+                bgcolor: theme.palette.primary.main, // Utiliser la couleur principale dynamique
+                color: theme.palette.text.primary, // Couleur du texte dynamique
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
             }}
         >
             <Toolbar
@@ -25,19 +26,17 @@ export default function MyAppBar() {
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {/* Section à gauche avec fond blanc */}
-    
-                        {/* Logo de l'application */}
-                        <img
-                            src="/src/chu_logo.png"
-                            alt="CHU Logo"
-                            style={{
-                                height: '80px',
-                                marginRight: '16px',
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' 
-                            }}
-                        />
-                   
+                    {/* Logo de l'application */}
+                    <img
+                        src="/src/chu_logo.png"
+                        alt="CHU Logo"
+                        style={{
+                            height: '80px',
+                            marginRight: '16px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        }}
+                    />
+
                     {/* Nom de l'application */}
                     <Typography
                         variant="h5"

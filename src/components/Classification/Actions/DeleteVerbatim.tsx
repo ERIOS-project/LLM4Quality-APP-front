@@ -7,8 +7,10 @@ import { RootState } from '../../../redux/store';
 import { deleteVerbatims } from '../../../api/verbatims';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
 import { Box } from '@mui/material';
+import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation du ThemeContext
 
 export default function DeleteVerbatim() {
+  const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
@@ -29,7 +31,7 @@ export default function DeleteVerbatim() {
   };
 
   return (
-    <Box sx={{  justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <Box sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <Button
         variant="contained"
         startIcon={<DeleteIcon />}
@@ -38,15 +40,15 @@ export default function DeleteVerbatim() {
           padding: '12px 24px', // Espacement ajusté pour un bouton plus net
           textTransform: 'none', // Garde la police naturelle
           borderRadius: '8px', // Coins arrondis pour un aspect moderne
-          backgroundColor: '#d32f2f', // Rouge pour signaler la suppression
+          backgroundColor: darkMode ? '#d32f2f' : '#d32f2f', // Rouge pour signaler la suppression
           color: '#ffffff', // Texte blanc pour le contraste
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre douce pour profondeur
+          boxShadow: darkMode ? '0 4px 8px rgba(0, 0, 0, 0.1)' : '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre douce pour profondeur
           '&:hover': {
-            backgroundColor: '#9A0007', // Rouge plus foncé au survol
-            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)', // Ombre un peu plus marquée au survol
+            backgroundColor: darkMode ? '#9A0007' : '#9A0007', // Rouge plus foncé au survol
+            boxShadow: darkMode ? '0 6px 12px rgba(0, 0, 0, 0.15)' : '0 6px 12px rgba(0, 0, 0, 0.15)', // Ombre plus marquée au survol
           },
           '&:active': {
-            backgroundColor: '#7A0004', // Rouge encore plus foncé au clic
+            backgroundColor: darkMode ? '#7A0004' : '#7A0004', // Rouge encore plus foncé au clic
           },
           verticalAlign: 'middle', 
         }}
@@ -54,7 +56,6 @@ export default function DeleteVerbatim() {
       >
         Supprimer
       </Button>
-
     </Box>
   );
 }

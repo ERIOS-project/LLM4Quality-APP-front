@@ -5,8 +5,10 @@ import { RootState } from '../../../redux/store';
 import VerbatimStatus from '../../../models/VerbatimStatus';
 import { setSelectedStatus } from '../../../redux/statusSlice';
 import { Box } from '@mui/system';
+import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation de useThemeContext
 
 const StatusSelection = memo(() => {
+  const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode
   const dispatch = useDispatch();
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
 
@@ -31,7 +33,7 @@ const StatusSelection = memo(() => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
-        <InputLabel id="status-select-label" sx={{ color: '#2A3E53' }}>Statut</InputLabel>
+        <InputLabel id="status-select-label" sx={{ color: darkMode ? '#fff' : '#2A3E53' }}>Statut</InputLabel>
         <Select
           labelId="status-select-label"
           id="status-select"
@@ -39,18 +41,18 @@ const StatusSelection = memo(() => {
           onChange={handleChange}
           label="Statut"
           sx={{
-            backgroundColor: '#fff',
+            backgroundColor: darkMode ? '#333' : '#fff', // Couleur de fond dynamique en fonction du mode
             borderRadius: '6px',
-            borderColor: '#2A3E53', // Couleur pour la bordure (identique à l'AppBar)
+            borderColor: darkMode ? '#444' : '#2A3E53', // Bordure ajustée selon le mode
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: '#2A3E53', // Bordure par défaut
+                borderColor: darkMode ? '#444' : '#2A3E53', // Bordure par défaut
               },
               '&:hover fieldset': {
-                borderColor: '#1f2c3a', // Bordure plus foncée au survol
+                borderColor: darkMode ? '#666' : '#1f2c3a', // Bordure plus foncée au survol
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#2A3E53', // Bordure quand le champ est en focus
+                borderColor: darkMode ? '#666' : '#2A3E53', // Bordure quand le champ est en focus
               },
             },
           }}

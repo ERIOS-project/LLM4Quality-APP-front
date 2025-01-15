@@ -7,7 +7,6 @@ import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import { green, red, orange } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedRows } from '../../redux/selectedRowsSlice';
@@ -18,9 +17,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useQuery, useQueryClient } from 'react-query';
 import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
-import colors from '../../utils/color';
-
-
+import { useTheme } from '@mui/material'; // Import du thème Material-UI
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -32,73 +29,62 @@ export default function VerbatimDatagrid() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const queryClient = useQueryClient();
+  const theme = useTheme(); // Accès au thème
 
   const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
     ['verbatims', selectedYear, selectedStatus],
-    () => fetchVerbatims({ year: selectedYear !== "" ? Number(selectedYear) : undefined, status: selectedStatus })
+    () =>
+      fetchVerbatims({
+        year: selectedYear !== '' ? Number(selectedYear) : undefined,
+        status: selectedStatus,
+      })
   );
-
-
-  
 
   useEffect(() => {
     if (selectedRows.length === 0) {
-      setSelectedRowIds([]); 
+      setSelectedRowIds([]);
     }
-  }, [selectedRows.length]); 
-  
+  }, [selectedRows.length]);
+
   useEffect(() => {
     const handleNewVerbatim = (data: any | string) => {
-      // Vérifiez si `data` est une chaîne, et parsez-la si nécessaire
       if (typeof data === 'string') {
         try {
           data = JSON.parse(data);
         } catch (error) {
           console.error('Erreur lors du parsing des données WebSocket :', data, error);
-          return; // Ignorez les données invalides
+          return;
         }
       }
-  
-  
-      // Assurez-vous que les données ont la bonne structure
+
       const formattedData = {
-        _id: data.id || data._id, // Priorité à "id", mais utilisez "_id" comme fallback
+        _id: data.id || data._id,
         content: data.content,
         status: data.status,
         result: data.result,
         year: data.year,
         created_at: data.created_at,
       };
-  
-      console.log('Donnée formatée reçue :', formattedData);
-  
-      // Mise à jour de la liste des verbatims
+
       queryClient.setQueryData<Verbatim[]>(['verbatims', selectedYear, selectedStatus], (oldVerbatims = []) => {
         const existingIndex = oldVerbatims.findIndex((verbatim) => verbatim._id === formattedData._id);
-  
+
         if (existingIndex !== -1) {
-          // Si le verbatim existe déjà, on le met à jour
           const updatedVerbatims = [...oldVerbatims];
           updatedVerbatims[existingIndex] = { ...updatedVerbatims[existingIndex], ...formattedData };
-          console.log('Verbatim mis à jour :', updatedVerbatims[existingIndex]);
           return updatedVerbatims;
         } else {
-          // Sinon, on ajoute un nouveau verbatim
-          console.log('Nouveau verbatim ajouté :', formattedData);
           return [formattedData, ...oldVerbatims];
         }
       });
     };
-  
-    // Abonnez-vous à l'événement "newVerbatim"
+
     eventEmitter.on('newVerbatim', handleNewVerbatim);
-  
-    // Nettoyer l'abonnement
+
     return () => {
       eventEmitter.off('newVerbatim', handleNewVerbatim);
     };
   }, [queryClient, selectedYear, selectedStatus]);
-  
 
   const handleSelectionChange = (selection: GridRowId[]) => {
     setSelectedRowIds(selection);
@@ -112,7 +98,7 @@ export default function VerbatimDatagrid() {
       headerName: 'Date de création',
       width: 200,
       flex: 1,
-      valueGetter: (value,row) => {
+      valueGetter: (value, row) => {
         const date = row.created_at;
         return date ? new Date(date).toLocaleDateString() : 'Date non disponible';
       },
@@ -131,11 +117,11 @@ export default function VerbatimDatagrid() {
         const getIcon = () => {
           switch (params.value) {
             case VerbatimStatus.Success:
-              return <CheckCircleIcon style={{ color: green[500] }} />;
+              return <CheckCircleIcon style={{ color: theme.palette.success.main }} />;
             case VerbatimStatus.Error:
-              return <CancelIcon style={{ color: red[500] }} />;
+              return <CancelIcon style={{ color: theme.palette.error.main }} />;
             case VerbatimStatus.Run:
-              return <HourglassTopIcon style={{ color: orange[500] }} />;
+              return <HourglassTopIcon style={{ color: theme.palette.warning.main }} />;
             default:
               return null;
           }
@@ -162,10 +148,6 @@ export default function VerbatimDatagrid() {
           }}
           sx={{
             textTransform: 'none',
-            backgroundColor: colors.primary,
-            '&:hover': {
-              backgroundColor: colors.hover_primary,
-            },
             padding: '6px 12px',
           }}
         >
@@ -178,8 +160,16 @@ export default function VerbatimDatagrid() {
   if (isLoading) {
     return (
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid size={{ xs: 12 ,sm:10, md:10 ,lg:10}}>
-          <Paper style={{ height: 550, width: '100%', borderRadius: 8, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }}>
+        <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
+          <Paper
+            style={{
+              height: 550,
+              width: '100%',
+              borderRadius: 8,
+              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              backgroundColor: theme.palette.background.paper,
+            }}
+          >
             <Skeleton variant="rectangular" width="100%" height="100%" />
           </Paper>
         </Grid>
@@ -192,37 +182,43 @@ export default function VerbatimDatagrid() {
   }
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ backgroundColor: '#F4F4F4'}}>
-      <Grid size={{ xs: 12 ,sm:10, md:10 ,lg:10}}>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      sx={{ backgroundColor: theme.palette.background.default }}
+    >
+      <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
         <Paper
           style={{
             height: 550,
             width: '100%',
             borderRadius: 8,
-            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-            backgroundColor: '#FFFFFF',
-            margin: '0 auto', // This ensures the Paper container is centered
+            boxShadow: theme.shadows[3],
+            backgroundColor: theme.palette.background.paper,
+            margin: '0 auto',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
           <div style={{ width: '98%', height: '95%' }}>
-          <DataGrid
-            rows={verbatims}
-            columns={columns}
-            pagination
-            paginationModel={{ pageSize, page }}
-            pageSizeOptions={[10, 20, 30]}
-            onPaginationModelChange={(model) => {
-              setPageSize(model.pageSize);
-              setPage(model.page);
-            }}
-            checkboxSelection
-            getRowId={(row) => row.id || row._id}
-            onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
-            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-          />
+            <DataGrid
+              rows={verbatims}
+              columns={columns}
+              pagination
+              paginationModel={{ pageSize, page }}
+              pageSizeOptions={[10, 20, 30]}
+              onPaginationModelChange={(model) => {
+                setPageSize(model.pageSize);
+                setPage(model.page);
+              }}
+              checkboxSelection
+              getRowId={(row) => row.id || row._id}
+              onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
+              localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+            />
           </div>
         </Paper>
       </Grid>

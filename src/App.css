@@ -9,7 +9,6 @@ html, body {
   text-align: center;
   height: 100%; /* Assurer que l'élément couvre toute la hauteur disponible */
   min-height: 100vh; /* Garantir que la page couvre tout l'écran, même si le contenu est peu élevé */
-  background-color: #F4F4F4; /* Couleur de fond choisie */
   display: flex; /* Utilisation de Flexbox pour la mise en page */
   flex-direction: column;
   justify-content: flex-start; /* Garantir que le contenu est aligné en haut */

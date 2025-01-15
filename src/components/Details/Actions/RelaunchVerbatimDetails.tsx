@@ -5,7 +5,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { useDispatch } from 'react-redux';
 import { rerunClassification } from '../../../api/websockets/rerun';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
-import colors from '../../../utils/color'; // Import colors for consistent theme
+import { useTheme } from '@mui/material/styles'; // Import du hook useTheme pour accéder au thème
 
 interface RelaunchVerbatimDetailsProps {
     verbatim: Verbatim;
@@ -13,6 +13,7 @@ interface RelaunchVerbatimDetailsProps {
 
 export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDetailsProps) {
     const dispatch = useDispatch();
+    const theme = useTheme(); // Utilisation du thème Material-UI
 
     const handleRelaunch = () => {
         rerunClassification(
@@ -27,13 +28,16 @@ export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDe
             variant="contained"
             startIcon={<ReplayIcon />}
             sx={{
-                backgroundColor: 'white',
-                color: 'rgb(46,61,81)', // Texte noir
+                backgroundColor: theme.palette.background.paper, // Fond dynamique en fonction du thème
+                color: theme.palette.text.primary, // Couleur du texte adaptée au thème
                 fontSize: '0.875rem',
                 textTransform: 'none',
                 padding: '6px 12px',
                 borderRadius: '20px',
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                boxShadow: theme.shadows[2], // Ombre dynamique du thème
+                '&:hover': {
+                    backgroundColor: theme.palette.action.hover, // Fond au survol en fonction du thème
+                },
             }}
             onClick={handleRelaunch}
         >

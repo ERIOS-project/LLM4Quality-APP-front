@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
 import { uploadCsv } from '../../../api/websockets/csv';
 import { setSuccessToast, setErrorToast } from '../../../redux/toastSlice';
-import colors from '../../../utils/color';
+import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation du useThemeContext
 
 const START_YEAR = 2000; // Année limite inférieure
 
@@ -29,6 +29,9 @@ export default function UploadCsv() {
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number } | null>(null); 
   const [selectedYear, setSelectedYear] = useState<number | ''>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Utilisation du ThemeContext
+  const { darkMode } = useThemeContext();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -118,12 +121,12 @@ export default function UploadCsv() {
             padding: '12px 24px',
             textTransform: 'none',
             borderRadius: '8px',
-            backgroundColor: colors.primary,
+            backgroundColor: darkMode ? '#1976d2' : '#1976d2', // Maintien la même couleur pour le bouton
             color: '#ffffff',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            boxShadow: darkMode ? '0 4px 8px rgba(255, 255, 255, 0.1)' : '0 4px 8px rgba(0, 0, 0, 0.1)',
             '&:hover': {
-              backgroundColor: colors.hover_primary,
-              boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
+              backgroundColor: darkMode ? '#1565c0' : '#1565c0',
+              boxShadow: darkMode ? '0 6px 12px rgba(255, 255, 255, 0.2)' : '0 6px 12px rgba(0, 0, 0, 0.2)',
             },
           }}
         >
@@ -173,14 +176,14 @@ export default function UploadCsv() {
             fullWidth
             variant="outlined"
             sx={{
-              backgroundColor: '#fff',
+              backgroundColor: darkMode ? '#333' : '#fff', // Fond dynamique
               borderRadius: '6px',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#2A3E53', // Couleur qui correspond à l'AppBar
+                  borderColor: darkMode ? '#444' : '#2A3E53', // Bordure dynamique
                 },
                 '&:hover fieldset': {
-                  borderColor: '#1f2c3a', // Couleur au survol
+                  borderColor: darkMode ? '#666' : '#1f2c3a', // Bordure au survol
                 },
               },
             }}
