@@ -44,7 +44,7 @@ export default function DeleteVerbatim() {
   };
 
   return (
-    <Box sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <Box sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <Button
         variant="contained"
         startIcon={<DeleteIcon />}

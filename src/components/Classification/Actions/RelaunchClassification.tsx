@@ -35,7 +35,7 @@ export default function RelaunchClassification() {
   };
 
   return (
-    <div style={{ justifyContent: 'center', marginTop: '20px' }}>
+    <div style={{  display: 'flex', justifyContent: 'center' }}>
       <Button
         variant="contained"
         startIcon={<ReplayIcon />}

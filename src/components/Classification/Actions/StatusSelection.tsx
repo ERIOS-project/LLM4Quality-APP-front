@@ -35,7 +35,7 @@ const StatusSelection = memo(() => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
+      <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px'}}>
         <InputLabel id="status-select-label" sx={{ color: darkMode ? '#fff' : '#000' }}>Statut</InputLabel>
         <Select
           labelId="status-select-label"

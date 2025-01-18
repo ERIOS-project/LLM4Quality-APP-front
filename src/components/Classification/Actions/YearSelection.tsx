@@ -29,7 +29,7 @@ const YearSelection = memo(() => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px', marginTop: '20px' }}>
+      <FormControl fullWidth variant="outlined" sx={{ maxWidth: '300px' }}>
         <InputLabel id="year-select-label" sx={{ color: darkMode ? '#fff' : '#000' }}>Année</InputLabel>
         <Select
           labelId="year-select-label"

@@ -19,16 +19,22 @@ export default function VerbatimDatagridActions() {
       container
       spacing={3}
       justifyContent="center"
-      alignItems="baseline"
+      alignItems="center" // Aligner toutes les Grid verticalement
       sx={{
         backgroundColor: theme.palette.background.default, // Couleur dynamique du fond
         paddingLeft: '20px',
         paddingRight: '20px',
       }}
     >
+      {/* Composants uniformisés */}
       <Grid
-        size={{ xs: 12, sm: 6, md: 4, lg: 2 }}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        size={{ xs: 12, sm: 6, md: 4, lg: 1.5 }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center', // Alignement vertical
+          height: '100px', // Hauteur fixe uniforme
+        }}
       >
         <div style={{ width: '100%' }}>
           <YearSelection />
@@ -36,8 +42,13 @@ export default function VerbatimDatagridActions() {
       </Grid>
 
       <Grid
-        size={{ xs: 12, sm: 6, md: 4, lg: 2 }}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        size={{ xs: 12, sm: 6, md: 4, lg: 1.5 }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100px',
+        }}
       >
         <div style={{ width: '100%' }}>
           <StatusSelection />
@@ -45,11 +56,12 @@ export default function VerbatimDatagridActions() {
       </Grid>
 
       <Grid
-        size={{ xs: 12, sm: 12, md: 4, lg: 3 }}
+        size={{ xs: 12, sm: 12, md: 4, lg: 3.5 }}
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          minHeight: '120px',
+          alignItems: 'center',
+          height: '100px',
         }}
       >
         <div style={{ width: '100%' }}>
@@ -59,7 +71,12 @@ export default function VerbatimDatagridActions() {
 
       <Grid
         size={{ xs: 12, sm: 6, md: 6, lg: 1.5 }}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100px',
+        }}
       >
         {selectedRows.length > 0 && (
           <div style={{ width: '100%' }}>
@@ -70,7 +87,12 @@ export default function VerbatimDatagridActions() {
 
       <Grid
         size={{ xs: 12, sm: 6, md: 6, lg: 1.5 }}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100px',
+        }}
       >
         {selectedRows.length > 0 && (
           <div style={{ width: '100%' }}>
@@ -81,7 +103,12 @@ export default function VerbatimDatagridActions() {
 
       <Grid
         size={{ xs: 12, sm: 12, md: 12, lg: 1.5 }}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100px',
+        }}
       >
         <div style={{ width: '100%' }}>
           <UploadCsv />
