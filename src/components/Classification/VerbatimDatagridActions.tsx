@@ -8,11 +8,15 @@ import DeleteVerbatim from './Actions/DeleteVerbatim';
 import UploadCsv from './Actions/UploadCsv';
 import CountVerbatim from './Actions/CountVerbatim';
 import { RootState } from '../../redux/store';
-import { useTheme } from '@mui/material';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 export default function VerbatimDatagridActions() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
   const theme = useTheme(); // Accéder au thème
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
 
   return (
     <Grid
@@ -26,9 +30,9 @@ export default function VerbatimDatagridActions() {
         paddingRight: '20px',
       }}
     >
-      {/* Composants uniformisés */}
+      {/* YearSelection et StatusSelection toujours affichés de la même manière */}
       <Grid
-        size={{ xs: 12, sm: 6, md: 4, lg: 1.5 }}
+        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 }}
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -42,7 +46,7 @@ export default function VerbatimDatagridActions() {
       </Grid>
 
       <Grid
-        size={{ xs: 12, sm: 6, md: 4, lg: 1.5 }}
+        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 }}
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -55,65 +59,258 @@ export default function VerbatimDatagridActions() {
         </div>
       </Grid>
 
-      <Grid
-        size={{ xs: 12, sm: 12, md: 4, lg: 3.5 }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100px',
-        }}
-      >
-        <div style={{ width: '100%' }}>
-          <CountVerbatim />
-        </div>
-      </Grid>
+      {isLg && (
+        <>
+          <Grid
+            size={{lg: 3.5 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <CountVerbatim />
+            </div>
+          </Grid>
 
-      <Grid
-        size={{ xs: 12, sm: 6, md: 6, lg: 1.5 }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100px',
-        }}
-      >
-        {selectedRows.length > 0 && (
-          <div style={{ width: '100%' }}>
-            <RelaunchClassification />
-          </div>
-        )}
-      </Grid>
+          <Grid
+            size={{lg: 1.5 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            {selectedRows.length > 0 && (
+              <div style={{ width: '100%' }}>
+                <RelaunchClassification />
+              </div>
+            )}
+          </Grid>
 
-      <Grid
-        size={{ xs: 12, sm: 6, md: 6, lg: 1.5 }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100px',
-        }}
-      >
-        {selectedRows.length > 0 && (
-          <div style={{ width: '100%' }}>
-            <DeleteVerbatim />
-          </div>
-        )}
-      </Grid>
+          <Grid
+            size={{lg: 1.5 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            {selectedRows.length > 0 && (
+              <div style={{ width: '100%' }}>
+                <DeleteVerbatim />
+              </div>
+            )}
+          </Grid>
 
-      <Grid
-        size={{ xs: 12, sm: 12, md: 12, lg: 1.5 }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100px',
-        }}
-      >
-        <div style={{ width: '100%' }}>
-          <UploadCsv />
-        </div>
-      </Grid>
+          <Grid
+            size={{lg: 1.5 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <UploadCsv />
+            </div>
+          </Grid>
+        </>
+      )}
+
+      {isMd && (
+        <>
+          <Grid
+            size={{ md:6 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <CountVerbatim />
+            </div>
+          </Grid>
+          <Grid
+            size={{md: selectedRows.length > 0 ? 4 : 12 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <UploadCsv />
+            </div>
+          </Grid>
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{md: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <RelaunchClassification />
+              </div>
+          </Grid>
+          )}
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{md: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <DeleteVerbatim />
+              </div>
+            
+          </Grid>
+          )}
+        </>
+      )}
+
+      {isSm && (
+        <>
+          <Grid
+            size={{sm: 12}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <CountVerbatim />
+            </div>
+          </Grid>
+
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{sm: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <RelaunchClassification />
+              </div>
+          </Grid>
+          )}
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{sm: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <DeleteVerbatim />
+              </div>
+            
+          </Grid>
+          )}
+          <Grid
+            size={{sm: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <UploadCsv />
+            </div>
+          </Grid>
+        </>
+      )}
+
+      {isXs && (
+        <>
+          <Grid
+            size={{ xs: 12}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <CountVerbatim />
+            </div>
+          </Grid>
+
+          <Grid
+            size={{ xs: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <UploadCsv />
+            </div>
+          </Grid>
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{xs: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <RelaunchClassification />
+              </div>
+          </Grid>
+          )}
+          {selectedRows.length > 0 && (
+          <Grid
+            size={{xs: 4}}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+              <div style={{ width: '100%' }}>
+                <DeleteVerbatim />
+              </div>
+            
+          </Grid>
+          )}
+        </>
+      )}
+
     </Grid>
   );
 }
