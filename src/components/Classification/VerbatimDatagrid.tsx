@@ -275,7 +275,12 @@ export default function VerbatimDatagrid() {
                 '& .MuiDataGrid-selectedRowCountt':{
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                
+                '& .MuiDataGrid-cell:focus': {
+                    outline: 'none'
+                },
+                '& .MuiDataGrid-cell:focus-within': {
+                    outline: 'none'
+                }
               }}
             />
           </div>
