@@ -103,8 +103,9 @@ const CountsVerbatim = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          gap: 3,
+        
           alignItems: "center",
+          maxWidth: "100%",
         }}
       >
         {/* Cercles pour chaque statut */}
@@ -120,6 +121,8 @@ const CountsVerbatim = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                minWidth: "130px", // Minimum largeur d'élément pour éviter que l'élément soit trop petit
+                maxWidth: "33%",
               }}
             >
               <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
