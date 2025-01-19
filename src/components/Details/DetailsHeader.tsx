@@ -10,6 +10,7 @@ import VerbatimStatus from '../../models/VerbatimStatus';
 import RelaunchVerbatimDetails from './Actions/RelaunchVerbatimDetails';
 import DeleteVerbatimDetails from './Actions/DeleteVerbatimDetails';
 import Verbatim from '../../models/Verbatim';
+import { useMediaQuery } from '@mui/material';
 
 interface DetailsHeaderProps {
   date: string;
@@ -20,6 +21,8 @@ interface DetailsHeaderProps {
 export default function DetailsHeader({ date, status, verbatim }: DetailsHeaderProps) {
   const theme = useTheme(); // Utilisation du thème Material-UI
   const navigate = useNavigate();
+  const isXs = useMediaQuery(theme.breakpoints.down('xs')); 
+  
 
   const renderStatusIcon = (status: VerbatimStatus) => {
     switch (status) {
@@ -72,6 +75,7 @@ export default function DetailsHeader({ date, status, verbatim }: DetailsHeaderP
       sx={{
         marginBottom: '20px',
         padding: '15px',
+        overflow: 'hidden',
         backgroundColor: theme.palette.secondary.main, // Dégradé basé sur le thème
         color: theme.palette.primary.contrastText, // Texte contrasté
       }}
@@ -108,10 +112,9 @@ export default function DetailsHeader({ date, status, verbatim }: DetailsHeaderP
           </Typography>
           <Box>{renderStatusIcon(status)}</Box>
         </Grid>
-
         {/* Boutons d'action */}
-        <Grid size={{ xs: 2 }} container justifyContent="flex-end" alignItems="center">
-          <Box sx={{ display: 'flex', gap: '10px' }}>
+        <Grid size={{ xs: 12, sm: 12, md:2,lg:2 }} container justifyContent={{ xs: 'center', sm: 'center', md:'flex-end', lg:'flex-end' }} alignItems="center">
+          <Box sx={{ display: 'flex', gap: { xs: '30px', sm: '80px', md:'10px',lg:'10px' } }}>
             <RelaunchVerbatimDetails verbatim={verbatim} />
             <DeleteVerbatimDetails id={verbatim._id} />
           </Box>

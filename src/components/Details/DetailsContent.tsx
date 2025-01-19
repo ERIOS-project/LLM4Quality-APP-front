@@ -11,7 +11,7 @@ export default function DetailsContent({ content }: DetailsContentProps) {
 
   return (
     <Grid container spacing={4} justifyContent="center" alignItems="flex-start">
-      <Grid size={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
+      <Grid size={{ xs: 11, sm: 10, md: 10, lg: 10, xl: 10 }}>
         <Typography
           variant="h6"
           style={{
