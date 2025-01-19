@@ -8,7 +8,6 @@ import { fetchCounts } from "../../../api/verbatims";
 import { useTheme } from "@mui/material/styles"; // Importation de `useTheme`
 import { green, red, orange } from "@mui/material/colors";
 
-
 // Composant pour afficher les statistiques
 const CountsVerbatim = () => {
   const theme = useTheme(); // Utilisation de `useTheme` pour récupérer le thème
@@ -56,7 +55,7 @@ const CountsVerbatim = () => {
               sx={{
                 textAlign: "center",
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
                 alignItems: "center",
               }}
             >
@@ -66,20 +65,31 @@ const CountsVerbatim = () => {
                 height={50}
                 animation="wave"
               />
-              <Skeleton
-                variant="text"
-                width={30}
-                height={24}
-                animation="wave"
-                sx={{ marginTop: 1 }}
-              />
-              <Skeleton
-                variant="text"
-                width={50}
-                height={16}
-                animation="wave"
-                sx={{ marginTop: 0.5 }}
-              />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  marginLeft: "8px",
+                  height: "50px",
+                  justifyContent: "center",
+                }}
+              >
+                <Skeleton
+                  variant="text"
+                  width={30}
+                  height={24}
+                  animation="wave"
+                  sx={{ marginTop: 1 }}
+                />
+                <Skeleton
+                  variant="text"
+                  width={50}
+                  height={16}
+                  animation="wave"
+                  sx={{ marginTop: 0.5 }}
+                />
+              </Box>
             </Box>
           ))}
         </Box>
