@@ -202,7 +202,7 @@ export default function VerbatimDatagrid() {
               variant="rectangular"
               width="98%"
               height="95%"
-              style={{ borderRadius: 8 }}
+              style={{ borderRadius: 5 }}
               sx={{
                 bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
               }}
