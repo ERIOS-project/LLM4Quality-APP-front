@@ -190,11 +190,23 @@ export default function VerbatimDatagrid() {
               height: 550,
               width: '100%',
               borderRadius: 8,
-              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              boxShadow: theme.shadows[3],
               backgroundColor: theme.palette.background.paper,
+              margin: '0 auto',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Skeleton variant="rectangular" width="100%" height="100%" />
+            <Skeleton
+              variant="rectangular"
+              width="98%"
+              height="95%"
+              style={{ borderRadius: 8 }}
+              sx={{
+                bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
+              }}
+            />
           </Paper>
         </Grid>
       </Grid>
