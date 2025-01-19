@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
-import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowId, GridColumnMenu, GridColumnMenuProps , GridColumnMenuFilterItem } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
 import { useTheme } from '@mui/material'; // Import du thème Material-UI
+import { Stack } from '@mui/material';
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -92,6 +93,22 @@ export default function VerbatimDatagrid() {
     dispatch(setSelectedRows(selectedVerbatims));
   };
 
+  function CustomColumnMenu(props: GridColumnMenuProps) {
+    const itemProps = {
+      colDef: props.colDef,
+      onClick: props.hideMenu,
+    };
+  
+    return (
+      <React.Fragment>
+        <Stack px={0.5} py={0.5}>
+          {/* Seulement afficher le filtre */}
+          <GridColumnMenuFilterItem {...itemProps}  />
+        </Stack>
+      </React.Fragment>
+    );
+  }
+
   const columns: GridColDef[] = [
     {
       field: 'created_at',
@@ -107,11 +124,13 @@ export default function VerbatimDatagrid() {
       field: 'year',
       headerName: 'Année',
       flex: 1,
+      disableColumnMenu: true,
       width: 100,
     },
     {
       field: 'status',
       headerName: 'Statut',
+      disableColumnMenu: true,
       flex: 1,
       renderCell: (params) => {
         const getIcon = () => {
@@ -137,6 +156,7 @@ export default function VerbatimDatagrid() {
     {
       field: 'actions',
       headerName: '',
+      disableColumnMenu: true,
       flex: 1,
       renderCell: (params) => (
         <Button
@@ -228,8 +248,12 @@ export default function VerbatimDatagrid() {
                     },
                   },
                 },
+                columnMenu: {
+                  labelledby: 'columnMenu',
+                },
               }}
               getRowId={(row) => row.id || row._id}
+             
               onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
               localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
               sx={{
@@ -250,7 +274,8 @@ export default function VerbatimDatagrid() {
                 },
                 '& .MuiDataGrid-selectedRowCountt':{
                   color: theme.palette.text.secondary, // Texte noir en mode clair
-                }
+                },
+                
               }}
             />
           </div>

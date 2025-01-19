@@ -11,30 +11,39 @@ import {
   useTheme,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import CheckIcon from '@mui/icons-material/Check';
 import ClassificationResult from '../../models/ClassificationResult';
 
 interface DetailsTablesProps {
   result?: ClassificationResult;
 }
 
-// Fonction utilitaire pour créer un tableau de données à partir d'un objet
-const createTableData = (data: any) =>
-  Object.entries(data as Record<string, { positive: 0 | 1; negative: 0 | 1 } | null>).map(([key, value]) => {
-    let positive = '';
-    let negative = '';
-    if (value) {
-      positive = value.positive === 1 ? '✔️' : '';
-      negative = value.negative === 1 ? '✔️' : '';
-    }
-    const displayValue = value && value.positive === 0 && value.negative === 0 ? { positive: 'N/A', negative: 'N/A' } : { positive, negative };
-    return {
-      name: key,
-      ...displayValue,
-    };
-  });
-
 export default function DetailsTables({ result }: DetailsTablesProps) {
   const theme = useTheme(); // Utilisation du thème Material-UI
+
+  const createTableData = (data: any) => {
+    return Object.entries(data as Record<string, { positive: 0 | 1; negative: 0 | 1 } | null>).map(([key, value]) => {
+      let positive: React.ReactNode = '';
+      let negative: React.ReactNode = '';
+      if (value) {
+        positive = value.positive === 1 ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CheckIcon style={{ color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000' }} />
+          </div>
+        ) : '';
+        negative = value.negative === 1 ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CheckIcon style={{ color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000' }} />
+          </div>
+        ) : '';
+      }
+      const displayValue = value && value.positive === 0 && value.negative === 0 ? { positive: 'N/A', negative: 'N/A' } : { positive, negative };
+      return {
+        name: key,
+        ...displayValue,
+      };
+    });
+  };
 
   if (!result) {
     return (
