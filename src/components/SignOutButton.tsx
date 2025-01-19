@@ -23,9 +23,20 @@ export const SignOutButton = () => {
   return (
     <Button
       color="inherit"
-      startIcon={<LogoutIcon />}
       onClick={() => handleLogout("redirect")}
+      sx={{
+        minWidth: 0,
+        padding: 1,
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '&:hover': {
+          backgroundColor: theme.palette.action.hover,
+        },
+      }}
     >
+      <LogoutIcon />
     </Button>
   );
 };

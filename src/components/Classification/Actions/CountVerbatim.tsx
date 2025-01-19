@@ -8,15 +8,11 @@ import { fetchCounts } from "../../../api/verbatims";
 import { useTheme } from "@mui/material/styles"; // Importation de `useTheme`
 import { green, red, orange } from "@mui/material/colors";
 
-// Hook pour récupérer les données de comptage
-export const useCounts = () => {
-  return useQuery(["counts"], fetchCounts);
-};
 
 // Composant pour afficher les statistiques
 const CountsVerbatim = () => {
   const theme = useTheme(); // Utilisation de `useTheme` pour récupérer le thème
-  const { data, isLoading, error } = useCounts();
+  const { data, isLoading, error } = useQuery(["counts"], fetchCounts);
 
   if (error)
     return <Typography color="error">Error loading counts!</Typography>;
