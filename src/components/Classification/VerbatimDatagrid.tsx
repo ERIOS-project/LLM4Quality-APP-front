@@ -115,6 +115,7 @@ export default function VerbatimDatagrid() {
       headerName: 'Date de création',
       width: 200,
       flex: 1,
+      disableColumnMenu: true,
       valueGetter: (value, row) => {
         const date = row.created_at;
         return date ? new Date(date).toLocaleDateString() : 'Date non disponible';
@@ -132,6 +133,7 @@ export default function VerbatimDatagrid() {
       headerName: 'Statut',
       disableColumnMenu: true,
       flex: 1,
+      sortable: false,
       renderCell: (params) => {
         const getIcon = () => {
           switch (params.value) {
@@ -158,6 +160,7 @@ export default function VerbatimDatagrid() {
       headerName: '',
       disableColumnMenu: true,
       flex: 1,
+      sortable: false,
       renderCell: (params) => (
         <Button
           variant="contained"
