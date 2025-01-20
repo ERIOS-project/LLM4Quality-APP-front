@@ -27,7 +27,7 @@ export default function VerbatimDatagrid() {
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const queryClient = useQueryClient();
   const theme = useTheme(); // Accès au thème
 
