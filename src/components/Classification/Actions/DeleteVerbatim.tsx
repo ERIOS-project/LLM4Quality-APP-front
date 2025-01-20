@@ -10,7 +10,11 @@ import { Box } from '@mui/material';
 import { useThemeContext } from '../../../components/ThemeContextProvider'; // Importation du ThemeContext
 import type { AppDispatch } from '../../../redux/store';
 
-export default function DeleteVerbatim() {
+interface DeleteVerbatimProps {
+  isMobile: boolean;
+}
+
+export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
   const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();
@@ -44,15 +48,15 @@ export default function DeleteVerbatim() {
   };
 
   return (
-    <Box sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <Button
         variant="contained"
-        startIcon={<DeleteIcon />}
+        startIcon={!isMobile && <DeleteIcon />} // Afficher l'icône uniquement si ce n'est pas mobile
         sx={{
-          fontSize: '1.1rem',
-          padding: '12px 24px', // Espacement ajusté pour un bouton plus net
+          fontSize: isMobile ? '0' : '1.1rem', // Ajuster la taille de la police pour mobile
+          padding: isMobile ? '12px' : '12px 24px', // Ajuster le padding pour mobile
           textTransform: 'none', // Garde la police naturelle
-          borderRadius: '8px', // Coins arrondis pour un aspect moderne
+          borderRadius: isMobile ? '50%' : '8px', // Coins arrondis pour un aspect moderne ou rond pour mobile
           backgroundColor: darkMode ? '#d32f2f' : '#d32f2f', // Rouge pour signaler la suppression
           color: '#ffffff', // Texte blanc pour le contraste
           boxShadow: darkMode
@@ -68,10 +72,13 @@ export default function DeleteVerbatim() {
             backgroundColor: darkMode ? '#7A0004' : '#7A0004', // Rouge encore plus foncé au clic
           },
           verticalAlign: 'middle',
+          width: isMobile ? '48px' : 'auto', // Ajuster la largeur pour mobile
+          height: isMobile ? '48px' : 'auto', // Ajuster la hauteur pour mobile
+          minWidth: 'auto', // Supprimer la largeur minimale par défaut
         }}
         onClick={handleDelete}
       >
-        Supprimer
+        {isMobile ? <DeleteIcon /> : 'Supprimer'} {/* Afficher l'icône au centre si mobile, sinon le texte */}
       </Button>
     </Box>
   );

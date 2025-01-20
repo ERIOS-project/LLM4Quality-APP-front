@@ -76,7 +76,7 @@ export default function VerbatimDatagridActions() {
           </Grid>
 
           <Grid
-            size={{lg: 1.5 }}
+            size={{lg: 1.8 }}
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -86,13 +86,13 @@ export default function VerbatimDatagridActions() {
           >
             {selectedRows.length > 0 && (
               <div style={{ width: '100%' }}>
-                <RelaunchClassification />
+                <RelaunchClassification isMobile={false}/>
               </div>
             )}
           </Grid>
 
           <Grid
-            size={{lg: 1.5 }}
+            size={{lg: 1.8 }}
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -102,13 +102,13 @@ export default function VerbatimDatagridActions() {
           >
             {selectedRows.length > 0 && (
               <div style={{ width: '100%' }}>
-                <DeleteVerbatim />
+                <DeleteVerbatim isMobile={false}/>
               </div>
             )}
           </Grid>
 
           <Grid
-            size={{lg: 1.5 }}
+            size={{lg: 1.8 }}
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -117,7 +117,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
             <div style={{ width: '100%' }}>
-              <UploadCsv />
+              <UploadCsv isMobile={false} />
             </div>
           </Grid>
         </>
@@ -148,7 +148,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
             <div style={{ width: '100%' }}>
-              <UploadCsv />
+              <UploadCsv isMobile={false}/>
             </div>
           </Grid>
           {selectedRows.length > 0 && (
@@ -162,7 +162,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <RelaunchClassification />
+                <RelaunchClassification isMobile={false} />
               </div>
           </Grid>
           )}
@@ -177,7 +177,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <DeleteVerbatim />
+                <DeleteVerbatim isMobile={false} />
               </div>
             
           </Grid>
@@ -212,7 +212,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <RelaunchClassification />
+                <RelaunchClassification isMobile={false}/>
               </div>
           </Grid>
           )}
@@ -227,7 +227,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <DeleteVerbatim />
+                <DeleteVerbatim isMobile={false}/>
               </div>
             
           </Grid>
@@ -242,7 +242,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
             <div style={{ width: '100%' }}>
-              <UploadCsv />
+              <UploadCsv isMobile={false}/>
             </div>
           </Grid>
         </>
@@ -274,7 +274,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
             <div style={{ width: '100%' }}>
-              <UploadCsv />
+              <UploadCsv isMobile={true}/>
             </div>
           </Grid>
           {selectedRows.length > 0 && (
@@ -288,7 +288,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <RelaunchClassification />
+                <RelaunchClassification isMobile={true}/>
               </div>
           </Grid>
           )}
@@ -303,7 +303,7 @@ export default function VerbatimDatagridActions() {
             }}
           >
               <div style={{ width: '100%' }}>
-                <DeleteVerbatim />
+                <DeleteVerbatim isMobile={true}/>
               </div>
             
           </Grid>
