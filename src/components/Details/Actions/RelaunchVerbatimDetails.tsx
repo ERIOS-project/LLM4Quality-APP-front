@@ -18,7 +18,7 @@ export default function RelaunchVerbatimDetails({ verbatim }: RelaunchVerbatimDe
   const handleRelaunch = () => {
     rerunClassification(
       [verbatim],
-      () => dispatch(setToast('Reclassification en cours...', 'success', 5000)),
+      () => dispatch(setToast('Reclassification en cours...', 'warning', 5000)),
       () => dispatch(setToast('Une erreur est survenue lors de la reclassification.', 'error', 5000))
     );
   };
