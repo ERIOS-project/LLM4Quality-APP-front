@@ -234,7 +234,7 @@ export default function VerbatimDatagrid() {
                 setPage(model.page);
               }}
               checkboxSelection
-              rowSelectionModel={selectedRows.map((row) => row._id)}
+              rowSelectionModel={selectedRows.map((row:any) => row._id)}
               slotProps={{
                 pagination: {
                   SelectProps: {
