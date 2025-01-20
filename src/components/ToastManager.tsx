@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';// Importer l'icône Warning
 import { RootState } from '../redux/store';
 import { removeToast } from '../redux/toastSlice';
 
@@ -27,7 +28,12 @@ export default function ToastManager() {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           sx={{ marginBottom: `${index * 60}px` }} // Espacement entre les toasts
         >
-          <Alert onClose={handleClose(toast.id)} severity={toast.severity} sx={{ width: '100%' }}>
+          <Alert
+            onClose={handleClose(toast.id)}
+            severity={toast.severity}
+            icon={toast.severity === 'warning' ? <HourglassTopIcon /> : undefined} // Icône personnalisée pour les warnings
+            sx={{ width: '100%' }}
+          >
             {toast.message}
           </Alert>
         </Snackbar>

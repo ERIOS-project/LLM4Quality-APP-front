@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface Toast {
   id: string;
   message: string;
-  severity: 'success' | 'error';
+  severity: 'success' | 'error' | 'warning' | 'info';
 }
 
 interface ToastState {
@@ -24,7 +24,7 @@ const toastSlice = createSlice({
       reducer: (state, action: PayloadAction<Toast>) => {
         state.toasts.push(action.payload);
       },
-      prepare: (message: string, severity: 'success' | 'error') => ({
+      prepare: (message: string, severity: 'success' | 'error' | 'warning' | 'info') => ({
         payload: { id: uuidv4(), message, severity },
       }),
     },
@@ -39,7 +39,7 @@ export const { addToast, removeToast } = toastSlice.actions;
 // Thunk for adding toast with auto-dismiss
 export const setToast = (
   message: string,
-  severity: 'success' | 'error',
+  severity: 'success' | 'error' | 'warning' | 'info',
   timeout: number = 5000 // Default timeout of 5 seconds
 ) => (dispatch: AppDispatch, getState: () => RootState) => {
   const { toasts } = getState().toast;

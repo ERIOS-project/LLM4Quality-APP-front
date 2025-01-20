@@ -21,7 +21,7 @@ export default function RelaunchClassification({ isMobile }: RelaunchClassificat
   // Vérification de l'état désactivé
   const isDisabled = selectedRows.length === 0;
 
-  const showToast = (message: string, severity: 'success' | 'error') => {
+  const showToast = (message: string, severity: 'success' | 'error' | 'warning' | 'info' ) => {
     dispatch(setToast(message, severity, 5000));
   };
 
@@ -32,7 +32,7 @@ export default function RelaunchClassification({ isMobile }: RelaunchClassificat
     if (verbatims.length > 0) {
       rerunClassification(
         verbatims,
-        () => showToast('Reclassification en cours...', 'success'),
+        () => showToast('Reclassification en cours...', 'warning'),
         () => showToast('Une erreur est survenue lors de la reclassification.', 'error')
       );
     }
