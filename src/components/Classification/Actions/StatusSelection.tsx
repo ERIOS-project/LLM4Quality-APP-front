@@ -7,7 +7,6 @@ import { setSelectedStatus } from '../../../redux/statusSlice';
 import { Box } from '@mui/system';
 import { useThemeContext } from "../../../components/ThemeContextProvider"; // Importation de useThemeContext
 import { useTheme
-
  } from '@mui/material';
 const StatusSelection = memo(() => {
   const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode

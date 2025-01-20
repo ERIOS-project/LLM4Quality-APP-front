@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { deleteVerbatims } from '../../../api/verbatims';
-import { setToast } from '../../../redux/toastSlice'; // Import du thunk setToast
+import { setToast } from '../../../redux/toastSlice';
 import { Box } from '@mui/material';
-import { useThemeContext } from '../../../components/ThemeContextProvider'; // Importation du ThemeContext
+import { useThemeContext } from '../../../components/ThemeContextProvider';
+import ConfirmationDialog from '../../ConfirmationDialog'; // Import du composant
 import type { AppDispatch } from '../../../redux/store';
 
 interface DeleteVerbatimProps {
@@ -15,10 +16,12 @@ interface DeleteVerbatimProps {
 }
 
 export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
-  const { darkMode } = useThemeContext(); // Utilisation du ThemeContext pour obtenir le mode
+  const { darkMode } = useThemeContext();
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const mutation = useMutation(deleteVerbatims, {
     onSuccess: (data, variables) => {
@@ -27,7 +30,7 @@ export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
         setToast(
           `${variables.length} fichier(s) supprimé(s) avec succès.`,
           'success',
-          5000 // Toast disparaît après 5 secondes
+          5000
         )
       );
     },
@@ -36,7 +39,7 @@ export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
         setToast(
           'Une erreur est survenue lors de la suppression des fichiers.',
           'error',
-          5000 // Toast disparaît après 5 secondes
+          5000
         )
       );
     },
@@ -45,41 +48,50 @@ export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
   const handleDelete = () => {
     const ids = selectedRows.map((verbatim) => verbatim._id);
     mutation.mutate(ids);
+    setDialogOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      <Button
-        variant="contained"
-        startIcon={!isMobile && <DeleteIcon />} // Afficher l'icône uniquement si ce n'est pas mobile
-        sx={{
-          fontSize: isMobile ? '0' : '1.1rem', // Ajuster la taille de la police pour mobile
-          padding: isMobile ? '12px' : '12px 24px', // Ajuster le padding pour mobile
-          textTransform: 'none', // Garde la police naturelle
-          borderRadius: isMobile ? '50%' : '8px', // Coins arrondis pour un aspect moderne ou rond pour mobile
-          backgroundColor: darkMode ? '#d32f2f' : '#d32f2f', // Rouge pour signaler la suppression
-          color: '#ffffff', // Texte blanc pour le contraste
-          boxShadow: darkMode
-            ? '0 4px 8px rgba(0, 0, 0, 0.1)'
-            : '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre douce pour profondeur
-          '&:hover': {
-            backgroundColor: darkMode ? '#9A0007' : '#9A0007', // Rouge plus foncé au survol
-            boxShadow: darkMode
-              ? '0 6px 12px rgba(0, 0, 0, 0.15)'
-              : '0 6px 12px rgba(0, 0, 0, 0.15)', // Ombre plus marquée au survol
-          },
-          '&:active': {
-            backgroundColor: darkMode ? '#7A0004' : '#7A0004', // Rouge encore plus foncé au clic
-          },
-          verticalAlign: 'middle',
-          width: isMobile ? '48px' : 'auto', // Ajuster la largeur pour mobile
-          height: isMobile ? '48px' : 'auto', // Ajuster la hauteur pour mobile
-          minWidth: 'auto', // Supprimer la largeur minimale par défaut
-        }}
-        onClick={handleDelete}
-      >
-        {isMobile ? <DeleteIcon /> : 'Supprimer'} {/* Afficher l'icône au centre si mobile, sinon le texte */}
-      </Button>
-    </Box>
+    <>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <Button
+          variant="contained"
+          startIcon={!isMobile && <DeleteIcon />}
+          sx={{
+            fontSize: isMobile ? '0' : '1.1rem',
+            padding: isMobile ? '12px' : '12px 24px',
+            textTransform: 'none',
+            borderRadius: isMobile ? '50%' : '8px',
+            backgroundColor: darkMode ? '#d32f2f' : '#d32f2f',
+            color: '#ffffff',
+            '&:hover': {
+              backgroundColor: darkMode ? '#9A0007' : '#9A0007',
+            },
+          }}
+          onClick={handleOpenDialog}
+        >
+          {isMobile ? <DeleteIcon /> : 'Supprimer'}
+        </Button>
+      </Box>
+
+      <ConfirmationDialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        onConfirm={handleDelete}
+        title="Confirmer la suppression"
+        text="Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ? Cette action est irréversible."
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        confirmColor="error"
+      />
+    </>
   );
 }
