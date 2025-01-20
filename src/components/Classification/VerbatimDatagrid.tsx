@@ -9,7 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { setSelectedRows } from '../../redux/selectedRowsSlice';
+import { deselectAllRows, setSelectedRows } from '../../redux/selectedRowsSlice';
 import Verbatim from '../../models/Verbatim';
 import { fetchVerbatims } from '../../api/verbatims';
 import { RootState } from '../../redux/store';
@@ -26,7 +26,6 @@ export default function VerbatimDatagrid() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
-  const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const queryClient = useQueryClient();
@@ -41,11 +40,7 @@ export default function VerbatimDatagrid() {
       })
   );
 
-  useEffect(() => {
-    if (selectedRows.length === 0) {
-      setSelectedRowIds([]);
-    }
-  }, [selectedRows.length]);
+
 
   useEffect(() => {
     const handleNewVerbatim = (data: any | string) => {
@@ -88,26 +83,13 @@ export default function VerbatimDatagrid() {
   }, [queryClient, selectedYear, selectedStatus]);
 
   const handleSelectionChange = (selection: GridRowId[]) => {
-    setSelectedRowIds(selection);
-    const selectedVerbatims = verbatims.filter((verbatim: Verbatim) => selection.includes(verbatim._id));
+
+    const selectedVerbatims = verbatims.filter((verbatim: Verbatim) =>
+      selection.includes(verbatim._id)
+    );
     dispatch(setSelectedRows(selectedVerbatims));
   };
 
-  function CustomColumnMenu(props: GridColumnMenuProps) {
-    const itemProps = {
-      colDef: props.colDef,
-      onClick: props.hideMenu,
-    };
-  
-    return (
-      <React.Fragment>
-        <Stack px={0.5} py={0.5}>
-          {/* Seulement afficher le filtre */}
-          <GridColumnMenuFilterItem {...itemProps}  />
-        </Stack>
-      </React.Fragment>
-    );
-  }
 
   const columns: GridColDef[] = [
     {
@@ -168,6 +150,7 @@ export default function VerbatimDatagrid() {
           onClick={(event) => {
             event.stopPropagation();
             navigate(`/details/${params.row._id}`);
+            dispatch(deselectAllRows());
           }}
           sx={{
             textTransform: 'none',
@@ -251,6 +234,7 @@ export default function VerbatimDatagrid() {
                 setPage(model.page);
               }}
               checkboxSelection
+              rowSelectionModel={selectedRows.map((row) => row._id)}
               slotProps={{
                 pagination: {
                   SelectProps: {
@@ -268,7 +252,6 @@ export default function VerbatimDatagrid() {
                 },
               }}
               getRowId={(row) => row.id || row._id}
-             
               onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
               localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
               sx={{

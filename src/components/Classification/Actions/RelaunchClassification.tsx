@@ -4,7 +4,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../../redux/store';
 import Verbatim from '../../../models/Verbatim';
-import { setSelectedRows } from '../../../redux/selectedRowsSlice';
+import { deselectAllRows, setSelectedRows } from '../../../redux/selectedRowsSlice';
 import { rerunClassification } from '../../../api/websockets/rerun';
 import { setToast } from '../../../redux/toastSlice'; // Utilisation du thunk centralisé
 import { useTheme } from '@mui/material';
@@ -27,7 +27,7 @@ export default function RelaunchClassification({ isMobile }: RelaunchClassificat
 
   const handleRelaunch = () => {
     const verbatims: Verbatim[] = selectedRows.filter((row): row is Verbatim => row.hasOwnProperty('_id'));
-    dispatch(setSelectedRows([]));
+    dispatch(deselectAllRows());
 
     if (verbatims.length > 0) {
       rerunClassification(
