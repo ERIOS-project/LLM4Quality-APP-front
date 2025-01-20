@@ -70,8 +70,11 @@ export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
             padding: isMobile ? '12px' : '12px 24px',
             textTransform: 'none',
             borderRadius: isMobile ? '50%' : '8px',
+            minWidth:'48px',
             backgroundColor: darkMode ? '#d32f2f' : '#d32f2f',
             color: '#ffffff',
+            width: isMobile ? '48px' : 'auto', // Ajuster la largeur pour mobile
+            height: isMobile ? '48px' : 'auto', // Ajuster la hauteur pour mobile
             '&:hover': {
               backgroundColor: darkMode ? '#9A0007' : '#9A0007',
             },
