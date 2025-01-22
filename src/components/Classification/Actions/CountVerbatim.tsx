@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Tooltip, Typography, Box, Skeleton } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -7,11 +7,27 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { fetchCounts } from "../../../api/verbatims";
 import { useTheme } from "@mui/material/styles"; // Importation de `useTheme`
 import { green, red, orange } from "@mui/material/colors";
+import {eventEmitter} from "../../../api/websockets/simpleEventEmitter";
 
 // Composant pour afficher les statistiques
 const CountsVerbatim = () => {
   const theme = useTheme(); // Utilisation de `useTheme` pour récupérer le thème
-  const { data, isLoading, error } = useQuery(["counts"], fetchCounts);
+  const { data, isLoading, error, refetch } = useQuery(["counts"], fetchCounts, {
+    //refetchInterval: 5000, // Auto-refresh every 5 seconds
+  });
+
+  useEffect(() => {
+
+    const handleNewVerbatim = () => {
+      refetch();
+    }
+
+    eventEmitter.on('newVerbatim', handleNewVerbatim);
+    
+    return () => {
+      eventEmitter.off('newVerbatim', handleNewVerbatim);
+    };
+  }, []);
 
   if (error)
     return <Typography color="error">Error loading counts!</Typography>;
