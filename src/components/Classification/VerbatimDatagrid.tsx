@@ -19,6 +19,7 @@ import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
 import { useTheme } from '@mui/material'; // Import du thème Material-UI
 import RefreshIcon from '@mui/icons-material/Refresh';
+import CustomNoRowsOverlay from './NoRowsVerbatimDatagrid';
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -265,6 +266,9 @@ export default function VerbatimDatagrid() {
               }}
               checkboxSelection
               rowSelectionModel={selectedRows.map((row:any) => row._id)}
+              slots={{
+                noRowsOverlay: CustomNoRowsOverlay,
+              }}
               slotProps={{
                 pagination: {
                   SelectProps: {

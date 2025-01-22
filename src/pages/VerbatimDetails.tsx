@@ -55,7 +55,7 @@ export default function VerbatimDetails() {
         <DetailsContent content={verbatim.content} />
       </Grid>
       <Grid size={{xs:12}} style={{ marginBottom: '16px' }}>
-        <DetailsTables result={verbatim.result} />
+        <DetailsTables result={verbatim.result} status={verbatim.status} />
       </Grid>
     </Grid>
   );

@@ -13,12 +13,15 @@ import {
 import Grid from '@mui/material/Grid2';
 import CheckIcon from '@mui/icons-material/Check';
 import ClassificationResult from '../../models/ClassificationResult';
+import DetailsInRun from './DetailsInRun';
+import VerbatimStatus from '../../models/VerbatimStatus';
 
 interface DetailsTablesProps {
   result?: ClassificationResult;
+  status?: VerbatimStatus;
 }
 
-export default function DetailsTables({ result }: DetailsTablesProps) {
+export default function DetailsTables({ result, status }: DetailsTablesProps) {
   const theme = useTheme(); // Utilisation du thème Material-UI
 
   const createTableData = (data: any) => {
@@ -46,11 +49,17 @@ export default function DetailsTables({ result }: DetailsTablesProps) {
   };
 
   if (!result) {
+    if(status === VerbatimStatus.Run) {
     return (
-      <Typography variant="h6" color="textSecondary" align="center">
-        Aucune donnée disponible.
-      </Typography>
+      <DetailsInRun/>
     );
+    }
+    else if (status === VerbatimStatus.Error) {
+      return null;
+    }
+    else{
+      return null
+    }
   }
 
   const { qualite_hoteliere, professionnalisme_de_l_equipe, circuit_de_prise_en_charge } = result;
