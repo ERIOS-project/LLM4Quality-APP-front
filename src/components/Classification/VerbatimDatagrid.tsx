@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
-import { DataGrid, GridColDef, GridRowId, GridColumnMenu, GridColumnMenuProps , GridColumnMenuFilterItem } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import VerbatimStatus from '../../models/VerbatimStatus';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -18,7 +18,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
 import { useTheme } from '@mui/material'; // Import du thème Material-UI
-import { Stack } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function VerbatimDatagrid() {
   const queryClient = useQueryClient();
   const theme = useTheme(); // Accès au thème
 
-  const { data: verbatims = [], isLoading, error } = useQuery<Verbatim[]>(
+  const { data: verbatims = [], isLoading, error, refetch } = useQuery<Verbatim[]>(
     ['verbatims', selectedYear, selectedStatus],
     () =>
       fetchVerbatims({
@@ -39,8 +39,6 @@ export default function VerbatimDatagrid() {
         status: selectedStatus,
       })
   );
-
-
 
   useEffect(() => {
     const handleNewVerbatim = (data: any | string) => {
@@ -83,13 +81,11 @@ export default function VerbatimDatagrid() {
   }, [queryClient, selectedYear, selectedStatus]);
 
   const handleSelectionChange = (selection: GridRowId[]) => {
-
     const selectedVerbatims = verbatims.filter((verbatim: Verbatim) =>
       selection.includes(verbatim._id)
     );
     dispatch(setSelectedRows(selectedVerbatims));
   };
-
 
   const columns: GridColDef[] = [
     {
@@ -197,7 +193,41 @@ export default function VerbatimDatagrid() {
   }
 
   if (error) {
-    return <div>Error loading data</div>;
+    return (
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
+          <Paper
+            style={{
+              height: 550,
+              width: '100%',
+              borderRadius: 8,
+              boxShadow: theme.shadows[3],
+              backgroundColor: theme.palette.background.paper,
+              margin: '0 auto',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => window.location.reload()}
+              sx={{
+                textTransform: 'none',
+                padding: '12px',
+                color: theme.palette.text.primary, // Texte noir en mode clair
+                minWidth: '48px', // Assurer que le bouton soit carré
+                minHeight: '48px', // Assurer que le bouton soit carré
+                borderRadius: '50%', // Bouton rond
+              }}
+            >
+              <RefreshIcon />
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
+    );
   }
 
   return (

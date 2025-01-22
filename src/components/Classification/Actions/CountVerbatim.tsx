@@ -30,7 +30,7 @@ const CountsVerbatim = () => {
   }, []);
 
   if (error)
-    return <Typography color="error">Error loading counts!</Typography>;
+    return 
 
   const statuses = [
     {
