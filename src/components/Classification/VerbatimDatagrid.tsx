@@ -26,6 +26,7 @@ export default function VerbatimDatagrid() {
   const navigate = useNavigate();
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
   const selectedYear = useSelector((state: RootState) => state.year.selectedYear);
+  const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
   const selectedStatus = useSelector((state: RootState) => state.status.selectedStatus);
   const [pageSize, setPageSize] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
@@ -243,17 +244,17 @@ export default function VerbatimDatagrid() {
         <Paper
           style={{
             height: 550,
-            width: '100%',
+            width: "100%",
             borderRadius: 8,
             boxShadow: theme.shadows[3],
             backgroundColor: theme.palette.background.paper,
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <div style={{ width: '98%', height: '95%' }}>
+          <div style={{ width: "98%", height: "95%" }}>
             <DataGrid
               rows={verbatims}
               columns={columns}
@@ -261,11 +262,15 @@ export default function VerbatimDatagrid() {
               paginationModel={{ pageSize, page }}
               pageSizeOptions={[10, 20, 30]}
               onPaginationModelChange={(model) => {
-                setPageSize(model.pageSize);
-                setPage(model.page);
+                setIsPageChanging(true); // Start transition
+                setTimeout(() => {
+                  setPageSize(model.pageSize);
+                  setPage(model.page);
+                  setIsPageChanging(false); // End transition
+                }, 300);
               }}
               checkboxSelection
-              rowSelectionModel={selectedRows.map((row:any) => row._id)}
+              rowSelectionModel={selectedRows.map((row: any) => row._id)}
               slots={{
                 noRowsOverlay: CustomNoRowsOverlay,
               }}
@@ -282,37 +287,46 @@ export default function VerbatimDatagrid() {
                   },
                 },
                 columnMenu: {
-                  labelledby: 'columnMenu',
+                  labelledby: "columnMenu",
                 },
               }}
               getRowId={(row) => row.id || row._id}
-              onRowSelectionModelChange={(newSelection) => handleSelectionChange(newSelection as GridRowId[])}
+              onRowSelectionModelChange={(newSelection) =>
+                handleSelectionChange(newSelection as GridRowId[])
+              }
               localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
               sx={{
-                '& .MuiDataGrid-cell': {
+                "& .MuiDataGrid-cell": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiDataGrid-columnHeaderTitle': {
+                "& .MuiDataGrid-columnHeaderTitle": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiTablePagination-root': {
+                "& .MuiTablePagination-root": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiTablePagination-caption': {
+                "& .MuiTablePagination-caption": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiTablePagination-selectIcon': {
+                "& .MuiTablePagination-selectIcon": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiDataGrid-selectedRowCountt':{
+                "& .MuiDataGrid-selectedRowCountt": {
                   color: theme.palette.text.secondary, // Texte noir en mode clair
                 },
-                '& .MuiDataGrid-cell:focus': {
-                    outline: 'none'
+                "& .MuiDataGrid-cell:focus": {
+                  outline: "none",
                 },
-                '& .MuiDataGrid-cell:focus-within': {
-                    outline: 'none'
-                }
+                "& .MuiDataGrid-cell:focus-within": {
+                  outline: "none",
+                },
+                "& .MuiDataGrid-row": {
+                  opacity: isPageChanging ? 0 : 1,
+                  transition: "opacity 0.2s ease-in-out", // Smooth fade-in effect
+                  animation: isPageChanging
+                    ? "fade-out 0.2s ease-in-out"
+                    : "none",
+                },
               }}
             />
           </div>
