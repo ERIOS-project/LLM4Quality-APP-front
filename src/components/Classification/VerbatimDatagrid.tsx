@@ -44,6 +44,7 @@ export default function VerbatimDatagrid() {
 
   useEffect(() => {
     const handleNewVerbatim = (data: any | string) => {
+      if (data === undefined) {return;}
       if (typeof data === 'string') {
         try {
           data = JSON.parse(data);
@@ -52,7 +53,7 @@ export default function VerbatimDatagrid() {
           return;
         }
       }
-
+      
       const formattedData = {
         _id: data.id || data._id,
         content: data.content,

@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 import { useThemeContext } from '../../../components/ThemeContextProvider';
 import ConfirmationDialog from '../../ConfirmationDialog'; // Import du composant
 import type { AppDispatch } from '../../../redux/store';
+import { eventEmitter } from "../../../api/websockets/simpleEventEmitter";
 
 interface DeleteVerbatimProps {
   isMobile: boolean;
@@ -25,6 +26,7 @@ export default function DeleteVerbatim({ isMobile }: DeleteVerbatimProps) {
 
   const mutation = useMutation(deleteVerbatims, {
     onSuccess: (data, variables) => {
+      eventEmitter.emit("newVerbatim");
       queryClient.invalidateQueries('verbatims');
       dispatch(
         setToast(
