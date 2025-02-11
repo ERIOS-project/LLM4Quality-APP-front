@@ -23,8 +23,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ghcr.io/ERIOS-project/llm4quality_front:latest .
+          docker build -t ghcr.io/erios-project/llm4quality_front:latest .
 
       - name: Push Docker Image to GHCR
         run: |
-          docker push ghcr.io/ERIOS-project/llm4quality_front:latest
+          docker push ghcr.io/erios-project/llm4quality_front:latest
