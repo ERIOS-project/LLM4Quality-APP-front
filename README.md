@@ -1,27 +1,65 @@
-# vite-template-redux
+# LLM4Quality-APP
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+Welcome to the LLM4Quality-APP! This application is designed to help you manage and analyze verbatim data efficiently.
 
-```sh
-npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
-```
+## Table of Contents
 
-## Goals
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [License](#license)
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+## Installation
 
-## Scripts
+To get started with the LLM4Quality-APP, follow these steps:
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/LLM4Quality-APP.git
+    ```
 
-## Inspiration
+2. Navigate to the project directory:
+    ```sh
+    cd LLM4Quality-APP
+    ```
 
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
+
+4. Create a `.env` file based on the `.env.sample` file and fill in the necessary environment variables.
+
+5. Start the development server:
+    ```sh
+    npm run dev
+    ```
+
+## Usage
+
+Once the server is running, you can access the application at `http://localhost:3000`. 
+
+### Authentication
+
+The application uses Azure AD for authentication. Make sure to configure your Azure AD credentials in the `.env` file.
+
+### Verbatim Classification
+
+1. Upload a CSV file containing verbatim data.
+2. Select the year and status for the verbatim entries.
+3. Click on "Validate" to start the analysis.
+
+### Viewing Details
+
+Click on any verbatim entry to view detailed information, including classification results and status.
+
+## Features
+
+- **Dark Mode**: Toggle between light and dark themes.
+- **Real-time Updates**: Get real-time updates on verbatim processing status.
+- **Detailed Analysis**: View detailed classification results for each verbatim entry.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
