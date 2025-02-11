@@ -1,19 +1,19 @@
-import "./App.css"
+import "./App.css";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import {Routes} from "react-router-dom";
-import {Route} from "react-router-dom";
-import {useEffect} from 'react';
-import {loginRequest } from './authConfig';
-import {Provider} from 'react-redux';
-import { store } from './app/store';
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from 'react';
+import { loginRequest } from './authConfig';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 import MyAppBar from "./components/AppBar";
 import VerbatimClassification from "./pages/VerbatimClassification";
-
-
-
+import VerbatimDetails from "./pages/VerbatimDetails"; 
+import ToastManager from "./components/ToastManager";
+import DarkModeToggle from "./components/DarkModeToggle";
+import { Box, useTheme } from '@mui/material';
 
 const LoginRedirect = () => {
-  const {instance} = useMsal();
+  const { instance } = useMsal();
   useEffect(() => {
     instance.loginRedirect(loginRequest).catch((e) => {
       console.log(e);
@@ -23,25 +23,33 @@ const LoginRedirect = () => {
   return null; 
 };
 
+export default function App() {
+  const { instance } = useMsal();
+  const theme = useTheme(); // Accéder au thème actuel
 
-export default function App(){
-  const { instance, accounts } = useMsal();
   return (
-    <div className="App">
+    <Box
+      sx={{
+        minHeight: '100vh', // Prendre toute la hauteur de la page
+        bgcolor: theme.palette.background.default, // Utiliser la couleur de fond du thème
+  
+      }}
+    >
       <AuthenticatedTemplate>
-        <MyAppBar/>
+        <MyAppBar />
         <Provider store={store}>
-          <div className="body">
+          <Box className="body" sx={{ flex: 1 }}> {/* Flex: 1 pour remplir l'espace restant */}
             <Routes>
-                <Route path='/' element={< VerbatimClassification/>} />
+              <Route path='/' element={<VerbatimClassification />} />
+              <Route path='/details/:id' element={<VerbatimDetails />} />
             </Routes>
-          </div>
+            <ToastManager />
+          </Box>
         </Provider>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-         <LoginRedirect />
-    </UnauthenticatedTemplate>
-    </div>
-  )
+        <LoginRedirect />
+      </UnauthenticatedTemplate>
+    </Box>
+  );
 }
-

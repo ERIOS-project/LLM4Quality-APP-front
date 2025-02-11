@@ -1,7 +1,7 @@
 enum VerbatimStatus {
-    Success =  "Success",
-    Error = "Error",
-    Run = "Run",
+    Success =  "SUCCESS",
+    Error = "ERROR",
+    Run = "RUN",
 }
 
 export default VerbatimStatus;

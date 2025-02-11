@@ -1,11 +1,13 @@
-import VerbatimDatagrid from "../components/VerbatimDatagrid";
-import VerbatimDatagridActions from "../components/VerbatimDatagridActions";
+import VerbatimDatagrid from "../components/Classification/VerbatimDatagrid";
+import VerbatimDatagridActions from "../components/Classification/VerbatimDatagridActions";
 
-export default function VerbatimClassification(){
-    return(
+export default function VerbatimClassification() {
+    return (
         <div>
-            <VerbatimDatagridActions/>
-            <VerbatimDatagrid/>
+            <div style={{ margin: '16px', marginBottom:'32px' }}>
+                <VerbatimDatagridActions />
+            </div>
+            <VerbatimDatagrid />
         </div>
-    )
+    );
 }
