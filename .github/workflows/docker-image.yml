@@ -1,0 +1,30 @@
+name: Build and Push Docker Image to GHCR
+
+on:
+  push:
+    branches:
+      - main  # Adjust if needed
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Allows pushing to GHCR
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/llm4quality_front:latest .
+
+      - name: Push Docker Image to GHCR
+        run: |
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/llm4quality_front:latest
