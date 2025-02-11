@@ -1,5 +1,5 @@
 # Utilisez une image de base officielle de Node.js
-FROM node:16-alpine
+FROM node:23-alpine
 
 # Définissez le répertoire de travail dans le conteneur
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installez les dépendances
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copiez le reste de l'application dans le répertoire de travail
 COPY . .
