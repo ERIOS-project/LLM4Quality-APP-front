@@ -13,6 +13,7 @@ import { useTheme, useMediaQuery } from '@mui/material';
 export default function VerbatimDatagridActions() {
   const selectedRows = useSelector((state: RootState) => state.selectedRows.selectedRows);
   const theme = useTheme(); // Accéder au thème
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
   const isLg = useMediaQuery(theme.breakpoints.only('lg'));
   const isMd = useMediaQuery(theme.breakpoints.only('md'));
   const isSm = useMediaQuery(theme.breakpoints.only('sm'));
@@ -32,7 +33,7 @@ export default function VerbatimDatagridActions() {
     >
       {/* YearSelection et StatusSelection toujours affichés de la même manière */}
       <Grid
-        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 }}
+        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 , xl: 1.5}}
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -46,7 +47,7 @@ export default function VerbatimDatagridActions() {
       </Grid>
 
       <Grid
-        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 }}
+        size={{ xs: 6, sm: 6, md: 3, lg: 1.5 , xl: 1.5}}
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -58,6 +59,70 @@ export default function VerbatimDatagridActions() {
           <StatusSelection />
         </div>
       </Grid>
+
+      {isXl && (
+        <>
+          <Grid
+            size={{xl: 3.5 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <CountVerbatim />
+            </div>
+          </Grid>
+
+          <Grid
+            size={{xl: 1.8 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            {selectedRows.length > 0 && (
+              <div style={{ width: '100%' }}>
+                <RelaunchClassification isMobile={false}/>
+              </div>
+            )}
+          </Grid>
+
+          <Grid
+            size={{xl: 1.8 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            {selectedRows.length > 0 && (
+              <div style={{ width: '100%' }}>
+                <DeleteVerbatim isMobile={false}/>
+              </div>
+            )}
+          </Grid>
+
+          <Grid
+            size={{lg: 1.8 }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100px',
+            }}
+          >
+            <div style={{ width: '100%' }}>
+              <UploadCsv isMobile={false} />
+            </div>
+          </Grid>
+        </>
+      )}
 
       {isLg && (
         <>
