@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
+import chuLogo from "../chu_logo.png"
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Box, useTheme, useMediaQuery, IconButton, Drawer, List, ListItem } from '@mui/material';
@@ -86,7 +87,7 @@ export default function MyAppBar() {
         >
           {/* Logo de l'application */}
           <img
-            src="/src/chu_logo.png"
+            src={chuLogo}
             alt="CHU Logo"
             style={{
               height: isXs ? '130%' : '150%', // Augmenter la taille de l'image en mobile
