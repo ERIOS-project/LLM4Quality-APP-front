@@ -19,7 +19,10 @@ import { eventEmitter } from '../../api/websockets/simpleEventEmitter';
 import { frFR } from '@mui/x-data-grid/locales';
 import { useTheme } from '@mui/material'; // Import du thème Material-UI
 import RefreshIcon from '@mui/icons-material/Refresh';
+import CustomNoAnalysisOverlay from './NoAnalysisVerbatimDatagrid';
+import { fetchCounts } from "../../api/verbatims";
 import CustomNoRowsOverlay from './NoRowsVerbatimDatagrid';
+
 
 export default function VerbatimDatagrid() {
   const dispatch = useDispatch();
@@ -32,8 +35,11 @@ export default function VerbatimDatagrid() {
   const [page, setPage] = useState<number>(0);
   const queryClient = useQueryClient();
   const theme = useTheme(); // Accès au thème
+  const { data: countsData, isLoading: isCountsLoading, error: countsError, refetch: refetchCounts } = useQuery(["counts"], fetchCounts, {
+    //refetchInterval: 5000, // Auto-refresh every 5 seconds
+  });
 
-  const { data: verbatims = [], isLoading, error, refetch } = useQuery<Verbatim[]>(
+  const { data: verbatims = [], isLoading: isVerbatimsLoading, error: verbatimsError, refetch: refetchVerbatims } = useQuery<Verbatim[]>(
     ['verbatims', selectedYear, selectedStatus],
     () =>
       fetchVerbatims({
@@ -163,7 +169,7 @@ export default function VerbatimDatagrid() {
     },
   ];
 
-  if (isLoading) {
+  if (isVerbatimsLoading || isCountsLoading) {
     return (
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
@@ -195,7 +201,7 @@ export default function VerbatimDatagrid() {
     );
   }
 
-  if (error) {
+  if (verbatimsError || countsError) {
     return (
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid size={{ xs: 12, sm: 10, md: 10, lg: 10 }}>
@@ -273,7 +279,9 @@ export default function VerbatimDatagrid() {
               checkboxSelection
               rowSelectionModel={selectedRows.map((row: any) => row._id)}
               slots={{
-                noRowsOverlay: CustomNoRowsOverlay,
+                noRowsOverlay: (countsData?.total_success || 0) + (countsData?.total_run || 0) + (countsData?.total_error || 0) > 0
+                  ? CustomNoRowsOverlay
+                  : CustomNoAnalysisOverlay,
               }}
               slotProps={{
                 pagination: {
