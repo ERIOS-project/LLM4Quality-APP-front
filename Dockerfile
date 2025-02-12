@@ -15,11 +15,23 @@ RUN npm run build
 # Étape 2 : Utiliser Nginx pour servir les fichiers statiques
 FROM nginx:stable-alpine
 
+# Installer gettext pour utiliser envsubst dans l'entrée
+RUN apk --no-cache add gettext
+
 # Copier la configuration Nginx personnalisée
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copier les fichiers construits depuis l'étape précédente
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copier le script d'entrée
+COPY entrypoint.sh /entrypoint.sh
+
+# Rendre le script exécutable
+RUN chmod +x /entrypoint.sh
+
+# Définir l'entrée du conteneur pour exécuter le script
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Exposer le port 80
 EXPOSE 80
