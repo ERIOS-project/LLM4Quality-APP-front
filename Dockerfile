@@ -1,23 +1,28 @@
-# Utilisez une image de base officielle de Node.js
-FROM node:23-alpine
+# Étape 1 : Build de l'application
+FROM node:23-alpine AS build
 
-# Définissez le répertoire de travail dans le conteneur
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Copiez le fichier package.json et package-lock.json
+# Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
 
-# Installez les dépendances
+# Installer les dépendances et construire l'application
 RUN npm install --legacy-peer-deps
-
-# Copiez le reste de l'application dans le répertoire de travail
 COPY . .
-
-# Construisez l'application pour la production
 RUN npm run build
 
-# Exposez le port sur lequel l'application sera disponible
-EXPOSE 3000
+# Étape 2 : Utiliser Nginx pour servir les fichiers statiques
+FROM nginx:stable-alpine
 
-# Commande pour démarrer l'application
-CMD ["npm", "run", "preview"]
+# Copier la configuration Nginx personnalisée
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copier les fichiers construits depuis l'étape précédente
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Exposer le port 80
+EXPOSE 80
+
+# Commande pour démarrer Nginx
+CMD ["nginx", "-g", "daemon off;"]
