@@ -1,12 +1,19 @@
 import Verbatim from '../../models/Verbatim';
 import { eventEmitter } from './simpleEventEmitter';
 
+if (!window.env) {
+  window.env = import.meta.env;
+}
+
+const apiURL = window.env.VITE_API_URL;
+
+
 export const rerunClassification = (
   verbatims: Verbatim[],
   onSuccess: () => void,
   onError: () => void
 ) => {
-  const socket = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/ws`);
+  const socket = new WebSocket(`${apiURL.replace(/^http/, "ws")}/ws`);
 
   socket.onopen = () => {
     const message = {

@@ -1,5 +1,11 @@
 import { LogLevel, PublicClientApplication } from "@azure/msal-browser";
 
+if (!window.env) {
+  window.env = import.meta.env;
+}
+const azureAppId = window.env.VITE_AZURE_APP_ID;
+const azureLocataireId = window.env.VITE_AZURE_LOCATAIRE_ID;
+const azureApiAppId = window.env.VITE_AZURE_API_APP_ID;
 /**
  * Configuration object to be passed to MSAL instance on creation. 
  * For a full list of MSAL.js configuration parameters, visit:
@@ -7,37 +13,37 @@ import { LogLevel, PublicClientApplication } from "@azure/msal-browser";
  */
 
 export const msalConfig = {
-    auth: {
-        clientId: import.meta.env.VITE_AZURE_APP_ID || "", //id de l'application
-        authority: `https://login.microsoftonline.com/${import.meta.env.VITE_AZURE_LOCATAIRE_ID}`, //id de l'annuaire (locataire)
-        redirectUri: "/",
+  auth: {
+    clientId:  azureAppId || "", //id de l'application
+    authority: `https://login.microsoftonline.com/${azureLocataireId}`, //id de l'annuaire (locataire)
+    redirectUri: "/",
+  },
+  cache: {
+    cacheLocation: "sessionStorage", // This configures where your cache will be stored
+    storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+  },
+  system: {
+    loggerOptions: {
+      loggerCallback: (level: any, message: any, containsPii: any) => {
+        if (containsPii) {
+          return;
+        }
+        switch (level) {
+          case LogLevel.Error:
+            console.error(message);
+            return;
+          case LogLevel.Verbose:
+            console.debug(message);
+            return;
+          case LogLevel.Warning:
+            console.warn(message);
+            return;
+          default:
+            return;
+        }
+      },
     },
-    cache: {
-        cacheLocation: "sessionStorage", // This configures where your cache will be stored
-        storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
-    },
-    system: {	
-        loggerOptions: {	
-            loggerCallback: (level: any, message: any, containsPii: any) => {	
-                if (containsPii) {		
-                    return;		
-                }		
-                switch (level) {
-                    case LogLevel.Error:
-                        console.error(message);
-                        return;
-                    case LogLevel.Verbose:
-                        console.debug(message);
-                        return;
-                    case LogLevel.Warning:
-                        console.warn(message);
-                        return;
-                    default:
-                        return;
-                }	
-            }	
-        }	
-    }
+  },
 };
 
 let msalInstance : any ;
@@ -93,7 +99,9 @@ export async function getGraphToken() {
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest = {
-    scopes: [`api://${import.meta.env.VITE_AZURE_API_APP_ID}/user_impersonation`] //id application de l'api
+  scopes: [
+    `api://${azureApiAppId}/user_impersonation`,
+  ], //id application de l'api
 };
 
 /**

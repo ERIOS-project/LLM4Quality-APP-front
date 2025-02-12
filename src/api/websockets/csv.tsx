@@ -13,13 +13,20 @@ function encodeToBase64(input : string) : string{
   return btoa(binaryString);
 }
 
+if (!window.env) {
+  window.env = import.meta.env;
+}
+
+const apiURL = window.env.VITE_API_URL;
+
+
 export const uploadCsv = (
   fileContent: string,
   year : number,
   onSuccess: () => void,
   onError: () => void
 ) => {
-  const socket = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/ws`);
+  const socket = new WebSocket(`${apiURL.replace(/^http/, "ws")}/ws`);
 
   socket.onopen = () => {
     console.log('WebSocket connection opened');

@@ -1,8 +1,14 @@
 import axios from "axios";
 import { getUserToken } from "../authConfig"; // Assurez-vous que le chemin est correct
 
+if(!window.env){
+  window.env = import.meta.env;
+}
+
+const apiURL = window.env.VITE_API_URL;
+
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}`, // Utilisez la variable d'environnement pour l'URL de votre back-end
+  baseURL: apiURL, // Utilisez la variable d'environnement pour l'URL de votre back-end
   timeout: 10000,
   headers: {
     "Content-Type": "application/json", // En-tête pour spécifier le type de contenu
